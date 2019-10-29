@@ -38,16 +38,11 @@ public class ObscuredSharedPreference {
 
     public static ObscuredSharedPreference getPref(Context context) {
         synchronized (ObscuredSharedPreference.class) {
-            try {
-                if (prefs == null) {
-                    prefs = new ObscuredSharedPreference(context);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                return prefs;
+            if (prefs == null) {
+                prefs = new ObscuredSharedPreference(context);
             }
         }
+        return prefs;
     }
 
     public static void setNewKey(String key) {
