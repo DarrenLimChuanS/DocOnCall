@@ -1,0 +1,8 @@
+Executable : C:\Users\lim_5\AppData\Local\Android\Sdk\cmake\3.6.4111459\bin\cmake.exe
+arguments : 
+--build
+C:\Users\lim_5\OneDrive\Documents\GitHub\DocOnCall\app\.cxx\cmake\debug\arm64-v8a
+--target
+native-lib
+jvmArgs : 
+

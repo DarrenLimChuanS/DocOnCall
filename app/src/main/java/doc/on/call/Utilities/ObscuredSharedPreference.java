@@ -18,7 +18,6 @@ public class ObscuredSharedPreference {
     static {
         System.loadLibrary("native-lib");
     }
-
     public static native String getPrefFile();
 
     // Variables
