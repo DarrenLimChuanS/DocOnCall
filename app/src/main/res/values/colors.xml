@@ -5,4 +5,10 @@
     <color name="colorAccent">#a2a2a2</color>
     <color name="subText">#a2a2a2</color>
     <color name="mainText">#454545</color>
+
+    <!-- Raw Color -->
+    <color name="black">#000000</color>
+    <color name="blue">#2ebcff</color>
+    <color name="grey">#64646d</color>
+    <color name="white">#ffffff</color>
 </resources>

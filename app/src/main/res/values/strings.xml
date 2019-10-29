@@ -1,8 +1,40 @@
 <resources>
+    <!-- Title -->
     <string name="app_name">DocOnCall</string>
-    <string name="description">Businesses often become known today through effective
-marketing. The marketing may be in the form of a regular
-news item or half column society news in the Sunday
-newspaper. The marketing may be in the form of a heart to
-heart talk with Mr. Brown on his prominent local television</string>
+    <string name="app_slogan">Doctors to your doorstep</string>
+
+    <!-- Label -->
+    <string name="label_address">Address</string>
+    <string name="label_age">Age</string>
+    <string name="label_back">Back</string>
+    <string name="label_continue">Continue</string>
+    <string name="label_email">Email</string>
+    <string name="label_log_out">Log out</string>
+    <string name="label_name">Full Name</string>
+    <string name="label_nric">NRIC</string>
+    <string name="label_password">Password</string>
+    <string name="label_phone">Mobile Number</string>
+    <string name="label_sign_in">Sign In</string>
+    <string name="label_sign_up">Sign Up</string>
+    <string name="label_username">Username</string>
+    <string name="label_verify">Verify</string>
+    <string name="label_verify_token">Verification Token</string>
+
+    <!-- Menu -->
+    <string name="menu_doc_on_call">Doctor On Call</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_setting">Setting</string>
+
+    <!-- Message -->
+    <string name="message_login_invalid">Login Invalid</string>
+    <string name="message_login_success">"Login Successful\n\nAn OTP has been sent to your registered phone number"</string>
+    <string name="message_login_unverified">Account not verified! Please check your email!</string>
+    <string name="message_network_timeout">Connection timed out</string>
+    <string name="message_register_input_conflict">Username and email must be unique!</string>
+    <string name="message_register_invalid">Registration Failed</string>
+    <string name="message_register_success">"Register Successful\n\nAn OTP has been sent to your registered email for verification"</string>
+    <string name="message_validate_invalid">OTP Invalid</string>
+    <string name="message_validate_success">Login Successful</string>
+    <string name="message_verify_invalid">Account Verification Invalid</string>
+    <string name="message_verify_success">"Account Verification Successful\n\nPlease proceed to login to your account"</string>
 </resources>

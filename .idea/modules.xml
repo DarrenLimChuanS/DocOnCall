@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DocOnCallBackup.iml" filepath="$PROJECT_DIR$/DocOnCallBackup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DocOnCall.iml" filepath="$PROJECT_DIR$/DocOnCall.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
