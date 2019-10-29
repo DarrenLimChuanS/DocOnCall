@@ -4,19 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class Patient {
+public class Doctor {
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("age")
-    @Expose
-    private int age;
-    @SerializedName("appointments")
-    @Expose
-    private List<Appointment> appointments;
-    @SerializedName("conditions")
-    @Expose
-    private List<String> condition;
     @SerializedName("email")
     @Expose
     private String email;
@@ -26,30 +17,21 @@ public class Patient {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("nric")
+    @SerializedName("pastAppointmentCollections")
     @Expose
-    private String nric;
+    private List<PastAppointment> pastAppointments = null;
     @SerializedName("phone")
     @Expose
     private String phone;
+    @SerializedName("upcomingAppointments")
+    @Expose
+    private List<Appointment> upcomingAppointments = null;
     @SerializedName("username")
     @Expose
     private String username;
 
     public String getAddress() {
         return this.address;
-    }
-
-    public int getAge() {
-        return this.age;
-    }
-
-    public List<Appointment> getAppointments() {
-        return this.appointments;
-    }
-
-    public List<String> getCondition() {
-        return this.condition;
     }
 
     public String getEmail() {
@@ -64,12 +46,16 @@ public class Patient {
         return this.name;
     }
 
-    public String getNric() {
-        return this.nric;
+    public List<PastAppointment> getPastAppointments() {
+        return this.pastAppointments;
     }
 
     public String getPhone() {
         return this.phone;
+    }
+
+    public List<Appointment> getUpcomingAppointments() {
+        return this.upcomingAppointments;
     }
 
     public String getUsername() {
@@ -78,18 +64,6 @@ public class Patient {
 
     public void setAddress(String str) {
         this.address = str;
-    }
-
-    public void setAge(int i) {
-        this.age = i;
-    }
-
-    public void setAppointments(List<Appointment> list) {
-        this.appointments = list;
-    }
-
-    public void setCondition(List<String> list) {
-        this.condition = list;
     }
 
     public void setEmail(String str) {
@@ -104,12 +78,16 @@ public class Patient {
         this.name = str;
     }
 
-    public void setNric(String str) {
-        this.nric = str;
+    public void setPastAppointments(List<PastAppointment> list) {
+        this.pastAppointments = list;
     }
 
     public void setPhone(String str) {
         this.phone = str;
+    }
+
+    public void setUpcomingAppointments(List<Appointment> list) {
+        this.upcomingAppointments = list;
     }
 
     public void setUsername(String str) {
@@ -118,16 +96,14 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Patient{" +
+        return "Doctor{" +
                 "address='" + address + '\'' +
-                ", age=" + age +
-                ", appointments=" + appointments +
-                ", condition=" + condition +
                 ", email='" + email + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", nric='" + nric + '\'' +
+                ", pastAppointments=" + pastAppointments +
                 ", phone='" + phone + '\'' +
+                ", upcomingAppointments=" + upcomingAppointments +
                 ", username='" + username + '\'' +
                 '}';
     }
