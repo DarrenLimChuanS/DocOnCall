@@ -42,6 +42,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
@@ -72,4 +73,7 @@ dependencies {
     // Google Services
     implementation 'com.google.android.gms:play-services-auth:11.4.2'
     implementation 'com.google.android.gms:play-services:11.4.2'
+
+    // Pin View
+    implementation 'com.chaos.view:pinview:1.4.2'
 }
