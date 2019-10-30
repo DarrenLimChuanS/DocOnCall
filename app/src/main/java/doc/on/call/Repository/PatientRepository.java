@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -20,7 +19,6 @@ import doc.on.call.R;
 import doc.on.call.RetroFit.Request.PatientApiRequest;
 import doc.on.call.RetroFit.Request.RetrofitRequest;
 import doc.on.call.SignInActivity;
-import doc.on.call.Utilities.Constants;
 import doc.on.call.Utilities.ObscuredSharedPreference;
 import java.io.IOException;
 import java.util.List;
@@ -52,6 +50,9 @@ public class PatientRepository {
 
     /**
      * ============================== START OF LOGIN ==============================
+     */
+    /**
+     * PatientApiRequest for Register Patient
      */
     public void registerPatient(String email, String username, String password, String fullname, String nric, int age, int phone, String address) {
         JsonObject jsonObject = new JsonObject();
@@ -106,7 +107,9 @@ public class PatientRepository {
                 });
     }
 
-
+    /**
+     * Function to handle Register Details State
+     */
     private void toggleRegisterDetailsState(boolean status) {
         if (status) {
             ((Activity) this.context).findViewById(R.id.etFullName).setEnabled(true);
@@ -122,6 +125,9 @@ public class PatientRepository {
         }
     }
 
+    /**
+     * Function to handle Register State
+     */
     private void toggleRegisterState(boolean status) {
         if (status) {
             ((Activity) this.context).findViewById(R.id.etEmail).setEnabled(true);
@@ -136,7 +142,60 @@ public class PatientRepository {
         }
     }
 
+    /**
+     * PatientApiRequest for Verify Patient
+     */
+    public void verifyPatient(String username, String password, String token) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("password", password);
+        jsonObject.addProperty("token", token);
+        jsonObject.addProperty("username", username);
+        this.patientApiRequest.verifyPatient(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch (response.code()) {
+                            case HTTP_OK:
+                                toggleVerifyState(false);
+                                showMessage(context.getString(R.string.message_verify_success));
+                                Intent signIn = new Intent(context, SignInActivity.class);
+                                context.startActivity(signIn);
+                                break;
+                            default:
+                                toggleVerifyState(true);
+                                showMessage(context.getString(R.string.message_verify_invalid));
+                                break;
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleVerifyState(true);
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+        });
+    }
+
+    /**
+     * Function to handle Verify State
+     */
+    private void toggleVerifyState(boolean status) {
+        if (status) {
+            ((Activity) this.context).findViewById(R.id.etUsername).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etPassword).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.imgPassword).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etToken).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnVerify).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnBack).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * PatientApiRequest for Login Patient
+     */
     public void loginPatient(String username, String password) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("loginUser", "patient");
@@ -156,11 +215,11 @@ public class PatientRepository {
                                         pinView.getText().clear();
                                         pinView.setLineColor(context.getResources().getColor(R.color.colorAccent));
                                         ((Activity)context).findViewById(R.id.llLoginInputs).setVisibility(View.GONE);
-                                        ((Activity)context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                        toggleLoginState(false);
                                         ((Activity)context).findViewById(R.id.llOtpInputs).setVisibility(View.VISIBLE);
                                         showMessage(context.getString(R.string.message_login_success));
                                     } else {
-                                        enableLoginState();
+                                        toggleLoginState(true);
                                         showMessage(context.getString(R.string.message_network_timeout));
                                     }
                                 } catch (IOException e) {
@@ -177,9 +236,9 @@ public class PatientRepository {
                                         // Not verified, direct to verify screen
                                         Intent verifyPatient = new Intent(context, VerifyActivity.class);
                                         context.startActivity(verifyPatient);
-                                        enableLoginState();
+                                        toggleLoginState(false);
                                     } else {
-                                        enableLoginState();
+                                        toggleLoginState(true);
                                         showMessage(context.getString(R.string.message_login_invalid));
                                     }
                                 } catch (IOException e) {
@@ -188,7 +247,7 @@ public class PatientRepository {
                                 break;
                             default:
                                 // Invalid login
-                                enableLoginState();
+                                toggleLoginState(true);
                                 showMessage(context.getString(R.string.message_network_timeout));
                                 break;
                         }
@@ -196,21 +255,31 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        enableLoginState();
+                        toggleLoginState(true);
                         showMessage(context.getString(R.string.message_network_timeout));
                     }
                 });
     }
 
-    private void enableLoginState() {
+    /**
+     * Function to handle Login State
+     */
+    private void toggleLoginState(boolean status) {
+        if (status) {
             ((Activity) context).findViewById(R.id.etUsername).setEnabled(true);
             ((Activity) context).findViewById(R.id.etPassword).setEnabled(true);
             ((Activity) context).findViewById(R.id.imgPassword).setEnabled(true);
             ((Activity) context).findViewById(R.id.btnSignIn).setEnabled(true);
             ((Activity) context).findViewById(R.id.btnSignUp).setEnabled(true);
             ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
     }
 
+    /**
+     * PatientApiRequest for Validate Patient
+     */
     public void validatePatient(String otp) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
@@ -231,9 +300,9 @@ public class PatientRepository {
                                         showMessage(context.getString(R.string.message_validate_success));
                                         Intent home = new Intent(context, HomeActivity.class);
                                         context.startActivity(home);
-                                        enableValidateState();
+                                        toggleValidateState(false);
                                     } else {
-                                        enableValidateState();
+                                        toggleValidateState(true);
                                         showMessage(context.getString(R.string.message_network_timeout));
                                     }
                                 } catch (IOException e) {
@@ -244,7 +313,7 @@ public class PatientRepository {
                                 break;
                             default:
                                 pinView.setLineColor(context.getResources().getColor(R.color.red));
-                                enableValidateState();
+                                toggleValidateState(true);
                                 showMessage(context.getString(R.string.message_validate_invalid));
                                 break;
                         }
@@ -252,34 +321,29 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        enableValidateState();
+                        toggleValidateState(true);
                         showMessage(context.getString(R.string.message_network_timeout));
                     }
                 });
     }
 
-    private void enableValidateState() {
+    /**
+     * Function to handle Validate State
+     */
+    private void toggleValidateState(boolean status) {
+        if (status) {
             ((Activity) this.context).findViewById(R.id.pinView).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.btnSubmit).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.btnBack).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
     }
 
-//
-//    private void toggleVerifyState(boolean z) {
-//        if (z) {
-//            ((Activity) this.context).findViewById(R.id.etUsername).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etPassword).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.imgPassword).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etVerify).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.btnVerify).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.btnBack).setEnabled(true);
-//            ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//            return;
-//        }
-//        ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//    }
-
+    /**
+     * PatientApiRequest for Logout Patient
+     */
     public void logoutPatient() {
         patientApiRequest.logoutPatient()
                 .enqueue(new Callback<ResponseBody>() {
@@ -308,37 +372,13 @@ public class PatientRepository {
                     }
                 });
     }
+    /**
+     * ============================== END OF LOGIN ==============================
+     */
 
-
-
-    public void verifyPatient(String str, String str2, String str3) {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("password", str2);
-//        jsonObject.addProperty("token", str3);
-//        jsonObject.addProperty("username", str);
-//        this.patientApiRequest.verifyPatient(jsonObject).enqueue(new Callback<ResponseBody>() {
-//            public void onFailure(Call<ResponseBody> call, Throwable th) {
-//                PatientRepository.this.toggleVerifyState(true);
-//                PatientRepository patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_network_timeout));
-//            }
-//
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                PatientRepository patientRepository;
-//                if (response.code() != Constants.HTTP_OK) {
-//                    PatientRepository.this.toggleVerifyState(true);
-//                    patientRepository = PatientRepository.this;
-//                    patientRepository.showMessage(patientRepository.context.getString(R.string.message_verify_invalid));
-//                    return;
-//                }
-//                PatientRepository.this.toggleVerifyState(false);
-//                PatientRepository.this.context.startActivity(new Intent(PatientRepository.this.context, SignInActivity.class));
-//                patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_verify_success));
-//            }
-//        });
-    }
-
+    /**
+     * ============================== START OF PATIENT ==============================
+     */
     public LiveData<List<Patient>> getAllPatients() {
         final MutableLiveData mutableLiveData = new MutableLiveData();
 //        this.patientApiRequest.getAllPatients().enqueue(new Callback<List<Patient>>() {
@@ -410,7 +450,9 @@ public class PatientRepository {
 //        });
         return mutableLiveData;
     }
-
+    /**
+     * ============================== END OF PATIENT ==============================
+     */
     /**
      * ============================== START OF UTILITIES ==============================
      */

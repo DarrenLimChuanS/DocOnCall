@@ -37,6 +37,7 @@
     <string name="error_age">Invalid Age</string>
     <string name="error_phone">Invalid Phone</string>
     <string name="error_address">Invalid Address</string>
+    <string name="error_token">Invalid Token</string>
 
 
     <!-- HTTP Message -->

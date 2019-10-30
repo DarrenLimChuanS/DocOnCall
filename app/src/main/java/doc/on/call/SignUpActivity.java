@@ -207,8 +207,6 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp2.setEnabled(false);
         btnSignUp2Back.setEnabled(false);
     }
-
-
     /**
      * ================================= END OF FUNCTIONS =================================
      */
