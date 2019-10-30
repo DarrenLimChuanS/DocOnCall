@@ -12,6 +12,7 @@ import doc.on.call.Repository.PatientRepository;
 
 public class SettingFragment extends Fragment {
     private TextView btnLogout;
+    private TextView btnPatient;
     private PatientRepository mPatient;
 
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -20,16 +21,29 @@ public class SettingFragment extends Fragment {
         mPatient = new PatientRepository(getContext());
 
         btnLogout = (TextView) view.findViewById(R.id.btnLogout);
+        btnPatient = (TextView) view.findViewById(R.id.btnPatient);
+
         btnLogout.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 logoutPatient();
             }
         });
 
+        btnPatient.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+                getPatient();
+            }
+        });
+
+
         return view;
     }
 
     public void logoutPatient() {
         mPatient.logoutPatient();
+    }
+
+    public void getPatient(){
+        mPatient.getPatient();
     }
 }

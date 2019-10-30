@@ -44,9 +44,8 @@ public interface PatientApiRequest {
     @Headers({"No-Authentication: true"})
     Call<List<Patient>> getAllPatients();
 
-    @GET("api/patient/{id}")
-    @Headers({"No-Authentication: true"})
-    Call<Patient> getPatient(@Path("email") String str);
+    @GET("api/patient")
+    Call<Patient> getPatient();
     /**
      * ============================== END OF PATIENT ==============================
      */

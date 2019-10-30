@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -424,31 +425,26 @@ public class PatientRepository {
         return mutableLiveData;
     }
 
-    public LiveData<Patient> getPatient(String str) {
-        final MutableLiveData mutableLiveData = new MutableLiveData();
-//        this.patientApiRequest.getPatient(str).enqueue(new Callback<Patient>() {
-//            public void onFailure(Call<Patient> call, Throwable th) {
-//                Log.d(PatientRepository.TAG, "Failed");
-//                mutableLiveData.setValue(null);
-//            }
-//
-//            public void onResponse(Call<Patient> call, Response<Patient> response) {
-//                String access$800 = PatientRepository.TAG;
-//                StringBuilder stringBuilder = new StringBuilder();
-//                stringBuilder.append("onResponse response:: ");
-//                stringBuilder.append(response);
-//                Log.d(access$800, stringBuilder.toString());
-//                if (response.body() != null) {
-//                    mutableLiveData.setValue(response.body());
-//                    String access$8002 = PatientRepository.TAG;
-//                    StringBuilder stringBuilder2 = new StringBuilder();
-//                    stringBuilder2.append("Patient: ");
-//                    stringBuilder2.append(((Patient) response.body()));
-//                    Log.d(access$8002, stringBuilder2.toString());
-//                }
-//            }
-//        });
-        return mutableLiveData;
+    public LiveData<Patient> getPatient() {
+        final MutableLiveData<Patient> patient = new MutableLiveData<>();
+        patientApiRequest.getPatient()
+                .enqueue(new Callback<Patient>() {
+                    @Override
+                    public void onResponse(Call<Patient> call, Response<Patient> response) {
+                        Log.d(TAG, "onResponse response:: " + response);
+                        if (response.body() != null) {
+                            patient.setValue(response.body());
+                            Log.d(TAG, "Patient is: " + patient.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Patient> call, Throwable th) {
+                        patient.setValue(null);
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+        });
+        return patient;
     }
     /**
      * ============================== END OF PATIENT ==============================
