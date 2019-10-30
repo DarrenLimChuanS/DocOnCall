@@ -13,18 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
-import doc.on.call.HomeActivity;
-import doc.on.call.MainActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
 import doc.on.call.RetroFit.Request.PatientApiRequest;
 import doc.on.call.RetroFit.Request.RetrofitRequest;
-import doc.on.call.RetroFit.Response.PatientResponse;
 import doc.on.call.SignInActivity;
 import doc.on.call.Utilities.Constants;
 import doc.on.call.Utilities.ObscuredSharedPreference;
 import java.io.IOException;
 import java.util.List;
+
+import doc.on.call.VerifyActivity;
 import okhttp3.ResponseBody;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,15 +83,19 @@ public class PatientRepository {
                                 break;
                             case HTTP_UNAUTHORIZED:
                                 // Verified or invalid login
-                                if (response.message().equals(context.getResources().getString(R.string.message_login_unverified))) {
-                                    toggleLoginState(false);
-                                    showMessage(context.getString(R.string.message_login_unverified));
-                                    // Not verified, direct to verify screen
-                                    Intent verifyPatient = new Intent(context, MainActivity.class);
-                                    context.startActivity(verifyPatient);
-                                } else {
-                                    toggleLoginState(true);
-                                    showMessage(context.getString(R.string.message_login_invalid));
+                                try {
+                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.message_login_unverified))) {
+                                        showMessage(context.getString(R.string.message_login_unverified));
+                                        // Not verified, direct to verify screen
+                                        Intent verifyPatient = new Intent(context, VerifyActivity.class);
+                                        context.startActivity(verifyPatient);
+                                        toggleLoginState(true);
+                                    } else {
+                                        toggleLoginState(true);
+                                        showMessage(context.getString(R.string.message_login_invalid));
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                                 break;
                             default:
@@ -108,7 +111,6 @@ public class PatientRepository {
                         toggleLoginState(true);
                         showMessage(context.getString(R.string.message_network_timeout));
                     }
-
                 });
     }
 
@@ -178,7 +180,7 @@ public class PatientRepository {
 //    }
 
     public LiveData<List<Patient>> getAllPatients() {
-//        final MutableLiveData mutableLiveData = new MutableLiveData();
+        final MutableLiveData mutableLiveData = new MutableLiveData();
 //        this.patientApiRequest.getAllPatients().enqueue(new Callback<List<Patient>>() {
 //            public void onFailure(Call<List<Patient>> call, Throwable th) {
 //                mutableLiveData.setValue(null);
@@ -219,11 +221,11 @@ public class PatientRepository {
 //                }
 //            }
 //        });
-//        return mutableLiveData;
+        return mutableLiveData;
     }
 
     public LiveData<Patient> getPatient(String str) {
-//        final MutableLiveData mutableLiveData = new MutableLiveData();
+        final MutableLiveData mutableLiveData = new MutableLiveData();
 //        this.patientApiRequest.getPatient(str).enqueue(new Callback<Patient>() {
 //            public void onFailure(Call<Patient> call, Throwable th) {
 //                Log.d(PatientRepository.TAG, "Failed");
@@ -246,7 +248,7 @@ public class PatientRepository {
 //                }
 //            }
 //        });
-//        return mutableLiveData;
+        return mutableLiveData;
     }
 
 

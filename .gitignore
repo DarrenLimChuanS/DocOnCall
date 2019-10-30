@@ -66,5 +66,6 @@ fastlane/readme.md
 
 # Ndk
 **/ndkHelperBin
+**/.cxx
 app/.cxx
 .externalNativeBuild

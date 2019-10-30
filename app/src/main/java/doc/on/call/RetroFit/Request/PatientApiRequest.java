@@ -2,7 +2,6 @@ package doc.on.call.RetroFit.Request;
 
 import com.google.gson.JsonObject;
 import doc.on.call.Model.Patient;
-import doc.on.call.RetroFit.Response.PatientResponse;
 import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

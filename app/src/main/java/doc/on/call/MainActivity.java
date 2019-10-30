@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         this.mSharedPreference = ObscuredSharedPreference.getPref(this);
         Log.d(TAG, "Hello");
         Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
-        Log.d(TAG, "Nonce:" + mSharedPreference.readNonce());
+        Log.d(TAG, "Nonce: " + mSharedPreference.readNonce());
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 MainActivity.this.startActivity(new Intent(MainActivity.this, SignInActivity.class));

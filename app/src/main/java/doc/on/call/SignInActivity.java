@@ -116,11 +116,11 @@ public class SignInActivity extends AppCompatActivity {
             etPassword.requestFocus();
             etPassword.setError(getString(R.string.error_password));
         } else {
-//            etUsername.setEnabled(false);
-//            etPassword.setEnabled(false);
-//            imgPassword.setEnabled(false);
-//            btnSignIn.setEnabled(false);
-//            btnSignUp.setEnabled(false);
+            etUsername.setEnabled(false);
+            etPassword.setEnabled(false);
+            imgPassword.setEnabled(false);
+            btnSignIn.setEnabled(false);
+            btnSignUp.setEnabled(false);
             pbLoading.setVisibility(View.VISIBLE);
 
             mPatient.loginPatient(username, password);
@@ -128,8 +128,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void registerPatient() {
-        Log.d(TAG, "Register clicked");
-//        Intent signUp = new Intent(this, SignUpActivity.class);
+        Intent signUp = new Intent(this, SignUpActivity.class);
+        startActivity(signUp);
     }
 
     public void submitOTP() {
