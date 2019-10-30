@@ -36,6 +36,7 @@ import retrofit2.Response;
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
+import static doc.on.call.Utilities.Constants.PREF_TOKEN;
 
 public class PatientRepository {
     private static final String TAG = PatientRepository.class.getSimpleName();
@@ -225,101 +226,30 @@ public class PatientRepository {
 //        ((Activity) this.context).findViewById(2131296540).setVisibility(8);
 //    }
 
-    public LiveData<List<Patient>> getAllPatients() {
-        final MutableLiveData mutableLiveData = new MutableLiveData();
-//        this.patientApiRequest.getAllPatients().enqueue(new Callback<List<Patient>>() {
-//            public void onFailure(Call<List<Patient>> call, Throwable th) {
-//                mutableLiveData.setValue(null);
-//            }
-//
-//            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
-//                String access$800 = PatientRepository.TAG;
-//                StringBuilder stringBuilder = new StringBuilder();
-//                stringBuilder.append("onResponse response: ");
-//                stringBuilder.append(response);
-//                Log.d(access$800, stringBuilder.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                access$800 = PatientRepository.TAG;
-//                stringBuilder = new StringBuilder();
-//                stringBuilder.append("Message ");
-//                stringBuilder.append(response.message());
-//                Log.d(access$800, stringBuilder.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                access$800 = PatientRepository.TAG;
-//                stringBuilder = new StringBuilder();
-//                stringBuilder.append("Body: ");
-//                stringBuilder.append(response.body());
-//                Log.d(access$800, stringBuilder.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                String access$8002 = PatientRepository.TAG;
-//                StringBuilder stringBuilder2 = new StringBuilder();
-//                stringBuilder2.append("BodyFirstPatient: ");
-//                stringBuilder2.append(((Patient) ((List) response.body()).get(5)).toString());
-//                Log.d(access$8002, stringBuilder2.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                access$800 = PatientRepository.TAG;
-//                stringBuilder = new StringBuilder();
-//                stringBuilder.append("Code: ");
-//                stringBuilder.append(response.code());
-//                Log.d(access$800, stringBuilder.toString());
-//                if (response.body() != null) {
-//                    mutableLiveData.setValue(response.body());
-//                }
-//            }
-//        });
-        return mutableLiveData;
-    }
-
-    public LiveData<Patient> getPatient(String str) {
-        final MutableLiveData mutableLiveData = new MutableLiveData();
-//        this.patientApiRequest.getPatient(str).enqueue(new Callback<Patient>() {
-//            public void onFailure(Call<Patient> call, Throwable th) {
-//                Log.d(PatientRepository.TAG, "Failed");
-//                mutableLiveData.setValue(null);
-//            }
-//
-//            public void onResponse(Call<Patient> call, Response<Patient> response) {
-//                String access$800 = PatientRepository.TAG;
-//                StringBuilder stringBuilder = new StringBuilder();
-//                stringBuilder.append("onResponse response:: ");
-//                stringBuilder.append(response);
-//                Log.d(access$800, stringBuilder.toString());
-//                if (response.body() != null) {
-//                    mutableLiveData.setValue(response.body());
-//                    String access$8002 = PatientRepository.TAG;
-//                    StringBuilder stringBuilder2 = new StringBuilder();
-//                    stringBuilder2.append("Patient: ");
-//                    stringBuilder2.append(((Patient) response.body()));
-//                    Log.d(access$8002, stringBuilder2.toString());
-//                }
-//            }
-//        });
-        return mutableLiveData;
-    }
-
-
-
     public void logoutPatient() {
-//        this.patientApiRequest.logoutPatient().enqueue(new Callback<ResponseBody>() {
-//            public void onFailure(Call<ResponseBody> call, Throwable th) {
-//                PatientRepository patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_network_timeout));
-//            }
-//
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                PatientRepository patientRepository;
-//                if (response.code() != Constants.HTTP_OK) {
-//                    Log.d(PatientRepository.TAG, "I'm here");
-//                    patientRepository = PatientRepository.this;
-//                    patientRepository.showMessage(patientRepository.context.getString(R.string.message_verify_invalid));
-//                    return;
-//                }
-//                Log.d(PatientRepository.TAG, "I'm here");
-//                PatientRepository.this.context.startActivity(new Intent(PatientRepository.this.context, SignInActivity.class));
-//                patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_verify_success));
-//            }
-//        });
+        patientApiRequest.logoutPatient()
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_logout_success));
+                                Intent signIn = new Intent(context, SignInActivity.class);
+                                context.startActivity(signIn);
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_network_timeout));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
     }
 
     public void registerPatient(String str, String str2, String str3, String str4, String str5, int i, int i2, String str6) {
@@ -399,6 +329,78 @@ public class PatientRepository {
 //                patientRepository.showMessage(patientRepository.context.getString(R.string.message_verify_success));
 //            }
 //        });
+    }
+
+    public LiveData<List<Patient>> getAllPatients() {
+        final MutableLiveData mutableLiveData = new MutableLiveData();
+//        this.patientApiRequest.getAllPatients().enqueue(new Callback<List<Patient>>() {
+//            public void onFailure(Call<List<Patient>> call, Throwable th) {
+//                mutableLiveData.setValue(null);
+//            }
+//
+//            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
+//                String access$800 = PatientRepository.TAG;
+//                StringBuilder stringBuilder = new StringBuilder();
+//                stringBuilder.append("onResponse response: ");
+//                stringBuilder.append(response);
+//                Log.d(access$800, stringBuilder.toString());
+//                Log.d(PatientRepository.TAG, "=================================");
+//                access$800 = PatientRepository.TAG;
+//                stringBuilder = new StringBuilder();
+//                stringBuilder.append("Message ");
+//                stringBuilder.append(response.message());
+//                Log.d(access$800, stringBuilder.toString());
+//                Log.d(PatientRepository.TAG, "=================================");
+//                access$800 = PatientRepository.TAG;
+//                stringBuilder = new StringBuilder();
+//                stringBuilder.append("Body: ");
+//                stringBuilder.append(response.body());
+//                Log.d(access$800, stringBuilder.toString());
+//                Log.d(PatientRepository.TAG, "=================================");
+//                String access$8002 = PatientRepository.TAG;
+//                StringBuilder stringBuilder2 = new StringBuilder();
+//                stringBuilder2.append("BodyFirstPatient: ");
+//                stringBuilder2.append(((Patient) ((List) response.body()).get(5)).toString());
+//                Log.d(access$8002, stringBuilder2.toString());
+//                Log.d(PatientRepository.TAG, "=================================");
+//                access$800 = PatientRepository.TAG;
+//                stringBuilder = new StringBuilder();
+//                stringBuilder.append("Code: ");
+//                stringBuilder.append(response.code());
+//                Log.d(access$800, stringBuilder.toString());
+//                if (response.body() != null) {
+//                    mutableLiveData.setValue(response.body());
+//                }
+//            }
+//        });
+        return mutableLiveData;
+    }
+
+    public LiveData<Patient> getPatient(String str) {
+        final MutableLiveData mutableLiveData = new MutableLiveData();
+//        this.patientApiRequest.getPatient(str).enqueue(new Callback<Patient>() {
+//            public void onFailure(Call<Patient> call, Throwable th) {
+//                Log.d(PatientRepository.TAG, "Failed");
+//                mutableLiveData.setValue(null);
+//            }
+//
+//            public void onResponse(Call<Patient> call, Response<Patient> response) {
+//                String access$800 = PatientRepository.TAG;
+//                StringBuilder stringBuilder = new StringBuilder();
+//                stringBuilder.append("onResponse response:: ");
+//                stringBuilder.append(response);
+//                Log.d(access$800, stringBuilder.toString());
+//                if (response.body() != null) {
+//                    mutableLiveData.setValue(response.body());
+//                    String access$8002 = PatientRepository.TAG;
+//                    StringBuilder stringBuilder2 = new StringBuilder();
+//                    stringBuilder2.append("Patient: ");
+//                    stringBuilder2.append(((Patient) response.body()));
+//                    Log.d(access$8002, stringBuilder2.toString());
+//                }
+//            }
+//        });
+        return mutableLiveData;
     }
 
     /**

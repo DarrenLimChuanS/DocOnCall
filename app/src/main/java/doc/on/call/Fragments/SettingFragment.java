@@ -12,7 +12,7 @@ import doc.on.call.Repository.PatientRepository;
 
 public class SettingFragment extends Fragment {
     private TextView btnLogout;
-    PatientRepository mPatient;
+    private PatientRepository mPatient;
 
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         View view = layoutInflater.inflate(R.layout.fragment_setting, viewGroup, false);
@@ -30,6 +30,6 @@ public class SettingFragment extends Fragment {
     }
 
     public void logoutPatient() {
-        this.mPatient.logoutPatient();
+        mPatient.logoutPatient();
     }
 }

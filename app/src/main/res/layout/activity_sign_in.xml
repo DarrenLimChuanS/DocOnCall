@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/imgIcon">
 
@@ -83,7 +82,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/imgIcon">
 
         <TextView
@@ -95,13 +94,13 @@
         <com.chaos.view.PinView
             android:id="@+id/pinView"
             style="@style/PinWidget.PinView"
-            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:cursorVisible="true"
             android:inputType="number"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_18dp"
             android:textStyle="bold"
             app:cursorColor="@color/blue"
             app:cursorWidth="2dp"

@@ -38,6 +38,7 @@
     <string name="message_login_invalid">Login Invalid</string>
     <string name="message_login_success">"Login Successful\n\nAn OTP has been sent to your registered phone number"</string>
     <string name="message_login_unverified">Account not verified! Please check your email!</string>
+    <string name="message_logout_success">Logout Successful</string>
     <string name="message_network_timeout">Connection timed out</string>
     <string name="message_register_input_conflict">Username and email must be unique!</string>
     <string name="message_register_invalid">Registration Failed</string>
