@@ -28,21 +28,27 @@
     <string name="menu_setting">Setting</string>
 
     <!-- Errors -->
+    <string name="error_email">Invalid Email</string>
     <string name="error_username">Invalid Username</string>
     <string name="error_password">Invalid Password</string>
     <string name="error_otp">Invalid OTP</string>
-    <string name="error_name">Invalid Name</string>
+    <string name="error_fullname">Invalid Full Name</string>
+    <string name="error_nric">Invalid NRIC</string>
+    <string name="error_age">Invalid Age</string>
+    <string name="error_phone">Invalid Phone</string>
+    <string name="error_address">Invalid Address</string>
 
 
     <!-- HTTP Message -->
     <string name="message_login_invalid">Login Invalid</string>
     <string name="message_login_success">"Login Successful\n\nAn OTP has been sent to your registered phone number"</string>
     <string name="message_login_unverified">Account not verified! Please check your email!</string>
+    <string name="message_logout_invalid">Account does not have a session. Logged out.</string>
     <string name="message_logout_success">Logout Successful</string>
     <string name="message_network_timeout">Connection timed out</string>
-    <string name="message_register_input_conflict">Username and email must be unique!</string>
+    <string name="message_register_input_conflict">Username and email is taken!</string>
     <string name="message_register_invalid">Registration Failed</string>
-    <string name="message_register_success">"Register Successful\n\nAn OTP has been sent to your registered email for verification"</string>
+    <string name="message_register_success">"Register Successful\n\nAn email has been sent to your registered email for verification"</string>
     <string name="message_validate_invalid">OTP Invalid</string>
     <string name="message_validate_success">Login Successful</string>
     <string name="message_verify_invalid">Account Verification Invalid</string>

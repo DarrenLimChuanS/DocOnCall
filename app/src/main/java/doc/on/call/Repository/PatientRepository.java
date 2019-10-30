@@ -53,6 +53,90 @@ public class PatientRepository {
     /**
      * ============================== START OF LOGIN ==============================
      */
+    public void registerPatient(String email, String username, String password, String fullname, String nric, int age, int phone, String address) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("address", address);
+        jsonObject.addProperty("age", Integer.valueOf(age));
+        jsonObject.addProperty("email", email);
+        jsonObject.addProperty("name", fullname);
+        jsonObject.addProperty("nric", nric);
+        jsonObject.addProperty("password", password);
+        jsonObject.addProperty("phone", Integer.valueOf(phone));
+        jsonObject.addProperty("username", username);
+        patientApiRequest.registerPatient(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                toggleRegisterDetailsState(false);
+                                showMessage(context.getString(R.string.message_register_success));
+                                Intent signIn = new Intent(context, SignInActivity.class);
+                                context.startActivity(signIn);
+                                break;
+                            default:
+                                try {
+                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.message_register_input_conflict))) {
+                                        toggleRegisterDetailsState(false);
+                                        toggleRegisterState(true);
+                                        ((Activity) context).findViewById(R.id.llAccountInputs).setVisibility(View.VISIBLE);
+                                        ((Activity) context).findViewById(R.id.llInformationInputs).setVisibility(View.GONE);
+                                        EditText etUsername = (EditText) ((Activity) context).findViewById(R.id.etUsername);
+                                        EditText etEmail = (EditText) ((Activity) context).findViewById(R.id.etEmail);
+                                        etUsername.requestFocus();
+                                        etUsername.setError(context.getResources().getString(R.string.message_register_input_conflict));
+                                        etEmail.requestFocus();
+                                        etEmail.setError(context.getResources().getString(R.string.message_register_input_conflict));
+                                    } else {
+                                        toggleRegisterDetailsState(true);
+                                        showMessage(context.getString(R.string.message_register_invalid));
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleRegisterDetailsState(true);
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+
+    private void toggleRegisterDetailsState(boolean status) {
+        if (status) {
+            ((Activity) this.context).findViewById(R.id.etFullName).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etNRIC).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etAge).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etPhone).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etAddress).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnSignUp2).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnSignUp2Back).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
+    }
+
+    private void toggleRegisterState(boolean status) {
+        if (status) {
+            ((Activity) this.context).findViewById(R.id.etEmail).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etUsername).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.etPassword).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.imgPassword).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnSignUp).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnSignUpBack).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
+    }
+
+
     public void loginPatient(String username, String password) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("loginUser", "patient");
@@ -166,11 +250,11 @@ public class PatientRepository {
                         }
                     }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable th) {
-                    enableValidateState();
-                    showMessage(context.getString(R.string.message_network_timeout));
-                }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        enableValidateState();
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
                 });
     }
 
@@ -180,36 +264,6 @@ public class PatientRepository {
             ((Activity) this.context).findViewById(R.id.btnBack).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
     }
-//
-//    private void toggleRegisterDetailsState(boolean z) {
-//        if (z) {
-//            ((Activity) this.context).findViewById(R.id.etName).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etNRIC).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etAge).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etPhone).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etAddress).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.btnSignUp2).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.btnSignUp2Back).setEnabled(true);
-//            ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//            return;
-//        }
-//        ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//    }
-//
-//    private void toggleRegisterState(boolean z) {
-//        if (z) {
-//            ((Activity) this.context).findViewById(R.id.etEmail).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etUsername).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.etPassword).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.imgPassword).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.btnSignUp).setEnabled(true);
-//            ((Activity) this.context).findViewById(R.id.btnSignUpBack).setEnabled(true);
-//            ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//            return;
-//        }
-//        ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//    }
-//
 
 //
 //    private void toggleVerifyState(boolean z) {
@@ -231,16 +285,19 @@ public class PatientRepository {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Intent signIn = new Intent(context, SignInActivity.class);
                         switch(response.code()) {
                             case HTTP_OK:
                                 showMessage(context.getString(R.string.message_logout_success));
-                                Intent signIn = new Intent(context, SignInActivity.class);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_network_timeout));
+                                showMessage(context.getString(R.string.message_logout_invalid));
+                                context.startActivity(signIn);
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
                                 break;
                         }
                     }
@@ -250,55 +307,6 @@ public class PatientRepository {
                         showMessage(context.getString(R.string.message_network_timeout));
                     }
                 });
-    }
-
-    public void registerPatient(String str, String str2, String str3, String str4, String str5, int i, int i2, String str6) {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("address", str6);
-//        jsonObject.addProperty("age", Integer.valueOf(i));
-//        jsonObject.addProperty("email", str);
-//        jsonObject.addProperty("name", str4);
-//        jsonObject.addProperty("nric", str5);
-//        jsonObject.addProperty("password", str3);
-//        jsonObject.addProperty("phone", Integer.valueOf(i2));
-//        jsonObject.addProperty("username", str2);
-//        this.patientApiRequest.registerPatient(jsonObject).enqueue(new Callback<ResponseBody>() {
-//            public void onFailure(Call<ResponseBody> call, Throwable th) {
-//                PatientRepository.this.toggleRegisterDetailsState(true);
-//                PatientRepository patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_network_timeout));
-//            }
-//
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.code() != Constants.HTTP_OK) {
-//                    try {
-//                        if (response.errorBody().string().equals(PatientRepository.this.context.getResources().getString(R.string.message_register_input_conflict))) {
-//                            PatientRepository.this.toggleRegisterDetailsState(false);
-//                            PatientRepository.this.toggleRegisterState(true);
-//                            ((Activity) PatientRepository.this.context).findViewById(R.id.accountInputs).setVisibility(0);
-//                            ((Activity) PatientRepository.this.context).findViewById(R.id.informationInputs).setVisibility(8);
-//                            EditText editText = (EditText) ((Activity) PatientRepository.this.context).findViewById(R.id.etUsername);
-//                            EditText editText2 = (EditText) ((Activity) PatientRepository.this.context).findViewById(R.id.etEmail);
-//                            editText.requestFocus();
-//                            editText.setError(PatientRepository.this.context.getResources().getString(R.string.message_register_input_conflict));
-//                            editText2.requestFocus();
-//                            editText2.setError(PatientRepository.this.context.getResources().getString(R.string.message_register_input_conflict));
-//                            return;
-//                        }
-//                        PatientRepository.this.toggleRegisterDetailsState(true);
-//                        PatientRepository.this.showMessage(PatientRepository.this.context.getString(R.string.message_register_invalid));
-//                        return;
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                        return;
-//                    }
-//                }
-//                PatientRepository.this.toggleRegisterDetailsState(false);
-//                PatientRepository.this.context.startActivity(new Intent(PatientRepository.this.context, SignInActivity.class));
-//                PatientRepository patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_register_success));
-//            }
-//        });
     }
 
 

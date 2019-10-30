@@ -22,7 +22,6 @@
     <style name="iv_logo">
         <item name="android:layout_width">@dimen/width_image_size_250dp</item>
         <item name="android:layout_height">@dimen/height_image_size_200dp</item>
-        <item name="android:layout_marginTop">@dimen/margin_header_size_100dp</item>
         <item name="android:src">@drawable/img_appicon</item>
     </style>
 

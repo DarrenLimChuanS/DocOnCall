@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -14,11 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chaos.view.PinView;
-
-import org.w3c.dom.Text;
 
 import doc.on.call.Repository.PatientRepository;
 
@@ -31,7 +26,7 @@ public class SignInActivity extends AppCompatActivity {
     ImageView imgPassword;
     TextView btnSignIn;
     TextView btnSignUp;
-    LinearLayout lLLoginInputs;
+    LinearLayout llLoginInputs;
 
     ProgressBar pbLoading;
 
@@ -53,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
         imgPassword = (ImageView)findViewById(R.id.imgPassword);
         btnSignIn = (TextView)findViewById(R.id.btnSignIn);
         btnSignUp = (TextView)findViewById(R.id.btnSignUp);
-        lLLoginInputs = (LinearLayout)findViewById(R.id.llLoginInputs);
+        llLoginInputs = (LinearLayout)findViewById(R.id.llLoginInputs);
         pbLoading = (ProgressBar)findViewById(R.id.pbLoading);
         pinView = (PinView)findViewById(R.id.pinView);
         btnSubmit = (TextView)findViewById(R.id.btnSubmit);
@@ -111,7 +106,7 @@ public class SignInActivity extends AppCompatActivity {
         String password = this.etPassword.getText().toString().trim();
         if (!isUsernameValid(username)) {
             etUsername.requestFocus();
-            etUsername.setError(getString(R.string.error_name));
+            etUsername.setError(getString(R.string.error_username));
         } else if (!isPasswordValid(password)) {
             etPassword.requestFocus();
             etPassword.setError(getString(R.string.error_password));
@@ -155,7 +150,7 @@ public class SignInActivity extends AppCompatActivity {
         etUsername.getText().clear();
         etPassword.getText().clear();
         llOtpInputs.setVisibility(View.GONE);
-        lLLoginInputs.setVisibility(View.VISIBLE);
+        llLoginInputs.setVisibility(View.VISIBLE);
     }
     /**
      * ================================= END OF FUNCTIONS =================================
