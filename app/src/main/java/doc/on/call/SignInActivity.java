@@ -139,7 +139,7 @@ public class SignInActivity extends AppCompatActivity {
             btnSubmit.setEnabled(false);
             btnBack.setEnabled(false);
             pbLoading.setVisibility(View.VISIBLE);
-//            mPatient.validatePatient(otp);
+            mPatient.validatePatient(otp);
         } else {
             pinView.requestFocus();
             pinView.setError(getString(R.string.error_otp));
@@ -177,21 +177,5 @@ public class SignInActivity extends AppCompatActivity {
     }
     /**
      * ================================= END OF VALIDATIONS =================================
-     */
-
-    /**
-     * ================================= START OF UTILITIES =================================
-     */
-    private void showMessage(String message) {
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-        if( v != null) {
-            v.setGravity(Gravity.CENTER);
-        }
-        toast.show();
-    }
-    /**
-     * ================================= END OF UTILITIES =================================
      */
 }

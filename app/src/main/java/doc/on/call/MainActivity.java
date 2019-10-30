@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
-        this.mSharedPreference = ObscuredSharedPreference.getPref(this);
+        mSharedPreference = ObscuredSharedPreference.getPref(this);
         Log.d(TAG, "Hello");
         Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
         Log.d(TAG, "Nonce: " + mSharedPreference.readNonce());

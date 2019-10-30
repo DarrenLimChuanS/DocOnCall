@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -14,8 +15,13 @@ import java.util.ArrayList;
 
 import doc.on.call.Adapters.PropertyRecyclerAdapter;
 import doc.on.call.Model.PropertyRecyclerModel;
+import doc.on.call.Utilities.ObscuredSharedPreference;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private static final String TAG = HomeActivity.class.getSimpleName();
+
+    private ObscuredSharedPreference mSharedPreference;
 
     private ArrayList<PropertyRecyclerModel> homeListModelClassArrayList;
     private RecyclerView recyclerView;
@@ -34,6 +40,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mSharedPreference = ObscuredSharedPreference.getPref(this);
+        Log.d(TAG, "Hello");
+        Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
+        Log.d(TAG, "Nonce: " + mSharedPreference.readNonce());
+
         HomeActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
        refine=(TextView)findViewById(R.id.refine);
@@ -61,6 +73,5 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
     }
 }

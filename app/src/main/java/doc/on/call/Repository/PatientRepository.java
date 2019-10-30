@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
+
+import doc.on.call.HomeActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
 import doc.on.call.RetroFit.Request.PatientApiRequest;
@@ -33,6 +35,7 @@ import retrofit2.Response;
 
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
+import static doc.on.call.Utilities.Constants.PREF_NONCE;
 
 public class PatientRepository {
     private static final String TAG = PatientRepository.class.getSimpleName();
@@ -64,15 +67,15 @@ public class PatientRepository {
                                     String nonce = new JSONObject(response.body().string()).getString("nonce");
                                     if (!nonce.isEmpty()) {
                                         mSharedPreference.writeNonce(nonce);
-                                        PinView pinView = ((Activity)context).findViewById(R.id.pinView);
+                                        PinView pinView = (PinView) ((Activity)context).findViewById(R.id.pinView);
                                         pinView.getText().clear();
                                         pinView.setLineColor(context.getResources().getColor(R.color.colorAccent));
                                         ((Activity)context).findViewById(R.id.llLoginInputs).setVisibility(View.GONE);
-                                        toggleLoginState(false);
+                                        ((Activity)context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                         ((Activity)context).findViewById(R.id.llOtpInputs).setVisibility(View.VISIBLE);
                                         showMessage(context.getString(R.string.message_login_success));
                                     } else {
-                                        toggleLoginState(true);
+                                        enableLoginState();
                                         showMessage(context.getString(R.string.message_network_timeout));
                                     }
                                 } catch (IOException e) {
@@ -89,9 +92,9 @@ public class PatientRepository {
                                         // Not verified, direct to verify screen
                                         Intent verifyPatient = new Intent(context, VerifyActivity.class);
                                         context.startActivity(verifyPatient);
-                                        toggleLoginState(true);
+                                        enableLoginState();
                                     } else {
-                                        toggleLoginState(true);
+                                        enableLoginState();
                                         showMessage(context.getString(R.string.message_login_invalid));
                                     }
                                 } catch (IOException e) {
@@ -100,7 +103,7 @@ public class PatientRepository {
                                 break;
                             default:
                                 // Invalid login
-                                toggleLoginState(true);
+                                enableLoginState();
                                 showMessage(context.getString(R.string.message_network_timeout));
                                 break;
                         }
@@ -108,23 +111,73 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        toggleLoginState(true);
+                        enableLoginState();
                         showMessage(context.getString(R.string.message_network_timeout));
                     }
                 });
     }
 
-    private void toggleLoginState(boolean status) {
-        if (status) {
+    private void enableLoginState() {
             ((Activity) context).findViewById(R.id.etUsername).setEnabled(true);
             ((Activity) context).findViewById(R.id.etPassword).setEnabled(true);
             ((Activity) context).findViewById(R.id.imgPassword).setEnabled(true);
             ((Activity) context).findViewById(R.id.btnSignIn).setEnabled(true);
             ((Activity) context).findViewById(R.id.btnSignUp).setEnabled(true);
             ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
-        } else {
-            ((Activity)context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
-        }
+    }
+
+    public void validatePatient(String otp) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
+        jsonObject.addProperty("otp", otp);
+        patientApiRequest.validatePatient(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        PinView pinView = (PinView) ((Activity)context).findViewById(R.id.pinView);
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                try {
+                                    String token = new JSONObject(response.body().string()).getString("token");
+                                    if (!token.isEmpty()) {
+                                        mSharedPreference.writeJWTToken(token);
+                                        mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                        pinView.setLineColor(context.getResources().getColor(R.color.green));
+                                        showMessage(context.getString(R.string.message_validate_success));
+                                        Intent home = new Intent(context, HomeActivity.class);
+                                        context.startActivity(home);
+                                        enableValidateState();
+                                    } else {
+                                        enableValidateState();
+                                        showMessage(context.getString(R.string.message_network_timeout));
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            default:
+                                pinView.setLineColor(context.getResources().getColor(R.color.red));
+                                enableValidateState();
+                                showMessage(context.getString(R.string.message_validate_invalid));
+                                break;
+                        }
+                    }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable th) {
+                    enableValidateState();
+                    showMessage(context.getString(R.string.message_network_timeout));
+                }
+                });
+    }
+
+    private void enableValidateState() {
+            ((Activity) this.context).findViewById(R.id.pinView).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnSubmit).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnBack).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
     }
 //
 //    private void toggleRegisterDetailsState(boolean z) {
@@ -156,14 +209,7 @@ public class PatientRepository {
 //        ((Activity) this.context).findViewById(2131296540).setVisibility(8);
 //    }
 //
-//    private void toggleValidateState(boolean z) {
-//        if (z) {
-//            ((Activity) this.context).findViewById(R.id.pinView).setEnabled(true);
-//            ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//            return;
-//        }
-//        ((Activity) this.context).findViewById(2131296540).setVisibility(8);
-//    }
+
 //
 //    private void toggleVerifyState(boolean z) {
 //        if (z) {
@@ -325,43 +371,7 @@ public class PatientRepository {
 //        });
     }
 
-    public void validatePatient(String str) {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
-//        jsonObject.addProperty("otp", str);
-//        this.patientApiRequest.validatePatient(jsonObject).enqueue(new Callback<ResponseBody>() {
-//            public void onFailure(Call<ResponseBody> call, Throwable th) {
-//                PatientRepository.this.toggleValidateState(true);
-//                PatientRepository patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_network_timeout));
-//            }
-//
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                PinView pinView = (PinView) ((Activity) PatientRepository.this.context).findViewById(R.id.pinView);
-//                PatientRepository patientRepository;
-//                if (response.code() != Constants.HTTP_OK) {
-//                    pinView.setLineColor(-65536);
-//                    PatientRepository.this.toggleValidateState(true);
-//                    patientRepository = PatientRepository.this;
-//                    patientRepository.showMessage(patientRepository.context.getString(R.string.message_validate_invalid));
-//                    return;
-//                }
-//                pinView.setLineColor(-16711936);
-//                PatientRepository.this.toggleValidateState(false);
-//                try {
-//                    PatientRepository.this.mSharedPreference.writeJWTToken(new JSONObject(((ResponseBody) response.body()).string()).getString("token"));
-//                    PatientRepository.this.mSharedPreference.removeSharedPreference(Constants.PREF_NONCE);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } catch (JSONException e2) {
-//                    e2.printStackTrace();
-//                }
-//                PatientRepository.this.context.startActivity(new Intent(PatientRepository.this.context, HomeActivity.class));
-//                patientRepository = PatientRepository.this;
-//                patientRepository.showMessage(patientRepository.context.getString(R.string.message_validate_success));
-//            }
-//        });
-    }
+
 
     public void verifyPatient(String str, String str2, String str3) {
 //        JsonObject jsonObject = new JsonObject();
