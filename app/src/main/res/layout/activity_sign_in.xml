@@ -1,130 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="doc.on.call.SignInActivity">
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/eye_scan"/>
-    <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#b7b8ba"
-        android:textSize="12dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="Best way to find homes"/>
 
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="@style/pb_loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        style="@style/iv_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Step one Login Inputs -->
     <LinearLayout
+        android:id="@+id/llLoginInputs"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/imgIcon">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-
-
-
-                <doc.on.call.CustomFonts.EditText_Roboto_Regular
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="User Name"
-                    android:layout_weight="1"
-                    android:inputType="text"
-                    android:textColor="#000"
-                    android:background="#00000000"
-                    android:textColorHint="#A2A2A2"
-                    android:textSize="12dp" />
-
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-
-                android:src="@drawable/ic_user" />
+        <LinearLayout style="@style/et_layout">
+            <doc.on.call.CustomFonts.EditText_Roboto_Regular
+                android:id="@+id/etUsername"
+                style="@style/et_input"
+                android:layout_weight="1"
+                android:hint="@string/label_username"
+                android:inputType="text" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:background="#acacac" />
+        <View style="@style/v_line" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-
-
-
-                <doc.on.call.CustomFonts.EditText_Roboto_Regular
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColor="#000"
-                    android:layout_weight="1"
-                    android:background="#00000000"
-                    android:textColorHint="#A2A2A2"
-                    android:textSize="12dp" />
-
-
-
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            style="@style/et_layout">
+            <doc.on.call.CustomFonts.EditText_Roboto_Regular
+                android:id="@+id/etPassword"
+                style="@style/et_input"
+                android:layout_weight="1"
+                android:hint="@string/label_password"
+                android:inputType="textPassword" />
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:id="@+id/imgPassword"
+                android:layout_width="@dimen/width_icon_size_18dp"
+                android:layout_height="@dimen/height_icon_size_18dp"
                 android:src="@drawable/ic_eye" />
         </LinearLayout>
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:background="#acacac" />
-
+        <View style="@style/v_line" />
 
         <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
             android:id="@+id/btnSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/signin_rect"
-            android:gravity="center_horizontal"
-            android:paddingBottom="12dp"
-            android:paddingLeft="90dp"
-            android:paddingRight="90dp"
-            android:paddingTop="12dp"
-            android:text="Sign In"
-            android:textColor="#ffffff"
-            android:textSize="16dp" />
-        <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign up Now"
-            android:textColor="#2ebcff"
-            android:layout_gravity="center"
-            android:padding="20dp"
-            android:layout_marginTop="100dp"/>
+            style="@style/btn_primary"
+            android:layout_marginTop="@dimen/margin_size_50dp"
+            android:text="@string/label_sign_in" />
 
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
+            android:id="@+id/btnSignUp"
+            style="@style/btn_info"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:text="@string/label_sign_up" />
     </LinearLayout>
-</LinearLayout>
+
+    <!-- Step twice OTP inputs -->
+    <!-- Step one Login Inputs -->
+    <LinearLayout
+        android:id="@+id/llOtpInputs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/imgIcon">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_caption_size_20dp"
+            android:text="@string/app_otp" />
+
+        <com.chaos.view.PinView
+            android:id="@+id/pinView"
+            style="@style/PinWidget.PinView"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cursorColor="@color/blue"
+            app:cursorWidth="2dp"
+            app:hideLineWhenFilled="true"
+            app:itemCount="6"
+            app:itemHeight="50dp"
+            app:itemRadius="10dp"
+            app:itemSpacing="5dp"
+            app:itemWidth="48dp"
+            app:lineColor="@color/colorAccent"
+            app:lineWidth="2dp"
+            app:viewType="rectangle" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
+            android:id="@+id/btnSubmit"
+            style="@style/btn_primary"
+            android:layout_marginTop="@dimen/margin_size_50dp"
+            android:text="@string/label_submit" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
+            android:id="@+id/btnBack"
+            style="@style/btn_info"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:text="@string/label_back" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

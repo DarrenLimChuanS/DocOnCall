@@ -7,7 +7,7 @@
     <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/subText"
+        android:textColor="@color/colorAccent"
         android:textSize="16dp"
         android:text="Contact Info."
         android:layout_marginTop="10dp"
@@ -42,7 +42,7 @@
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/subText"
+                android:textColor="@color/colorAccent"
                 android:text="xyz"
                 />
         </LinearLayout>

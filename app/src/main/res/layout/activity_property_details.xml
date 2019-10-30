@@ -335,13 +335,13 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:textSize="14dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Property Type"
                 android:textSize="11dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -351,7 +351,7 @@
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/subText"
+                android:textColor="@color/colorAccent"
                 android:text="Furnished"
                 android:layout_marginTop="7dp"
                 android:textSize="11dp"/>
@@ -367,7 +367,7 @@
                 android:text="QuickPro No."
                 android:layout_marginTop="7dp"
                 android:textSize="11dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -394,7 +394,7 @@
                 android:text="Land Type"
                 android:layout_marginTop="22dp"
                 android:textSize="11dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -407,7 +407,7 @@
                 android:text="Tenure"
                 android:textSize="11dp"
                 android:layout_marginTop="7dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -420,7 +420,7 @@
                 android:text="Posted Date"
                 android:textSize="11dp"
                 android:layout_marginTop="7dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
 
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
@@ -447,7 +447,7 @@
                 android:text="Facilities"
                 android:paddingLeft="10dp"
                 android:textSize="14dp"
-                android:textColor="@color/subText"
+                android:textColor="@color/colorAccent"
                 android:layout_marginTop="15dp"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -543,12 +543,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:textSize="14dp"
-                android:textColor="@color/subText"/>
+                android:textColor="@color/colorAccent"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="@string/description"
+                android:text="wow"
                 android:layout_marginTop="10dp"/>
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
@@ -575,7 +575,7 @@
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/subText"
+                android:textColor="@color/colorAccent"
                 android:textSize="14dp"
                 android:text="Contact Info."
                 android:layout_marginTop="10dp"
@@ -610,7 +610,7 @@
                     <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/subText"
+                        android:textColor="@color/colorAccent"
                         android:text="xyz"
                         />
                 </LinearLayout>

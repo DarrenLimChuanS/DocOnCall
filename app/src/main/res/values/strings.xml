@@ -2,6 +2,7 @@
     <!-- Title -->
     <string name="app_name">DocOnCall</string>
     <string name="app_slogan">Doctors to your doorstep</string>
+    <string name="app_otp">Enter the 6 digit OTP</string>
 
     <!-- Label -->
     <string name="label_address">Address</string>
@@ -16,6 +17,7 @@
     <string name="label_phone">Mobile Number</string>
     <string name="label_sign_in">Sign In</string>
     <string name="label_sign_up">Sign Up</string>
+    <string name="label_submit">Submit</string>
     <string name="label_username">Username</string>
     <string name="label_verify">Verify</string>
     <string name="label_verify_token">Verification Token</string>
@@ -25,7 +27,14 @@
     <string name="menu_home">Home</string>
     <string name="menu_setting">Setting</string>
 
-    <!-- Message -->
+    <!-- Errors -->
+    <string name="error_username">Invalid Username</string>
+    <string name="error_password">Invalid Password</string>
+    <string name="error_otp">Invalid OTP</string>
+    <string name="error_name">Invalid Name</string>
+
+
+    <!-- HTTP Message -->
     <string name="message_login_invalid">Login Invalid</string>
     <string name="message_login_success">"Login Successful\n\nAn OTP has been sent to your registered phone number"</string>
     <string name="message_login_unverified">Account not verified! Please check your email!</string>

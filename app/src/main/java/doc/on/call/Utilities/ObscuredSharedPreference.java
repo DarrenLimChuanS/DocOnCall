@@ -13,6 +13,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
+import static doc.on.call.Utilities.Constants.PREF_NONCE;
+import static doc.on.call.Utilities.Constants.PREF_TOKEN;
+
 public class ObscuredSharedPreference {
     // Fetch NDK
     static {
@@ -88,31 +91,31 @@ public class ObscuredSharedPreference {
     /**
      * =================================== START OF GETTER SETTERS ===================================
      */
-    public String readJWTToken() {
-        String string = this.sharedPreferences.getString(Constants.PREF_TOKEN, null);
-        return string != null ? decrypt(string) : null;
+    public void writeNonce(String nonce) {
+        Editor edit = this.sharedPreferences.edit();
+        edit.putString(PREF_NONCE, encrypt(nonce));
+        edit.apply();
     }
 
     public String readNonce() {
-        String string = this.sharedPreferences.getString(Constants.PREF_NONCE, null);
-        return string != null ? decrypt(string) : null;
+        String nonce = this.sharedPreferences.getString(PREF_NONCE, null);
+        return nonce != null ? decrypt(nonce) : null;
     }
 
-    public void writeJWTToken(String str) {
+    public void writeJWTToken(String token) {
         Editor edit = this.sharedPreferences.edit();
-        edit.putString(Constants.PREF_TOKEN, encrypt(str));
+        edit.putString(PREF_TOKEN, encrypt(token));
         edit.apply();
     }
 
-    public void writeNonce(String str) {
-        Editor edit = this.sharedPreferences.edit();
-        edit.putString(Constants.PREF_NONCE, encrypt(str));
-        edit.apply();
+    public String readJWTToken() {
+        String token = this.sharedPreferences.getString(PREF_TOKEN, null);
+        return token != null ? decrypt(token) : null;
     }
 
-    public void removeSharedPreference(String str) {
+    public void removeSharedPreference(String key) {
         Editor edit = this.sharedPreferences.edit();
-        edit.remove(str);
+        edit.remove(key);
         edit.commit();
     }
     /**
