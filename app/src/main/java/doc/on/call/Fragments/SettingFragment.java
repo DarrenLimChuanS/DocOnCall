@@ -11,6 +11,7 @@ import doc.on.call.R;
 import doc.on.call.Repository.PatientRepository;
 
 public class SettingFragment extends Fragment {
+    private static final String TAG = SettingFragment.class.getSimpleName();
     private TextView btnLogout;
     private TextView btnPatient;
     private PatientRepository mPatient;
@@ -44,6 +45,6 @@ public class SettingFragment extends Fragment {
     }
 
     public void getPatient(){
-        mPatient.getPatient();
+        mPatient.getAllPatients();
     }
 }

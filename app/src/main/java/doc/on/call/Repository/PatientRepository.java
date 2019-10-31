@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
 
 import doc.on.call.HomeActivity;
+import doc.on.call.MainActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
 import doc.on.call.RetroFit.Request.PatientApiRequest;
@@ -36,6 +38,7 @@ import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
 import static doc.on.call.Utilities.Constants.PREF_TOKEN;
+import static doc.on.call.Utilities.Constants.SPLASH_TIME_OUT;
 
 public class PatientRepository {
     private static final String TAG = PatientRepository.class.getSimpleName();
@@ -351,6 +354,7 @@ public class PatientRepository {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         Intent signIn = new Intent(context, SignInActivity.class);
+                        signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         switch(response.code()) {
                             case HTTP_OK:
                                 showMessage(context.getString(R.string.message_logout_success));
@@ -359,7 +363,7 @@ public class PatientRepository {
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_logout_invalid));
+                                showMessage(context.getString(R.string.message_logout_no_session));
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
@@ -373,6 +377,42 @@ public class PatientRepository {
                     }
                 });
     }
+
+    public void checkLoggedIn() {
+        patientApiRequest.getPatient()
+                .enqueue(new Callback<Patient>() {
+                    @Override
+                    public void onResponse(Call<Patient> call, Response<Patient> response) {
+                        Log.d(TAG, "Checking logged in");
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                if (response.body() != null) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        public void run() {
+                                            Intent home = new Intent(context, HomeActivity.class);
+                                            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            context.startActivity(home);
+                                        }
+                                    }, (long) SPLASH_TIME_OUT);
+                                }
+                                break;
+                            default:
+                                new Handler().postDelayed(new Runnable() {
+                                    public void run() {
+                                        Intent signIn = new Intent(context, SignInActivity.class);
+                                        signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        context.startActivity(signIn);
+                                    }
+                                }, (long) SPLASH_TIME_OUT);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Patient> call, Throwable th) {
+                    }
+                });
+    }
     /**
      * ============================== END OF LOGIN ==============================
      */
@@ -381,60 +421,64 @@ public class PatientRepository {
      * ============================== START OF PATIENT ==============================
      */
     public LiveData<List<Patient>> getAllPatients() {
-        final MutableLiveData mutableLiveData = new MutableLiveData();
-//        this.patientApiRequest.getAllPatients().enqueue(new Callback<List<Patient>>() {
-//            public void onFailure(Call<List<Patient>> call, Throwable th) {
-//                mutableLiveData.setValue(null);
-//            }
-//
-//            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
-//                String access$800 = PatientRepository.TAG;
-//                StringBuilder stringBuilder = new StringBuilder();
-//                stringBuilder.append("onResponse response: ");
-//                stringBuilder.append(response);
-//                Log.d(access$800, stringBuilder.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                access$800 = PatientRepository.TAG;
-//                stringBuilder = new StringBuilder();
-//                stringBuilder.append("Message ");
-//                stringBuilder.append(response.message());
-//                Log.d(access$800, stringBuilder.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                access$800 = PatientRepository.TAG;
-//                stringBuilder = new StringBuilder();
-//                stringBuilder.append("Body: ");
-//                stringBuilder.append(response.body());
-//                Log.d(access$800, stringBuilder.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                String access$8002 = PatientRepository.TAG;
-//                StringBuilder stringBuilder2 = new StringBuilder();
-//                stringBuilder2.append("BodyFirstPatient: ");
-//                stringBuilder2.append(((Patient) ((List) response.body()).get(5)).toString());
-//                Log.d(access$8002, stringBuilder2.toString());
-//                Log.d(PatientRepository.TAG, "=================================");
-//                access$800 = PatientRepository.TAG;
-//                stringBuilder = new StringBuilder();
-//                stringBuilder.append("Code: ");
-//                stringBuilder.append(response.code());
-//                Log.d(access$800, stringBuilder.toString());
-//                if (response.body() != null) {
-//                    mutableLiveData.setValue(response.body());
-//                }
-//            }
-//        });
-        return mutableLiveData;
+        final MutableLiveData<List<Patient>> patientList = new MutableLiveData<>();
+        patientApiRequest.getAllPatients()
+                .enqueue(new Callback<List<Patient>>() {
+                    @Override
+                    public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
+                        Intent signIn = new Intent(context, SignInActivity.class);
+                        signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Log.d(TAG, "onResponse response:: " + response);
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                if (response.body() != null) {
+                                    patientList.setValue(response.body());
+                                    Log.d(TAG, "Patient list is: " + patientList.getValue().toString());
+                                }
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_logout_no_session));
+                                context.startActivity(signIn);
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Patient>> call, Throwable th) {
+                        patientList.setValue(null);
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+        return patientList;
     }
 
+    /**
+     * PatientApiRequest for Get Patient
+     */
     public LiveData<Patient> getPatient() {
         final MutableLiveData<Patient> patient = new MutableLiveData<>();
         patientApiRequest.getPatient()
                 .enqueue(new Callback<Patient>() {
                     @Override
                     public void onResponse(Call<Patient> call, Response<Patient> response) {
+                        Intent signIn = new Intent(context, SignInActivity.class);
+                        signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d(TAG, "onResponse response:: " + response);
-                        if (response.body() != null) {
-                            patient.setValue(response.body());
-                            Log.d(TAG, "Patient is: " + patient.toString());
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                if (response.body() != null) {
+                                    patient.setValue(response.body());
+                                    Log.d(TAG, "Patient is: " + patient.getValue().toString());
+                                }
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_logout_no_session));
+                                context.startActivity(signIn);
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
+                                break;
                         }
                     }
 

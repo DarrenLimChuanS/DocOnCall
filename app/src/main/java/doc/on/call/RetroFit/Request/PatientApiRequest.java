@@ -41,7 +41,6 @@ public interface PatientApiRequest {
      * ============================== START OF PATIENT ==============================
      */
     @GET("api/testing/patients")
-    @Headers({"No-Authentication: true"})
     Call<List<Patient>> getAllPatients();
 
     @GET("api/patient")

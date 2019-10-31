@@ -95,6 +95,18 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
+    }
+
     public void inflateDocOnCall() {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.docOnCallFragment).commit();
         imgHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_home));

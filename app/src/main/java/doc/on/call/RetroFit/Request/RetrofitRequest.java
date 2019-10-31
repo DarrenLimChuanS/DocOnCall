@@ -29,7 +29,7 @@ public class RetrofitRequest {
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(2, TimeUnit.SECONDS)
                     .writeTimeout(2, TimeUnit.SECONDS)
-                    .retryOnConnectionFailure(false)
+                    .retryOnConnectionFailure(true)
                     .build();
             retrofit = new Retrofit.Builder().baseUrl(getAPIBaseURL())
                     .client(client)
