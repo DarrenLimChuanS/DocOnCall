@@ -21,6 +21,12 @@
     <string name="label_username">Username</string>
     <string name="label_verify">Verify</string>
     <string name="label_verify_token">Verification Token</string>
+    <string name="label_enter_issue">Enter your issue</string>
+    <string name="label_make_appointment">Make Appointment</string>
+    <string name="label_select_time">Select Time</string>
+    <string name="label_select_date">Select Date</string>
+    <string name="label_date_not_selected">Date is not selected</string>
+    <string name="label_time_not_selected">Time is not selected</string>
 
     <!-- Menu -->
     <string name="menu_doc_on_call">Doctor On Call</string>
@@ -38,20 +44,28 @@
     <string name="error_phone">Invalid Phone</string>
     <string name="error_address">Invalid Address</string>
     <string name="error_token">Invalid Token</string>
-
+    <string name="error_issue">Invalid Issue</string>
+    <string name="error_date">Invalid Date</string>
+    <string name="error_time">Invalid Time</string>
 
     <!-- HTTP Message -->
     <string name="message_login_invalid">Login Invalid</string>
-    <string name="message_login_success">"Login Successful\n\nAn OTP has been sent to your registered phone number"</string>
+    <string name="message_login_success">Login Successful\n\nAn OTP has been sent to your registered phone number</string>
     <string name="message_login_unverified">Account not verified! Please check your email!</string>
     <string name="message_logout_no_session">Session Expired. Please log in again.</string>
     <string name="message_logout_success">Logout Successful</string>
     <string name="message_network_timeout">Connection timed out</string>
     <string name="message_register_input_conflict">Username and email is taken!</string>
     <string name="message_register_invalid">Registration Failed</string>
-    <string name="message_register_success">"Register Successful\n\nAn email has been sent to your registered email for verification"</string>
+    <string name="message_register_success">Register Successful\n\nAn email has been sent to your registered email for verification</string>
     <string name="message_validate_invalid">OTP Invalid</string>
     <string name="message_validate_success">Login Successful</string>
     <string name="message_verify_invalid">Account Verification Invalid</string>
-    <string name="message_verify_success">"Account Verification Successful\n\nPlease proceed to login to your account"</string>
+    <string name="message_verify_success">Account Verification Successful\n\nPlease proceed to login to your account</string>
+    <string name="message_appointment_success">Appointment has been created</string>
+    <string name="message_appointment_invalid">Appointment Invalid</string>
+
+    <!-- Date Picker -->
+    <string name="date_picker_message">Please pick a weekday not later than one month from now.</string>
+    <string name="time_picker_message">Please pick a time between 9am to 4pm.</string>
 </resources>

@@ -1,6 +1,8 @@
 package doc.on.call.Repository;
 
 import android.app.Activity;
+
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
 
+import doc.on.call.Fragments.DocOnCallFragment;
 import doc.on.call.HomeActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
@@ -488,6 +491,44 @@ public class PatientRepository {
                     }
         });
         return patient;
+    }
+
+    /**
+     * PatientApiRequest for Create Appointment
+     */
+    public void createAppointment(String appointmentDateTime, String datetimeCreated, String issue, String patientDetail) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("appointmentDateTime", appointmentDateTime);
+        jsonObject.addProperty("datetimeCreated", datetimeCreated);
+        jsonObject.addProperty("issue", issue);
+        jsonObject.addProperty("patientDetail", patientDetail);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.createAppointment(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_appointment_success));
+                                DocOnCallFragment docOnCallFragment = new DocOnCallFragment(context);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, docOnCallFragment).commit();
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_appointment_invalid));
+                                ((FragmentActivity) context).findViewById(R.id.etIssue).setEnabled(true);
+                                ((FragmentActivity) context).findViewById(R.id.btnDate).setEnabled(true);
+                                ((FragmentActivity) context).findViewById(R.id.btnTime).setEnabled(true);
+                                ((FragmentActivity) context).findViewById(R.id.btnCreate).setEnabled(true);
+                                ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
     }
     /**
      * ============================== END OF PATIENT ==============================

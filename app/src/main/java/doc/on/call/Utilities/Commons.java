@@ -1,5 +1,10 @@
 package doc.on.call.Utilities;
 
+import android.content.Context;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,5 +57,15 @@ public class Commons {
                 break;
         }
         return convertedDateTime;
+    }
+
+    public static void showMessage(String message, Context context) {
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        if( v != null) {
+            v.setGravity(Gravity.CENTER);
+        }
+        toast.show();
     }
 }

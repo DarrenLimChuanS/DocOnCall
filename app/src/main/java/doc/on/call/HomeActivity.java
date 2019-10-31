@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import doc.on.call.Fragments.DocOnCallFragment;
 import doc.on.call.Fragments.PatientFragment;
 import doc.on.call.Fragments.SettingFragment;
 import doc.on.call.Utilities.ObscuredSharedPreference;
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // Fragments
     private PatientFragment patientFragment;
+    private DocOnCallFragment docOnCallFragment;
     private SettingFragment settingFragment;
 
 
@@ -57,8 +59,9 @@ public class HomeActivity extends AppCompatActivity {
         imgSetting = (ImageView)findViewById(R.id.imgSetting);
         tvSetting = (TextView)findViewById(R.id.tvSetting);
 
-        patientFragment = new PatientFragment();
-        settingFragment = new SettingFragment();
+        patientFragment = new PatientFragment(this);
+        docOnCallFragment = new DocOnCallFragment(this);
+        settingFragment = new SettingFragment(this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, patientFragment).commit();
         imgHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_home_blue));
@@ -99,18 +102,18 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "onStop");
     }
 
-    public void inflateDocOnCall() {
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.docOnCallFragment).commit();
-        imgHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_home));
-        tvHome.setTextColor(getResources().getColor(R.color.grey));
-        imgSetting.setImageDrawable(getResources().getDrawable(R.drawable.ic_setting));
-        tvSetting.setTextColor(getResources().getColor(R.color.grey));
-    }
-
     public void inflateHome() {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.patientFragment).commit();
         imgHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_home_blue));
         tvHome.setTextColor(getResources().getColor(R.color.blue));
+        imgSetting.setImageDrawable(getResources().getDrawable(R.drawable.ic_setting));
+        tvSetting.setTextColor(getResources().getColor(R.color.grey));
+    }
+
+    public void inflateDocOnCall() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, this.docOnCallFragment).commit();
+        imgHome.setImageDrawable(getResources().getDrawable(R.drawable.ic_home));
+        tvHome.setTextColor(getResources().getColor(R.color.grey));
         imgSetting.setImageDrawable(getResources().getDrawable(R.drawable.ic_setting));
         tvSetting.setTextColor(getResources().getColor(R.color.grey));
     }

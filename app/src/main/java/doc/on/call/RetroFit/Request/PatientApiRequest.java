@@ -45,6 +45,9 @@ public interface PatientApiRequest {
 
     @GET("api/patient")
     Call<Patient> getPatient();
+
+    @POST("api/patient/appointment/schedule")
+    Call<ResponseBody> createAppointment(@Body JsonObject jsonObject);
     /**
      * ============================== END OF PATIENT ==============================
      */
