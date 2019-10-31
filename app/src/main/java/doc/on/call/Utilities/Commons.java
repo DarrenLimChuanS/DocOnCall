@@ -13,9 +13,14 @@ import static doc.on.call.Utilities.Constants.DT_YEAR;
 
 public class Commons {
     // Function to convert Date Time
-    public static String convertDateTime(String dateTime, String returnType) throws ParseException {
+    public static String convertDateTime(String dateTime, String returnType) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:m:s");
-        Date date = sdf.parse(dateTime);
+        Date date = null;
+        try {
+            date = sdf.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String convertedDateTime = "";
         switch (returnType) {
             case DT_YEAR:

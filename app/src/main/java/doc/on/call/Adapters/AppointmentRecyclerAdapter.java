@@ -40,11 +40,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
     @Override
     public void onBindViewHolder(@NonNull AppointmentRecyclerAdapter.ViewHolder viewHolder, int i) {
         Appointment appointment = patient.getAppointments().get(i);
-        try {
-            viewHolder.appointmentDateTime.setText(convertDateTime(appointment.getAppointmentDateTime(), DT_DAY_TIME));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        viewHolder.appointmentDateTime.setText(convertDateTime(appointment.getAppointmentDateTime(), DT_DAY_TIME));
     }
 
     @Override

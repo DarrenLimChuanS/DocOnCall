@@ -1,5 +1,6 @@
 package doc.on.call.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,9 +13,15 @@ import doc.on.call.Repository.PatientRepository;
 
 public class SettingFragment extends Fragment {
     private static final String TAG = SettingFragment.class.getSimpleName();
+
+    private Context context;
     private TextView btnLogout;
     private TextView btnPatient;
     private PatientRepository mPatient;
+
+    public SettingFragment (Context context) {
+        this.context = context;
+    }
 
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         View view = layoutInflater.inflate(R.layout.fragment_setting, viewGroup, false);
