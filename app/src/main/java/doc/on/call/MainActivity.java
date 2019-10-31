@@ -1,13 +1,12 @@
 package doc.on.call;
 
-import android.arch.lifecycle.LiveData;
-import android.content.Intent;
+import androidx.lifecycle.LiveData;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
-import doc.on.call.Model.Patient;
 import doc.on.call.Repository.PatientRepository;
 import doc.on.call.Utilities.ObscuredSharedPreference;
 

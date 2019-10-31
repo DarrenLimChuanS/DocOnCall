@@ -10,6 +10,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static doc.on.call.Utilities.Constants.CONNECTION_TIMEOUT;
+import static doc.on.call.Utilities.Constants.READ_TIMEOUT;
+import static doc.on.call.Utilities.Constants.WRITE_TIMEOUT;
+
 public class RetrofitRequest {
     // Fetch from NDK
     static {
@@ -26,9 +30,9 @@ public class RetrofitRequest {
         if (retrofit == null) {
             client = new Builder().addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .addInterceptor(new TokenInterceptor(context))
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(2, TimeUnit.SECONDS)
-                    .writeTimeout(2, TimeUnit.SECONDS)
+                    .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(true)
                     .build();
             retrofit = new Retrofit.Builder().baseUrl(getAPIBaseURL())

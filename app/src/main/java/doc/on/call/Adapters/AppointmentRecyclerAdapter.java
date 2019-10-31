@@ -1,17 +1,22 @@
 package doc.on.call.Adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+
 import doc.on.call.Model.Appointment;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
+
+import static doc.on.call.Utilities.Commons.convertDateTime;
+import static doc.on.call.Utilities.Constants.DT_DAY_TIME;
 
 public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<AppointmentRecyclerAdapter.ViewHolder> {
     private static final String TAG = AppointmentRecyclerAdapter.class.getSimpleName();
@@ -35,7 +40,11 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
     @Override
     public void onBindViewHolder(@NonNull AppointmentRecyclerAdapter.ViewHolder viewHolder, int i) {
         Appointment appointment = patient.getAppointments().get(i);
-        viewHolder.appointmentDateTime.setText(appointment.getAppointmentDateTime());
+        try {
+            viewHolder.appointmentDateTime.setText(convertDateTime(appointment.getAppointmentDateTime(), DT_DAY_TIME));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

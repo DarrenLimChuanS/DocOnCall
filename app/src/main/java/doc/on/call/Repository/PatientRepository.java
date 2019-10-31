@@ -1,8 +1,8 @@
 package doc.on.call.Repository;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -16,7 +16,6 @@ import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
 
 import doc.on.call.HomeActivity;
-import doc.on.call.MainActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
 import doc.on.call.RetroFit.Request.PatientApiRequest;
