@@ -10,9 +10,9 @@
     android:background="@drawable/recycle_rect">
 
     <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        app:siShape="@drawable/image_corner"
+        android:layout_width="@dimen/width_recycler_size_130dp"
+        android:layout_height="@dimen/height_recycler_size_130dp"
+        app:siShape="@drawable/img_corner"
         android:id="@+id/foodImage"
         android:src="@drawable/property"
         />
@@ -29,7 +29,7 @@
             android:layout_marginTop="6dp">
 
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-                android:id="@+id/propertyName"
+                android:id="@+id/appointmentDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

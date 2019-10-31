@@ -54,7 +54,7 @@ public class PropertyRecyclerAdapter  extends RecyclerView.Adapter<PropertyRecyc
         @Override
         public PropertyRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.recycler_view, parent, false);
+                    .inflate(R.layout.recycler_appointment, parent, false);
 
 
             return new PropertyRecyclerAdapter.MyViewHolder(itemView);

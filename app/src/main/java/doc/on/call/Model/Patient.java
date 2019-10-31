@@ -2,6 +2,8 @@ package doc.on.call.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
@@ -35,6 +37,10 @@ public class Patient {
     @SerializedName("username")
     @Expose
     private String username;
+
+    public Patient() {
+        this.appointments = new ArrayList<Appointment>();
+    }
 
     public String getAddress() {
         return this.address;

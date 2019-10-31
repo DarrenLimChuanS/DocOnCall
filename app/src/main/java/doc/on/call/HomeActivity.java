@@ -15,10 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import doc.on.call.Adapters.PropertyRecyclerAdapter;
 import doc.on.call.Fragments.PatientFragment;
 import doc.on.call.Fragments.SettingFragment;
-import doc.on.call.Model.PropertyRecyclerModel;
 import doc.on.call.Utilities.ObscuredSharedPreference;
 
 public class HomeActivity extends AppCompatActivity {
