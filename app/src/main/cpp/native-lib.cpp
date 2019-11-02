@@ -13,6 +13,6 @@ extern "C" JNIEXPORT jstring
 
 JNICALL
 Java_doc_on_call_RetroFit_Request_RetrofitRequest_getAPIBaseURL(JNIEnv *env, jobject object) {
-    std::string mAPIBaseURL = "https://ssd-backend-users.herokuapp.com/";
+    std::string mAPIBaseURL = "https://doconcall.tk/";
     return env->NewStringUTF(mAPIBaseURL.c_str());
 }
