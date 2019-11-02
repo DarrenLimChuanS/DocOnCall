@@ -2,6 +2,9 @@ package doc.on.call;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+import doc.on.call.Utilities.Checker;
+import doc.on.call.Utilities.CheckerDialog;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +15,20 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+
+        /*
+         * ROOT DETECTION START
+         */
+
+//        Checker check_root = new Checker(this);
+//        if(check_root.isDeviceRooted()) {
+//            CheckerDialog warning_dialog = new CheckerDialog(this);
+//            warning_dialog.DisplayDialog();
+//        }
+
+        /*
+         * ROOT DETECTION END
+         */
 
         screen1=(TextView)findViewById(R.id.screen1);
 
