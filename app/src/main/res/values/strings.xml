@@ -59,12 +59,27 @@
     <string name="message_register_input_conflict">Username and email is taken!</string>
     <string name="message_register_invalid">Registration failed</string>
     <string name="message_register_success">Register successful\n\nAn email has been sent to your registered email for verification</string>
+    <string name="message_register_resend">A verification code has been resent!</string>
     <string name="message_validate_invalid">OTP invalid</string>
     <string name="message_validate_success">Login successful</string>
     <string name="message_verify_invalid">Account Verification invalid</string>
     <string name="message_verify_success">Account Verification successful\n\nPlease proceed to login to your account</string>
     <string name="message_appointment_success">Appointment has been created</string>
-    <string name="message_appointment_invalid">Appointment invalid</string>
+    <string name="message_appointment_invalid">Appointment Invalid</string>
+    <string name="message_password_reset_otp_sent">An OTP has been sent!</string>
+    <string name="message_password_reset_success">Password reset successful!</string>
+    <string name="message_password_reset_invalid">Failed to reset password!</string>
+    <string name="message_account_updated_success">Account has been updated!</string>
+    <string name="message_account_update_invalid">Unable to update account!</string>
+    <string name="message_change_password_success">Password has been updated!</string>
+    <string name="message_change_password_invalid">Unable to change password!</string>
+    <string name="message_delete_account_otp_sent">An OTP has been sent!</string>
+    <string name="message_delete_account_success">Account deleted!</string>
+    <string name="message_delete_account_invalid">Unable to delete account!</string>
+    <string name="message_delete_appointment_success">Appointment deleted!</string>
+    <string name="message_delete_appointment_invalid">Unable to delete appointment!</string>
+    <string name="message_respond_doctor_success">Your response has been sent!</string>
+    <string name="message_respond_doctor_invalid">Unable to send response!</string>
 
     <!-- Date Picker -->
     <string name="date_picker_message">Please pick a weekday not later than one month from now.</string>

@@ -27,6 +27,9 @@ public interface PatientApiRequest {
     @Headers({"No-Authentication: true"})
     Call<ResponseBody> registerPatient(@Body JsonObject jsonObject);
 
+    @POST("api/patient/register/resend")
+    Call<ResponseBody> resendRegistrationToken(@Body JsonObject jsonObject);
+
     @POST("api/user/otp/validate")
     @Headers({"No-Authentication: true"})
     Call<ResponseBody> validatePatient(@Body JsonObject jsonObject);
@@ -48,6 +51,31 @@ public interface PatientApiRequest {
 
     @POST("api/patient/appointment/schedule")
     Call<ResponseBody> createAppointment(@Body JsonObject jsonObject);
+
+    @POST("api/patient/update")
+    Call<ResponseBody> updateAccount(@Body JsonObject jsonObject);
+
+    @POST("api/patient/password/reset/otp")
+    Call<ResponseBody> resetPassword(@Body JsonObject jsonObject);
+
+    @POST("api/patient/password/reset/validate")
+    Call<ResponseBody> validateResetPassword(@Body JsonObject jsonObject);
+
+    @POST("api/patient/password/change")
+    @Headers({"No-Authentication: true"})
+    Call<ResponseBody> changePassword(@Body JsonObject jsonObject);
+
+    @POST("api/patient/account/delete/otp")
+    Call<ResponseBody> deleteAccount();
+
+    @POST("api/patient/account/delete/validate")
+    Call<ResponseBody> validateDeleteAccount(@Body JsonObject jsonObject);
+
+    @POST("api/patient/appointment/delete")
+    Call<ResponseBody> deleteAppointment(@Body JsonObject jsonObject);
+
+    @POST("api/patient/appointment/extra/respond")
+    Call<ResponseBody> respondToDetailsPermission(@Body JsonObject jsonObject);
     /**
      * ============================== END OF PATIENT ==============================
      */

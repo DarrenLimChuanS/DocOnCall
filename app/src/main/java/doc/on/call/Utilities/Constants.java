@@ -18,6 +18,7 @@ public class Constants {
     // Obscured Shared Preference
     public static final String PREF_NONCE = "SP_Nonce";
     public static final String PREF_TOKEN = "SP_Token";
+    public static final String PREF_RESEND = "SP_Resend";
 
     // Date Time
     public static final String DT_YEAR = "Year";
