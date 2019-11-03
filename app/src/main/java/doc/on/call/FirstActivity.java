@@ -20,11 +20,11 @@ public class FirstActivity extends AppCompatActivity {
          * ROOT DETECTION START
          */
 
-        Checker check_root = new Checker(this);
-        if(check_root.isDeviceRooted()) {
-            CheckerDialog warning_dialog = new CheckerDialog(this);
-            warning_dialog.DisplayDialog();
-        }
+//        Checker check_root = new Checker(this);
+//        if(check_root.isDeviceRooted()) {
+//            CheckerDialog warning_dialog = new CheckerDialog(this);
+//            warning_dialog.DisplayDialog();
+//        }
 
         /*
          * ROOT DETECTION END

@@ -1,6 +1,9 @@
 #include <jni.h>
 #include <string>
 
+/**
+ * Function to fetch Shared Preference File
+ */
 extern "C" JNIEXPORT jstring
 
 JNICALL
@@ -9,6 +12,20 @@ Java_doc_on_call_Utilities_ObscuredSharedPreference_getPrefFile(JNIEnv *env, job
     return env->NewStringUTF(mPrefFile.c_str());
 }
 
+/**
+ * Function to fetch Safety Net Recaptcha API Key
+ */
+extern "C" JNIEXPORT jstring
+
+JNICALL
+Java_doc_on_call_SignInActivity_getSiteAPIKey(JNIEnv *env, jclass object) {
+    std::string mSiteAPIKey = "6Ld9xcAUAAAAABngekazozbyu2X-5GsQCBzb2dQ7";
+    return env->NewStringUTF(mSiteAPIKey.c_str());
+}
+
+/**
+ * Function to fetch REST API URL
+ */
 extern "C" JNIEXPORT jstring
 
 JNICALL

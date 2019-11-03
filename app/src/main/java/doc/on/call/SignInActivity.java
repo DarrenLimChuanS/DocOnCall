@@ -33,9 +33,11 @@ import static doc.on.call.Utilities.Commons.showMessage;
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = SignInActivity.class.getSimpleName();
 
-    // need move this API key somewhere safe, nt sure if exposing this value will be dangerous
-    private final static String SITE_API_KEY = "6Ld9xcAUAAAAABngekazozbyu2X-5GsQCBzb2dQ7";
-
+    // Fetch NDK
+    static {
+        System.loadLibrary("native-lib");
+    }
+    public static native String getSiteAPIKey();
 
     // Declare variables
     EditText etUsername;
@@ -137,7 +139,7 @@ public class SignInActivity extends AppCompatActivity {
             pbLoading.setVisibility(View.VISIBLE);
 
             // Recaptcha user-side token generation end
-            SafetyNet.getClient(SignInActivity.this).verifyWithRecaptcha(SITE_API_KEY)
+            SafetyNet.getClient(SignInActivity.this).verifyWithRecaptcha(getSiteAPIKey())
                     .addOnSuccessListener(SignInActivity.this,
                             new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
                                 @Override
@@ -164,12 +166,12 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.e("token", "Error: " + CommonStatusCodes
                                         .getStatusCodeString(statusCode));
                                 // show error to tell users of captcha verification failed
-                                showMessage("Something Went Wrong!", SignInActivity.this);
+                                showMessage(getString(R.string.message_login_captcha_failed), SignInActivity.this);
                             } else {
                                 // A different, unknown type of error occurred.
                                 Log.e("token", "Error: " + e.getMessage());
                                 // show error to tell users of captcha verification failed
-                                showMessage("Something Went Wrong!", SignInActivity.this);
+                                showMessage(getString(R.string.message_login_captcha_failed), SignInActivity.this);
                             }
                             etUsername.setEnabled(true);
                             etPassword.setEnabled(true);
