@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
@@ -37,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static doc.on.call.Utilities.Commons.showMessage;
 import static doc.on.call.Utilities.Constants.HTTP_BAD;
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
@@ -94,7 +92,7 @@ public class PatientRepository {
                                 }
                                 //to here
                                 toggleRegisterDetailsState(false);
-                                showMessage(context.getString(R.string.message_register_success));
+                                showMessage(context.getString(R.string.message_register_success), context);
                                 //Intent signIn = new Intent(context, SignInActivity.class);
                                 //context.startActivity(signIn);
                                 break;
@@ -113,7 +111,7 @@ public class PatientRepository {
                                         etEmail.setError(context.getResources().getString(R.string.message_register_input_conflict));
                                     } else {
                                         toggleRegisterDetailsState(true);
-                                        showMessage(context.getString(R.string.message_register_invalid));
+                                        showMessage(context.getString(R.string.message_register_invalid), context);
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -125,7 +123,7 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
                         toggleRegisterDetailsState(true);
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -146,7 +144,7 @@ public class PatientRepository {
                                     if (!resendToken.isEmpty()) {
                                         mSharedPreference.writeRegisterationResendToken(resendToken);
                                     }
-                                    showMessage(context.getString(R.string.message_register_resend));
+                                    showMessage(context.getString(R.string.message_register_resend), context);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
@@ -157,14 +155,14 @@ public class PatientRepository {
                                 System.out.println(response.body());
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_network_timeout));
+                                showMessage(context.getString(R.string.message_network_timeout), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -219,13 +217,13 @@ public class PatientRepository {
                         switch (response.code()) {
                             case HTTP_OK:
                                 toggleVerifyState(false);
-                                showMessage(context.getString(R.string.message_verify_success));
+                                showMessage(context.getString(R.string.message_verify_success), context);
                                 Intent signIn = new Intent(context, SignInActivity.class);
                                 context.startActivity(signIn);
                                 break;
                             default:
                                 toggleVerifyState(true);
-                                showMessage(context.getString(R.string.message_verify_invalid));
+                                showMessage(context.getString(R.string.message_verify_invalid), context);
                                 break;
                         }
                     }
@@ -233,7 +231,7 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
                         toggleVerifyState(true);
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
         });
     }
@@ -280,10 +278,10 @@ public class PatientRepository {
                                         ((Activity)context).findViewById(R.id.llLoginInputs).setVisibility(View.GONE);
                                         toggleLoginState(false);
                                         ((Activity)context).findViewById(R.id.llOtpInputs).setVisibility(View.VISIBLE);
-                                        showMessage(context.getString(R.string.message_login_success));
+                                        showMessage(context.getString(R.string.message_login_success), context);
                                     } else {
                                         toggleLoginState(true);
-                                        showMessage(context.getString(R.string.message_network_timeout));
+                                        showMessage(context.getString(R.string.message_network_timeout), context);
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -295,14 +293,14 @@ public class PatientRepository {
                                 // Verified or invalid login
                                 try {
                                     if (response.errorBody().string().equals(context.getResources().getString(R.string.message_login_unverified))) {
-                                        showMessage(context.getString(R.string.message_login_unverified));
+                                        showMessage(context.getString(R.string.message_login_unverified), context);
                                         // Not verified, direct to verify screen
                                         Intent verifyPatient = new Intent(context, VerifyActivity.class);
                                         context.startActivity(verifyPatient);
                                         toggleLoginState(false);
                                     } else {
                                         toggleLoginState(true);
-                                        showMessage(context.getString(R.string.message_login_invalid));
+                                        showMessage(context.getString(R.string.message_login_invalid), context);
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -311,7 +309,7 @@ public class PatientRepository {
                             default:
                                 // Invalid login
                                 toggleLoginState(true);
-                                showMessage(context.getString(R.string.message_network_timeout));
+                                showMessage(context.getString(R.string.message_network_timeout), context);
                                 break;
                         }
                     }
@@ -319,7 +317,7 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
                         toggleLoginState(true);
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -360,13 +358,13 @@ public class PatientRepository {
                                         mSharedPreference.writeJWTToken(token);
                                         mSharedPreference.removeSharedPreference(PREF_NONCE);
                                         pinView.setLineColor(context.getResources().getColor(R.color.green));
-                                        showMessage(context.getString(R.string.message_validate_success));
+                                        showMessage(context.getString(R.string.message_validate_success), context);
                                         Intent home = new Intent(context, HomeActivity.class);
                                         context.startActivity(home);
                                         toggleValidateState(false);
                                     } else {
                                         toggleValidateState(true);
-                                        showMessage(context.getString(R.string.message_network_timeout));
+                                        showMessage(context.getString(R.string.message_network_timeout), context);
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -377,7 +375,7 @@ public class PatientRepository {
                             default:
                                 pinView.setLineColor(context.getResources().getColor(R.color.red));
                                 toggleValidateState(true);
-                                showMessage(context.getString(R.string.message_validate_invalid));
+                                showMessage(context.getString(R.string.message_validate_invalid), context);
                                 break;
                         }
                     }
@@ -385,7 +383,7 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
                         toggleValidateState(true);
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -416,13 +414,13 @@ public class PatientRepository {
                         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_logout_success));
+                                showMessage(context.getString(R.string.message_logout_success), context);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_logout_no_session));
+                                showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
@@ -432,7 +430,7 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -496,7 +494,7 @@ public class PatientRepository {
                                 }
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_logout_no_session));
+                                showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
@@ -507,7 +505,7 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<List<Patient>> call, Throwable th) {
                         patientList.setValue(null);
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
         return patientList;
@@ -533,7 +531,7 @@ public class PatientRepository {
                                 }
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_logout_no_session));
+                                showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
@@ -544,7 +542,7 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<Patient> call, Throwable th) {
                         patient.setValue(null);
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
         });
         return patient;
@@ -559,19 +557,18 @@ public class PatientRepository {
         jsonObject.addProperty("datetimeCreated", datetimeCreated);
         jsonObject.addProperty("issue", issue);
         jsonObject.addProperty("patientDetail", patientDetail);
-        Log.d(TAG, jsonObject.toString());
         patientApiRequest.createAppointment(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_appointment_success));
+                                showMessage(context.getString(R.string.message_appointment_success), context);
                                 DocOnCallFragment docOnCallFragment = new DocOnCallFragment(context);
                                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, docOnCallFragment).commit();
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_appointment_invalid));
+                                showMessage(context.getString(R.string.message_appointment_invalid), context);
                                 ((FragmentActivity) context).findViewById(R.id.etIssue).setEnabled(true);
                                 ((FragmentActivity) context).findViewById(R.id.btnDate).setEnabled(true);
                                 ((FragmentActivity) context).findViewById(R.id.btnTime).setEnabled(true);
@@ -583,34 +580,34 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
     // work
-    public void updateAccount(String address, String email, String phone){
+    public void updatePatient(String address, String email, String phone){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("address", address.trim());
         jsonObject.addProperty("email", email.trim());
         jsonObject.addProperty("phone", phone.trim());
         Log.d(TAG, jsonObject.toString());
-        patientApiRequest.updateAccount(jsonObject)
+        patientApiRequest.updatePatient(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_account_updated_success));
+                                showMessage(context.getString(R.string.message_account_updated_success), context);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_account_update_invalid));
+                                showMessage(context.getString(R.string.message_account_update_invalid), context);
                                 break;
                         }
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -630,10 +627,10 @@ public class PatientRepository {
                                     String nonce = new JSONObject(response.body().string()).getString("nonce");
                                     if (!nonce.isEmpty()) {
                                         mSharedPreference.writeNonce(nonce);
-                                        showMessage(context.getString(R.string.message_password_reset_otp_sent));
+                                        showMessage(context.getString(R.string.message_password_reset_otp_sent), context);
                                     } else {
                                         toggleLoginState(true);
-                                        showMessage(context.getString(R.string.message_network_timeout));
+                                        showMessage(context.getString(R.string.message_network_timeout), context);
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -641,14 +638,14 @@ public class PatientRepository {
                                     e.printStackTrace();
                                 }
                             default:
-                                showMessage(context.getString(R.string.message_password_reset_invalid));
+                                showMessage(context.getString(R.string.message_password_reset_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -665,17 +662,18 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_password_reset_success));
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                showMessage(context.getString(R.string.message_password_reset_success), context);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_password_reset_invalid));
+                                showMessage(context.getString(R.string.message_password_reset_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -694,25 +692,25 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_change_password_success));
+                                showMessage(context.getString(R.string.message_change_password_success), context);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_change_password_invalid));
+                                showMessage(context.getString(R.string.message_change_password_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
     // work
-    public void deleteAccount(){
-        Log.d(TAG, "deleteAccount");
-        patientApiRequest.deleteAccount()
+    public void deletePatient(){
+        Log.d(TAG, "deletePatient");
+        patientApiRequest.deletePatient()
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -722,24 +720,24 @@ public class PatientRepository {
                                     String nonce = new JSONObject(response.body().string()).getString("nonce");
                                     if (!nonce.isEmpty()) {
                                         mSharedPreference.writeNonce(nonce);
-                                        showMessage(context.getString(R.string.message_delete_account_otp_sent));
+                                        showMessage(context.getString(R.string.message_delete_account_otp_sent), context);
                                     } else {
                                         toggleLoginState(true);
-                                        showMessage(context.getString(R.string.message_network_timeout));
+                                        showMessage(context.getString(R.string.message_network_timeout), context);
                                     }
                                 } catch (JSONException | IOException e) {
                                     e.printStackTrace();
                                 }
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_delete_account_invalid));
+                                showMessage(context.getString(R.string.message_delete_account_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -756,19 +754,20 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_delete_account_success));
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                showMessage(context.getString(R.string.message_delete_account_success), context);
                                 logoutPatient();
                                 //TODO log user out and clear all the share pref
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_delete_account_invalid));
+                                showMessage(context.getString(R.string.message_delete_account_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -784,17 +783,17 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_delete_appointment_success));
+                                showMessage(context.getString(R.string.message_delete_appointment_success), context);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_delete_appointment_invalid));
+                                showMessage(context.getString(R.string.message_delete_appointment_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
@@ -811,39 +810,22 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                showMessage(context.getString(R.string.message_respond_doctor_success));
+                                showMessage(context.getString(R.string.message_respond_doctor_success), context);
                                 break;
                             default:
-                                showMessage(context.getString(R.string.message_respond_doctor_invalid));
+                                showMessage(context.getString(R.string.message_respond_doctor_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout));
+                        showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
     /**
      * ============================== END OF PATIENT ==============================
-     */
-
-
-    /**
-     * ============================== START OF UTILITIES ==============================
-     */
-    private void showMessage(String message) {
-        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-        if( v != null) {
-            v.setGravity(Gravity.CENTER);
-        }
-        toast.show();
-    }
-    /**
-     * ============================== END OF UTILITIES ==============================
      */
 }

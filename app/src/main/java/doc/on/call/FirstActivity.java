@@ -2,15 +2,12 @@ package doc.on.call;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-import doc.on.call.Utilities.Checker;
-import doc.on.call.Utilities.CheckerDialog;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import doc.on.call.Repository.PatientRepository;
 
 public class FirstActivity extends AppCompatActivity {
@@ -93,7 +90,7 @@ public class FirstActivity extends AppCompatActivity {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPatient.resetPasswordSendOTP("gaylebartoletti");
+                mPatient.resetPasswordSendOTP("darrenlim");
             }
         });
 
@@ -108,9 +105,9 @@ public class FirstActivity extends AppCompatActivity {
             }
         });
 
-        final String username = "randallmuller";
-        final String oldPassword = "password1!";
-        final String newPassword = "password2!";
+        final String username = "darrenlim";
+        final String oldPassword = "password2!";
+        final String newPassword = "password1!";
 
         changePassword=(TextView)findViewById(R.id.changePassword);
 
@@ -127,7 +124,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Delete account");
-                mPatient.deleteAccount();
+                mPatient.deletePatient();
             }
         });
 
