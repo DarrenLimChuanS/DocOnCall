@@ -24,6 +24,7 @@ public class Constants {
     public static final String DT_YEAR = "Year";
     public static final String DT_MONTH = "Month";
     public static final String DT_MONTH_YEAR = "Month Year";
+    public static final String DT_DAY_MONTH = "Day Month";
     public static final String DT_DAY = "Day";
     public static final String DT_DAY_TIME = "Day Time";
     public static final String DT_TIME = "Time";

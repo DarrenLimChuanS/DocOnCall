@@ -85,8 +85,11 @@
     <string name="date_picker_message">Please pick a weekday not later than one month from now.</string>
     <string name="time_picker_message">Please pick a time between 9am to 4pm.</string>
 
-    <!-- Checker Dialog -->
-    <string name="alert_title">WARNING</string>
-    <string name="alert_msg">DocOnCall is executed in an insecure environment.\n\nApplication will exit now!</string>
-    <string name="alert_btn_text">OK</string>
+    <!-- Dialogs -->
+    <string name="alert_checker_title">WARNING</string>
+    <string name="alert_checker_message">DocOnCall is executed in an insecure environment.\n\nApplication will exit now!</string>
+    <string name="alert_checker_btn_text">OK</string>
+
+    <string name="alert_delete_appointment_title">WARNING: Deleting Appointment</string>
+    <string name="alert_delete_appointment_message">Are you sure you want to proceed in deleting this appointment?</string>
 </resources>

@@ -1,6 +1,7 @@
 package doc.on.call.Fragments;
 
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,8 +44,12 @@ public class PatientFragment extends Fragment {
     private View view;
     private Context context;
     private ProgressBar pbLoading;
-    private TextView tvPatient;
 
+    // Error: No Appointment
+    private LinearLayout rvEmpty;
+    private Button btnMakeAppointment;
+
+    // Appointment Recycler
     private TimeLineRecyclerView rvAppointments;
     private LinearLayoutManager mLayoutManager;
     private AppointmentRecyclerAdapter mAdapter;
@@ -60,7 +67,10 @@ public class PatientFragment extends Fragment {
 
         // Fetch variables
         pbLoading = (ProgressBar)view.findViewById(R.id.pbLoading);
-        tvPatient = (TextView)view.findViewById(R.id.rvEmpty);
+        pbLoading.setVisibility(View.VISIBLE);
+
+        rvEmpty = (LinearLayout) view.findViewById(R.id.rvEmpty);
+        btnMakeAppointment = (Button) view.findViewById(R.id.btnMakeAppointment);
         rvAppointments = (TimeLineRecyclerView)view.findViewById(R.id.rvAppointments);
 
         // Layout Manager
@@ -72,28 +82,42 @@ public class PatientFragment extends Fragment {
         mViewModel.getPatientLiveData().observe(this, new Observer<Patient>() {
             @Override
             public void onChanged(@Nullable Patient patientResponse) {
+                pbLoading.setVisibility(View.GONE);
                 if (patientResponse != null) {
                     Log.d(TAG, "OnChanged");
-                    String name = patientResponse.getName();
-                    tvPatient.setText(name);
                     patient = patientResponse;
-                    // Reverse the list to display in Chronological order
-                    List<Appointment> appointmentList = new ArrayList<>();
-                    appointmentList = patient.getAppointments();
-                    Collections.reverse(appointmentList);
-                    patient.setAppointments(appointmentList);
-                    if (mAdapter != null) {
-                        rvAppointments.addItemDecoration(getSectionCallback(patient));
-                        rvAppointments.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                    if (!patient.getAppointments().isEmpty()) {
+                        // Reverse the list to display in Chronological order
+                        List<Appointment> appointmentList = new ArrayList<>();
+                        appointmentList = patient.getAppointments();
+                        Collections.reverse(appointmentList);
+                        patient.setAppointments(appointmentList);
+                        if (mAdapter != null) {
+                            rvAppointments.addItemDecoration(getSectionCallback(patient));
+                            rvAppointments.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            // Adapter
+                            mAdapter = new AppointmentRecyclerAdapter(context, patient);
+                            rvAppointments.addItemDecoration(getSectionCallback(patient));
+                            rvAppointments.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        }
                     } else {
-                        // Adapter
-                        mAdapter = new AppointmentRecyclerAdapter(context, patient);
-                        rvAppointments.addItemDecoration(getSectionCallback(patient));
-                        rvAppointments.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                        // Display Error No Appointment
+                        rvAppointments.setVisibility(View.GONE);
+                        rvEmpty.setVisibility(View.VISIBLE);
                     }
                 }
+            }
+        });
+
+        // Event Listener
+        btnMakeAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DocOnCallFragment docOnCallFragment = new DocOnCallFragment(context);
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, docOnCallFragment).commit();
             }
         });
 

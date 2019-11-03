@@ -3,131 +3,71 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginLeft="@dimen/margin_size_10dp"
+    android:layout_marginRight="@dimen/margin_size_10dp"
+    android:layout_marginTop="@dimen/margin_size_10dp"
     android:elevation="1dp"
     android:background="@drawable/recycle_rect">
 
-    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+    <LinearLayout
         android:layout_width="@dimen/width_recycler_size_130dp"
         android:layout_height="@dimen/height_recycler_size_130dp"
-        app:siShape="@drawable/img_corner"
-        android:id="@+id/foodImage"
-        android:src="@drawable/property"
-        />
+        android:orientation="vertical">
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+            android:id="@+id/tvAppointmentDate"
+            style="@style/rv_date_time"
+            android:gravity="center"
+            android:textSize="@dimen/text_title_size_26dp"
+            android:text="Date"
+            />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
+            android:id="@+id/tvAppointmentDayTime"
+            style="@style/rv_date_time"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_caption_size_20dp"
+            android:text="Time"
+            />
+    </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp">
+            android:layout_marginTop="@dimen/margin_size_6dp">
 
             <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-                android:id="@+id/appointmentDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:id="@+id/tvAppointmentNumber"
+                style="@style/rv_title"
                 android:layout_weight="1"
-                android:text="Property Name"
-                android:textColor="#000"
-                android:textSize="14dp" />
+                android:text="Appointment Number"/>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_grey_star" />
+                android:id="@+id/imgAppointmentDelete"
+                android:layout_width="@dimen/width_icon_size_20dp"
+                android:layout_height="@dimen/height_icon_size_20dp"
+                android:layout_marginRight="@dimen/margin_size_10dp"
+                android:src="@drawable/ic_delete_black_24dp" />
         </LinearLayout>
 
         <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-            android:id="@+id/street1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:text="14 Street/3rd Block"
-            android:textColor="#A2A2A2"
-            android:textSize="12dp" />
+            android:id="@+id/tvAppointmentDoctor"
+            style="@style/rv_body"
+            android:text="Doctor"
+            />
 
         <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-            android:id="@+id/street2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Super Build-up Area:1060 Sq.Ft"
-            android:textColor="#A2A2A2"
-            android:textSize="12dp" />
-
-        <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="$2200"
-            android:textColor="#000"
-            android:textSize="14dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_bed" />
-
-            <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-                android:id="@+id/bedCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="0dp"
-                android:text="3"
-                android:textSize="12dp" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/ic_parking" />
-
-            <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-                android:id="@+id/carParking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="0dp"
-                android:text="3"
-                android:textSize="12dp" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/ic_swimming_pool" />
-
-            <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
-                android:id="@+id/swimmingPool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="3dp"
-                android:text="3"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
+            android:id="@+id/tvAppointmentIssue"
+            style="@style/rv_body"
+            android:layout_marginTop="@dimen/margin_size_10dp"
+            android:text="Cumque ea quae quaerat aut eligendi culpa."
+            />
     </LinearLayout>
 
 </LinearLayout>

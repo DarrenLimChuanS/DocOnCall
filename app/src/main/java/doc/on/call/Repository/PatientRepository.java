@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import doc.on.call.Fragments.DocOnCallFragment;
+import doc.on.call.Fragments.PatientFragment;
 import doc.on.call.HomeActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
@@ -784,6 +785,8 @@ public class PatientRepository {
                         switch(response.code()) {
                             case HTTP_OK:
                                 showMessage(context.getString(R.string.message_delete_appointment_success), context);
+                                PatientFragment patientFragment = new PatientFragment(context);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, patientFragment).commit();
                                 break;
                             default:
                                 showMessage(context.getString(R.string.message_delete_appointment_invalid), context);

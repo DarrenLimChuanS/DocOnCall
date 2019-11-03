@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static doc.on.call.Utilities.Constants.DT_DAY;
+import static doc.on.call.Utilities.Constants.DT_DAY_MONTH;
 import static doc.on.call.Utilities.Constants.DT_MONTH;
 import static doc.on.call.Utilities.Constants.DT_DAY_TIME;
 import static doc.on.call.Utilities.Constants.DT_MONTH_YEAR;
@@ -29,26 +30,37 @@ public class Commons {
         String convertedDateTime = "";
         switch (returnType) {
             case DT_YEAR:
+                // 2019
                 SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
                 convertedDateTime = yearFormat.format(date);
                 break;
             case DT_MONTH_YEAR:
+                // November 2019
                 SimpleDateFormat monthYearFormat = new SimpleDateFormat("MMMM yyyy");
                 convertedDateTime = monthYearFormat.format(date);
                 break;
             case DT_MONTH:
+                // November
                 SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
                 convertedDateTime = monthFormat.format(date);
                 break;
+            case DT_DAY_MONTH:
+                // 3 Nov
+                SimpleDateFormat dayMonthFormat = new SimpleDateFormat("d MMM");
+                convertedDateTime = dayMonthFormat.format(date);
+                break;
             case DT_DAY:
+                // Sunday
                 SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
                 convertedDateTime = dayFormat.format(date);
                 break;
             case DT_DAY_TIME:
-                SimpleDateFormat monthDayFormat = new SimpleDateFormat("d EEEE h:mm a");
-                convertedDateTime = monthDayFormat.format(date);
+                // Sunday 3:19PM
+                SimpleDateFormat dayTimeFormat = new SimpleDateFormat("EEEE\nh:mm a");
+                convertedDateTime = dayTimeFormat.format(date);
                 break;
             case DT_TIME:
+                // 3:19PM
                 SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
                 convertedDateTime = timeFormat.format(date);
                 break;
