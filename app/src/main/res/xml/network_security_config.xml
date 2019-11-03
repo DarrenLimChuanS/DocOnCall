@@ -5,8 +5,6 @@
         <pin-set>
             <!--doconcall.tk-->
             <pin digest="SHA-256">q9d475/q2xjBY9x3gH5l4ud161MopkGASLHvGHwK9bg=</pin>
-            <!--Intermediate CA - Let's Encrypt Authority X3-->
-            <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
         </pin-set>
     </domain-config>
 </network-security-config>
