@@ -202,11 +202,12 @@ public class PatientRepository {
     /**
      * PatientApiRequest for Login Patient
      */
-    public void loginPatient(String username, String password) {
+    public void loginPatient(String username, String password, String token) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("loginUser", "patient");
         jsonObject.addProperty("username", username);
         jsonObject.addProperty("password", password);
+        jsonObject.addProperty("captchaToken", token);
         patientApiRequest.loginPatient(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
