@@ -33,7 +33,7 @@ import static doc.on.call.Utilities.Commons.showMessage;
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = SignInActivity.class.getSimpleName();
 
-    // need move this API key somewhere safe
+    // need move this API key somewhere safe, nt sure if exposing this value will be dangerous
     private final static String SITE_API_KEY = "6Ld9xcAUAAAAABngekazozbyu2X-5GsQCBzb2dQ7";
 
 
