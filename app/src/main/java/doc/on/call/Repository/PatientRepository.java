@@ -1,10 +1,6 @@
 package doc.on.call.Repository;
 
 import android.app.Activity;
-
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -14,9 +10,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import doc.on.call.Fragments.DocOnCallFragment;
 import doc.on.call.HomeActivity;
 import doc.on.call.Model.Patient;
@@ -25,17 +31,13 @@ import doc.on.call.RetroFit.Request.PatientApiRequest;
 import doc.on.call.RetroFit.Request.RetrofitRequest;
 import doc.on.call.SignInActivity;
 import doc.on.call.Utilities.ObscuredSharedPreference;
-import java.io.IOException;
-import java.util.List;
-
 import doc.on.call.VerifyActivity;
 import okhttp3.ResponseBody;
-import org.json.JSONException;
-import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static doc.on.call.Utilities.Constants.HTTP_BAD;
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
@@ -74,12 +76,27 @@ public class PatientRepository {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        System.out.println(response.body());
                         switch(response.code()) {
                             case HTTP_OK:
+                                //Added from here
+                                try {
+                                    String resendToken = new JSONObject(response.body().string()).getString("token");
+                                    if (!resendToken.isEmpty()) {
+                                        System.out.println("resendToken: "+resendToken);
+                                        mSharedPreference.writeRegisterationResendToken(resendToken);
+                                        //TODO see if wanna put the code (toggle...to context.start) here
+                                        //Added this because registration now returns a token
+                                        //That token is used if u wanna resend verification token
+                                    }
+                                } catch (JSONException | IOException e) {
+                                    e.printStackTrace();
+                                }
+                                //to here
                                 toggleRegisterDetailsState(false);
                                 showMessage(context.getString(R.string.message_register_success));
-                                Intent signIn = new Intent(context, SignInActivity.class);
-                                context.startActivity(signIn);
+                                //Intent signIn = new Intent(context, SignInActivity.class);
+                                //context.startActivity(signIn);
                                 break;
                             default:
                                 try {
@@ -108,6 +125,45 @@ public class PatientRepository {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
                         toggleRegisterDetailsState(true);
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    public void resendRegistrationToken(String email){
+        JsonObject jsonObject = new JsonObject();
+        System.out.println(this.mSharedPreference.readRegisterationResendToken());
+        jsonObject.addProperty("token", this.mSharedPreference.readRegisterationResendToken());
+        jsonObject.addProperty("email", email);
+        patientApiRequest.resendRegistrationToken(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                try {
+                                    String resendToken = new JSONObject(response.body().string()).getString("token");
+                                    if (!resendToken.isEmpty()) {
+                                        mSharedPreference.writeRegisterationResendToken(resendToken);
+                                    }
+                                    showMessage(context.getString(R.string.message_register_resend));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case HTTP_BAD:
+                                System.out.println(response.body());
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_network_timeout));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
                         showMessage(context.getString(R.string.message_network_timeout));
                     }
                 });
@@ -530,9 +586,250 @@ public class PatientRepository {
                     }
                 });
     }
+
+    // work
+    public void updateAccount(String address, String email, String phone){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("address", address.trim());
+        jsonObject.addProperty("email", email.trim());
+        jsonObject.addProperty("phone", phone.trim());
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.updateAccount(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_account_updated_success));
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_account_update_invalid));
+                                break;
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void resetPasswordSendOTP(String username){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("username", username);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.resetPassword(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                try {
+                                    String nonce = new JSONObject(response.body().string()).getString("nonce");
+                                    if (!nonce.isEmpty()) {
+                                        mSharedPreference.writeNonce(nonce);
+                                        showMessage(context.getString(R.string.message_password_reset_otp_sent));
+                                    } else {
+                                        toggleLoginState(true);
+                                        showMessage(context.getString(R.string.message_network_timeout));
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            default:
+                                showMessage(context.getString(R.string.message_password_reset_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void validateResetPassword(String otp){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
+        jsonObject.addProperty("otp", otp);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.validateResetPassword(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_password_reset_success));
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_password_reset_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void changePassword(String username, String oldPassword, String newPassword){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("role", "patient");
+        jsonObject.addProperty("username", username);
+        jsonObject.addProperty("oldPassword", oldPassword);
+        jsonObject.addProperty("newPassword", newPassword);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.changePassword(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_change_password_success));
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_change_password_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void deleteAccount(){
+        Log.d(TAG, "deleteAccount");
+        patientApiRequest.deleteAccount()
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                try {
+                                    String nonce = new JSONObject(response.body().string()).getString("nonce");
+                                    if (!nonce.isEmpty()) {
+                                        mSharedPreference.writeNonce(nonce);
+                                        showMessage(context.getString(R.string.message_delete_account_otp_sent));
+                                    } else {
+                                        toggleLoginState(true);
+                                        showMessage(context.getString(R.string.message_network_timeout));
+                                    }
+                                } catch (JSONException | IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_delete_account_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void validateDeleteAccount(String otp){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
+        jsonObject.addProperty("otp", otp);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.validateDeleteAccount(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_delete_account_success));
+                                logoutPatient();
+                                //TODO log user out and clear all the share pref
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_delete_account_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void deleteAppointment(String appointmentId){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("appointmentId", appointmentId);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.deleteAppointment(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_delete_appointment_success));
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_delete_appointment_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
+    // work
+    public void respondToDetailsPermission(String appointmentId, Boolean acceptPermission){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("appointmentId", appointmentId);
+        jsonObject.addProperty("acceptPermission", acceptPermission);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.respondToDetailsPermission(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_respond_doctor_success));
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_respond_doctor_invalid));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout));
+                    }
+                });
+    }
+
     /**
      * ============================== END OF PATIENT ==============================
      */
+
+
     /**
      * ============================== START OF UTILITIES ==============================
      */

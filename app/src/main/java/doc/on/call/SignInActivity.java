@@ -104,6 +104,10 @@ public class SignInActivity extends AppCompatActivity {
     public void loginPatient() {
         String username = this.etUsername.getText().toString().trim();
         String password = this.etPassword.getText().toString().trim();
+        //TODO to remove this
+        username = "randallmuller";
+        password = "password2!";
+
         if (!isUsernameValid(username)) {
             etUsername.requestFocus();
             etUsername.setError(getString(R.string.error_username));

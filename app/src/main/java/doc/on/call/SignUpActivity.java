@@ -185,6 +185,7 @@ public class SignUpActivity extends AppCompatActivity {
             btnSignUp2Back.setEnabled(false);
             pbLoading.setVisibility(View.VISIBLE);
             mPatient.registerPatient(email, username, password, fullname, nric, ageNumber, phoneNumber, address);
+            //TODO have to add button / editText so users can resend verification token
         }
     }
 

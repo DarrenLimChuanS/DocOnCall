@@ -14,6 +14,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
+import static doc.on.call.Utilities.Constants.PREF_RESEND;
 import static doc.on.call.Utilities.Constants.PREF_TOKEN;
 
 public class ObscuredSharedPreference {
@@ -110,6 +111,17 @@ public class ObscuredSharedPreference {
 
     public String readJWTToken() {
         String token = this.sharedPreferences.getString(PREF_TOKEN, null);
+        return token != null ? decrypt(token) : null;
+    }
+
+    public void writeRegisterationResendToken(String token) {
+        Editor edit = this.sharedPreferences.edit();
+        edit.putString(PREF_RESEND, encrypt(token));
+        edit.apply();
+    }
+
+    public String readRegisterationResendToken() {
+        String token = this.sharedPreferences.getString(PREF_RESEND, null);
         return token != null ? decrypt(token) : null;
     }
 

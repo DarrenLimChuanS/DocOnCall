@@ -62,11 +62,95 @@
         android:background="#dddddd"
         android:elevation="1dp"
         android:gravity="center" />
+    <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/screen5"
+        android:text="Screen 5"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#dddddd"
+        android:elevation="1dp"
+        android:gravity="center" />
+    <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resetPassword"
+        android:text="Reset Password"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#dddddd"
+        android:elevation="1dp"
+        android:gravity="center" />
+    <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resetPasswordValidate"
+        android:text="Reset Password Validate"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#dddddd"
+        android:elevation="1dp"
+        android:gravity="center" />
+    <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/changePassword"
+        android:text="Change password"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#dddddd"
+        android:elevation="1dp"
+        android:gravity="center" />
+    <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deleteAccount"
+        android:text="Delete Account"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#dddddd"
+        android:elevation="1dp"
+        android:gravity="center" />
+    <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/validateDeleteAccount"
+        android:text="Validate Delete Account"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#dddddd"
+        android:elevation="1dp"
+        android:gravity="center" />
 
-
-
-
-
-
-
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
 </LinearLayout>

@@ -66,7 +66,7 @@ public interface PatientApiRequest {
     Call<ResponseBody> changePassword(@Body JsonObject jsonObject);
 
     @POST("api/patient/account/delete/otp")
-    Call<ResponseBody> deleteAccount(@Body JsonObject jsonObject);
+    Call<ResponseBody> deleteAccount();
 
     @POST("api/patient/account/delete/validate")
     Call<ResponseBody> validateDeleteAccount(@Body JsonObject jsonObject);
@@ -76,7 +76,6 @@ public interface PatientApiRequest {
 
     @POST("api/patient/appointment/extra/respond")
     Call<ResponseBody> respondToDetailsPermission(@Body JsonObject jsonObject);
-
     /**
      * ============================== END OF PATIENT ==============================
      */
