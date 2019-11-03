@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.provider.Settings;
-import android.provider.Settings.Secure;
 import android.util.Log;
-import java.security.Key;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
 import static doc.on.call.Utilities.Constants.PREF_TOKEN;
@@ -29,13 +32,16 @@ public class ObscuredSharedPreference {
     protected SharedPreferences sharedPreferences;
     private static byte[] SALT = null;
     private static char[] SEKRIT = null;
+    private static SecretKey secret_key;
+    private static byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     protected static final String UTF8 = "UTF-8";
 
-    public ObscuredSharedPreference(Context context) {
+    public ObscuredSharedPreference(Context context){
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(getPrefFile(), 0);
         ObscuredSharedPreference.setNewKey(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
         ObscuredSharedPreference.setNewSalt(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
+        ObscuredSharedPreference.setspecialKey();
     }
 
     public static ObscuredSharedPreference getPref(Context context) {
@@ -51,6 +57,18 @@ public class ObscuredSharedPreference {
         SEKRIT = key.toCharArray();
     }
 
+    public static void setspecialKey() {
+        try {
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            PBEKeySpec keyspec = new PBEKeySpec(SEKRIT, SALT, 1000, 256);
+            SecretKey s = keyFactory.generateSecret(keyspec);
+            secret_key = new SecretKeySpec(s.getEncoded(), "AES");
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            //any how catch here first
+            Log.e("Error",e.toString());
+        }
+    }
+
     public static void setNewSalt(String salt) {
         try {
             SALT = salt.getBytes(UTF8);
@@ -62,10 +80,9 @@ public class ObscuredSharedPreference {
     protected String decrypt(String value){
         try {
             final byte[] bytes = value!=null ? Base64Support.decode(value,Base64Support.DEFAULT) : new byte[0];
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
-            SecretKey key = keyFactory.generateSecret(new PBEKeySpec(SEKRIT));
-            Cipher pbeCipher = Cipher.getInstance("PBEWithMD5AndDES");
-            pbeCipher.init(Cipher.DECRYPT_MODE, key, new PBEParameterSpec(SALT, 20));
+            IvParameterSpec ivspec = new IvParameterSpec(iv);
+            Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            pbeCipher.init(Cipher.DECRYPT_MODE, secret_key,ivspec);
             return new String(pbeCipher.doFinal(bytes),UTF8);
         } catch( Exception e) {
             Log.e(this.getClass().getName(), "Warning, could not decrypt the value.  It may be stored in plaintext.  "+e.getMessage());
@@ -74,18 +91,15 @@ public class ObscuredSharedPreference {
     }
 
     protected String encrypt( String value ) {
-
         try {
             final byte[] bytes = value!=null ? value.getBytes(UTF8) : new byte[0];
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
-            SecretKey key = keyFactory.generateSecret(new PBEKeySpec(SEKRIT));
-            Cipher pbeCipher = Cipher.getInstance("PBEWithMD5AndDES");
-            pbeCipher.init(Cipher.ENCRYPT_MODE, key, new PBEParameterSpec(SALT, 20));
+            IvParameterSpec ivspec = new IvParameterSpec(iv);
+            Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            pbeCipher.init(Cipher.ENCRYPT_MODE, secret_key,ivspec);
             return new String(Base64Support.encode(pbeCipher.doFinal(bytes), Base64Support.NO_WRAP),UTF8);
         } catch( Exception e ) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**
