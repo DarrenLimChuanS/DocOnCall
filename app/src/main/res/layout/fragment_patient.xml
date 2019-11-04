@@ -70,14 +70,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_error_title_size_50dp"
-                android:text="Sorry"/>
+                android:textSize="@dimen/text_placeholder_title_size_50dp"
+                android:text="@string/placeholder_title_no_appointment"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_error_body_size_26dp"
-                android:text="You do not seem to have any appointments"/>
+                android:textSize="@dimen/text_placeholder_body_size_26dp"
+                android:text="@string/placeholder_body_no_appointment"/>
             <Button
                 android:id="@+id/btnMakeAppointment"
                 style="@style/btn_primary"

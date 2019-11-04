@@ -92,4 +92,10 @@
 
     <string name="alert_delete_appointment_title">WARNING: Deleting Appointment</string>
     <string name="alert_delete_appointment_message">Are you sure you want to proceed in deleting this appointment?</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_title_no_appointment">Sorry</string>
+    <string name="placeholder_body_no_appointment">You do not seem to have any appointments</string>
+    <string name="placeholder_title_have_appointment">Upcoming Appointment</string>
+    <string name="placeholder_body_have_appointment">You have an appointment with Doctor %1$s\n on %2$s</string>
 </resources>

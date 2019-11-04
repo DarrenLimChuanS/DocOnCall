@@ -3,13 +3,11 @@ package doc.on.call.Fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +50,8 @@ public class DocOnCallFragment extends Fragment {
     private Button btnCreate;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
-    private ConstraintLayout clPendingAppointment;
-    private TextView tvText;
+    private ConstraintLayout clUpcomingAppointment;
+    private TextView tvPlaceholderBody;
 
     private PatientViewModel mViewModel;
     private Patient loggedInPatient = new Patient();
@@ -81,8 +79,8 @@ public class DocOnCallFragment extends Fragment {
         btnTime = (Button) view.findViewById(R.id.btnTime);
         btnCreate = (Button) view.findViewById(R.id.btnCreate);
 
-        clPendingAppointment = (ConstraintLayout) view.findViewById(R.id.clPendingAppointment);
-        tvText = (TextView) view.findViewById(R.id.tvText);
+        clUpcomingAppointment = (ConstraintLayout) view.findViewById(R.id.clUpcomingAppointment);
+        tvPlaceholderBody = (TextView) view.findViewById(R.id.tvPlaceholderBody);
 
         mViewModel = (PatientViewModel) ViewModelProviders.of(this).get(PatientViewModel.class);
         mViewModel.getPatientLiveData().observe(this, new Observer<Patient>() {
@@ -102,12 +100,13 @@ public class DocOnCallFragment extends Fragment {
                             if (new Date().after(appointmentDate)) {
                                 // Latest appointment is history, allow creation of appointment
                                 clCreateAppointment.setVisibility(View.VISIBLE);
-                                clPendingAppointment.setVisibility(View.GONE);
+                                clUpcomingAppointment.setVisibility(View.GONE);
                             } else {
                                 // Latest appointment has yet to come, show time to appointment
-                                clPendingAppointment.setVisibility(View.VISIBLE);
+                                clUpcomingAppointment.setVisibility(View.VISIBLE);
                                 clCreateAppointment.setVisibility(View.GONE);
-                                tvText.setText(appointmentString);
+                                String placeholderBody = getString(R.string.placeholder_body_have_appointment, patient.getAppointments().get(latestAppointment).getDoctorDetail().getName(), appointmentString);
+                                tvPlaceholderBody.setText(placeholderBody);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -115,7 +114,7 @@ public class DocOnCallFragment extends Fragment {
                     } else {
                         // No appointments, allow creation of appointment
                         clCreateAppointment.setVisibility(View.VISIBLE);
-                        clPendingAppointment.setVisibility(View.GONE);
+                        clUpcomingAppointment.setVisibility(View.GONE);
                     }
                 }
             }

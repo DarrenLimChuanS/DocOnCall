@@ -109,21 +109,44 @@
             app:layout_constraintTop_toBottomOf="@+id/btnTime" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Pending appointment -->
+    <!-- Upcoming appointment -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clPendingAppointment"
-        android:visibility="gone"
+        android:id="@+id/clUpcomingAppointment"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tvText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ERROR"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+        <ImageView
+            android:id="@+id/imgEvent"
+            android:layout_width="@dimen/width_image_size_250dp"
+            android:layout_height="@dimen/height_image_size_200dp"
+            android:layout_marginTop="@dimen/margin_header_size_100dp"
+            android:src="@drawable/ic_appointment_blue_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPlaceholderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/placeholder_title_have_appointment"
+            android:textSize="@dimen/text_placeholder_title_size_50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgEvent" />
+
+        <TextView
+            android:id="@+id/tvPlaceholderBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_placeholder_body_size_26dp"
+            android:text="@string/placeholder_body_have_appointment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPlaceholderTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
