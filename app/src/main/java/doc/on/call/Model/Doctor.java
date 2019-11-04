@@ -17,7 +17,7 @@ public class Doctor {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("pastAppointmentCollections")
+    @SerializedName("pastAppointments")
     @Expose
     private List<PastAppointment> pastAppointments = null;
     @SerializedName("phone")

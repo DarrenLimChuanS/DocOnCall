@@ -27,6 +27,7 @@
     <string name="label_select_date">Select Date</string>
     <string name="label_date_not_selected">Date is not selected</string>
     <string name="label_time_not_selected">Time is not selected</string>
+    <string name="label_switch_allow_details">Allow data to Doctor </string>
 
     <!-- Menu -->
     <string name="menu_doc_on_call">Doctor On Call</string>

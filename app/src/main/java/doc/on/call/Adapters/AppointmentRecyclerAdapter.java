@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -73,6 +75,19 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         viewHolder.tvAppointmentNumber.setText("Appointment " + appointment.getAppointmentNumber());
         viewHolder.tvAppointmentDoctor.setText(appointment.getDoctorDetail().getName());
         viewHolder.tvAppointmentIssue.setText(appointment.getPatientDetail().getIssue());
+        // Initialise initial permission
+        if (appointment.getExtraPatientDetails() == null) {
+            viewHolder.swTogglePermission.setChecked(false);
+        } else {
+            viewHolder.swTogglePermission.setChecked(true);
+        }
+        viewHolder.swTogglePermission.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Toggle request to details permission
+                mPatient.respondToDetailsPermission(appointment.getId(), isChecked);
+            }
+        });
     }
 
     @Override
@@ -87,6 +102,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         private final TextView tvAppointmentNumber;
         private final TextView tvAppointmentDoctor;
         private final TextView tvAppointmentIssue;
+        private final Switch swTogglePermission;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -98,6 +114,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
             tvAppointmentNumber = (TextView) itemView.findViewById(R.id.tvAppointmentNumber);
             tvAppointmentDoctor = (TextView) itemView.findViewById(R.id.tvAppointmentDoctor);
             tvAppointmentIssue = (TextView) itemView.findViewById(R.id.tvAppointmentIssue);
+            swTogglePermission = (Switch) itemView.findViewById(R.id.swTogglePermission);
         }
     }
 }
