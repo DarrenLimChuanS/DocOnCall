@@ -41,7 +41,7 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -54,7 +54,7 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -72,7 +72,7 @@
                 android:src="@drawable/ic_eye" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
             android:id="@+id/btnSignUp"
@@ -106,7 +106,7 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -119,7 +119,7 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -132,7 +132,7 @@
                 android:inputType="number" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -145,7 +145,7 @@
                 android:inputType="number" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -158,7 +158,7 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
             android:id="@+id/btnSignUp2"

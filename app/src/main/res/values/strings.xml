@@ -103,4 +103,12 @@
     <string name="placeholder_title_have_appointment">Upcoming Appointment</string>
     <string name="placeholder_body_have_appointment">You have an appointment with Doctor %1$s\n on %2$s</string>
     <string name="placeholder_body_reset_password">We just need your registered Username to send you the password reset instructions.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_update_account">Update Account</string>
+    <string name="label_change_password">Change Password</string>
+    <string name="label_delete_account">Delete Account</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_update">Update</string>
 </resources>

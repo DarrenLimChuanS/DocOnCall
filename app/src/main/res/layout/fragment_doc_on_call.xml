@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <View
-            style="@style/v_line"
+            style="@style/v_line_accent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etIssue" />
@@ -68,7 +68,7 @@
 
         <View
             android:id="@+id/view"
-            style="@style/v_line"
+            style="@style/v_line_accent"
             android:layout_marginBottom="@dimen/margin_size_20dp"
             app:layout_constraintBottom_toTopOf="@+id/btnTime"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +93,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnDate" />
 
         <View
-            style="@style/v_line"
+            style="@style/v_line_accent"
             android:layout_marginTop="@dimen/margin_size_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,7 @@
 package doc.on.call.Repository;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -702,6 +703,36 @@ public class PatientRepository {
     }
 
     /**
+     * PatientApiRequest for Delete Appointment
+     */
+    public void deleteAppointment(String appointmentId){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("appointmentId", appointmentId);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.deleteAppointment(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                showMessage(context.getString(R.string.message_delete_appointment_success), context);
+                                PatientFragment patientFragment = new PatientFragment(context);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, patientFragment).commit();
+                                break;
+                            default:
+                                showMessage(context.getString(R.string.message_delete_appointment_invalid), context);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout), context);
+                    }
+                });
+    }
+
+    /**
      * PatientApiRequest for Toggling Details Permission
      */
     public void respondToDetailsPermission(String appointmentId, final Boolean acceptPermission, final String doctorName){
@@ -736,11 +767,11 @@ public class PatientRepository {
     }
 
     // work
-    public void updatePatient(String address, String email, String phone){
+    public void updatePatient(String address, String email, int phone, final Dialog updateDialog){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("address", address.trim());
         jsonObject.addProperty("email", email.trim());
-        jsonObject.addProperty("phone", phone.trim());
+        jsonObject.addProperty("phone", phone);
         Log.d(TAG, jsonObject.toString());
         patientApiRequest.updatePatient(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
@@ -748,20 +779,40 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
+                                toggleUpdatePatientState(false, updateDialog);
+                                updateDialog.dismiss();
                                 showMessage(context.getString(R.string.message_account_updated_success), context);
                                 break;
                             default:
+                                toggleUpdatePatientState(true, updateDialog);
                                 showMessage(context.getString(R.string.message_account_update_invalid), context);
                                 break;
                         }
                     }
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleUpdatePatientState(true, updateDialog);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
+    /**
+     * Function to handle Update Patient State
+     */
+    private void toggleUpdatePatientState(boolean status, Dialog updateDialog) {
+        if (status) {
+            updateDialog.findViewById(R.id.etAddress).setEnabled(true);
+            updateDialog.findViewById(R.id.etEmail).setEnabled(true);
+            updateDialog.findViewById(R.id.etPhone).setEnabled(true);
+            updateDialog.findViewById(R.id.btnClose).setEnabled(true);
+            updateDialog.findViewById(R.id.btnUpdate).setEnabled(true);
+            updateDialog.findViewById(R.id.btnCancel).setEnabled(true);
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
+    }
 
     // work
     public void changePassword(String username, String oldPassword, String newPassword){
@@ -856,36 +907,6 @@ public class PatientRepository {
                     }
                 });
     }
-
-    // work
-    public void deleteAppointment(String appointmentId){
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("appointmentId", appointmentId);
-        Log.d(TAG, jsonObject.toString());
-        patientApiRequest.deleteAppointment(jsonObject)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        switch(response.code()) {
-                            case HTTP_OK:
-                                showMessage(context.getString(R.string.message_delete_appointment_success), context);
-                                PatientFragment patientFragment = new PatientFragment(context);
-                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, patientFragment).commit();
-                                break;
-                            default:
-                                showMessage(context.getString(R.string.message_delete_appointment_invalid), context);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout), context);
-                    }
-                });
-    }
-
-
     /**
      * ============================== END OF PATIENT ==============================
      */

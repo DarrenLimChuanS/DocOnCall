@@ -6,16 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.SettingFragment">
 
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="@style/pb_loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
+        android:id="@+id/tvTitle"
         style="@style/tv_title"
-        android:text="Settings"
+        android:text="@string/menu_setting"
         android:layout_marginBottom="@dimen/margin_header_size_30dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/llSettingLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/llSettingLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -51,7 +60,7 @@
                     <TextView
                         style="@style/tv_label_sm"
                         android:layout_gravity="center_horizontal"
-                        android:text="Update Account" />
+                        android:text="@string/label_update_account" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -75,7 +84,7 @@
                     <TextView
                         style="@style/tv_label_sm"
                         android:layout_gravity="center_horizontal"
-                        android:text="Change Password" />
+                        android:text="@string/label_change_password" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -107,7 +116,7 @@
                     <TextView
                         style="@style/tv_label_sm"
                         android:layout_gravity="center_horizontal"
-                        android:text="Delete Account" />
+                        android:text="@string/label_delete_account" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -131,7 +140,7 @@
                     <TextView
                         style="@style/tv_label_sm"
                         android:layout_gravity="center_horizontal"
-                        android:text="Logout" />
+                        android:text="@string/label_log_out" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

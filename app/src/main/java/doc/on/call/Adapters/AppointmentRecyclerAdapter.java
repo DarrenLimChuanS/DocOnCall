@@ -93,9 +93,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
             } else {
                 // Appointment is upcoming
                 // Initialise initial permission
-                Log.d(TAG, "WOW " + appointment.toString());
                 if (appointment.getExtraPatientDetails() == null) {
-                    Log.d(TAG, "=============================================I'M HERE=============================================");
                     viewHolder.swTogglePermission.setChecked(false);
                 } else {
                     viewHolder.swTogglePermission.setChecked(true);

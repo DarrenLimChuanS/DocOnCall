@@ -27,12 +27,17 @@
     </style>
 
     <!-- View Line -->
-    <style name="v_line">
+    <style name="v_line_accent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/height_line_size_1dp</item>
         <item name="android:layout_marginLeft">@dimen/margin_size_70dp</item>
         <item name="android:layout_marginRight">@dimen/margin_size_70dp</item>
         <item name="android:background">@color/colorAccent</item>
+    </style>
+    <style name="v_line_black">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_line_size_1dp</item>
+        <item name="android:background">@color/black</item>
     </style>
 
     <!-- EditText -->
@@ -111,6 +116,22 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/btn_primary</item>
+        <item name="android:textSize">@dimen/text_button_size_16dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="btn_primary_sm">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_primary_sm</item>
+        <item name="android:textSize">@dimen/text_button_size_16dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="btn_error">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_error</item>
         <item name="android:textSize">@dimen/text_button_size_16dp</item>
         <item name="android:textColor">@color/white</item>
     </style>
