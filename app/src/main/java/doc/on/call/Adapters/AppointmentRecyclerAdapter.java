@@ -40,6 +40,10 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         this.patient = patient;
     }
 
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
     @NonNull
     @Override
     public AppointmentRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -89,7 +93,9 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
             } else {
                 // Appointment is upcoming
                 // Initialise initial permission
+                Log.d(TAG, "WOW " + appointment.toString());
                 if (appointment.getExtraPatientDetails() == null) {
+                    Log.d(TAG, "=============================================I'M HERE=============================================");
                     viewHolder.swTogglePermission.setChecked(false);
                 } else {
                     viewHolder.swTogglePermission.setChecked(true);

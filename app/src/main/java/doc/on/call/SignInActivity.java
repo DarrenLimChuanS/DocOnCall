@@ -45,6 +45,7 @@ public class SignInActivity extends AppCompatActivity {
     ImageView imgPassword;
     TextView btnSignIn;
     TextView btnSignUp;
+    TextView tvForgotPassword;
     LinearLayout llLoginInputs;
 
     ProgressBar pbLoading;
@@ -67,6 +68,7 @@ public class SignInActivity extends AppCompatActivity {
         imgPassword = (ImageView) findViewById(R.id.imgPassword);
         btnSignIn = (TextView) findViewById(R.id.btnSignIn);
         btnSignUp = (TextView) findViewById(R.id.btnSignUp);
+        tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassword);
         llLoginInputs = (LinearLayout) findViewById(R.id.llLoginInputs);
         pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
         pinView = (PinView) findViewById(R.id.pinView);
@@ -100,6 +102,13 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerPatient();
+            }
+        });
+
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPassword();
             }
         });
 
@@ -200,6 +209,11 @@ public class SignInActivity extends AppCompatActivity {
     public void registerPatient() {
         Intent signUp = new Intent(this, SignUpActivity.class);
         startActivity(signUp);
+    }
+
+    public void resetPassword() {
+        Intent resetPassword = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(resetPassword);
     }
 
     public void submitOTP() {

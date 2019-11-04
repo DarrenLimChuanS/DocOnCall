@@ -404,6 +404,115 @@ public class PatientRepository {
     }
 
     /**
+     * PatientApiRequest for Patient Reset Password
+     */
+    public void resetPasswordSendOTP(String username){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("username", username);
+        Log.d(TAG, jsonObject.toString());
+        patientApiRequest.resetPassword(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                try {
+                                    String nonce = new JSONObject(response.body().string()).getString("nonce");
+                                    if (!nonce.isEmpty()) {
+                                        mSharedPreference.writeNonce(nonce);
+                                        PinView pinView = (PinView) ((Activity)context).findViewById(R.id.pinView);
+                                        pinView.getText().clear();
+                                        pinView.setLineColor(context.getResources().getColor(R.color.colorAccent));
+                                        ((Activity)context).findViewById(R.id.llResetInputs).setVisibility(View.GONE);
+                                        ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                        ((Activity)context).findViewById(R.id.llOtpInputs).setVisibility(View.VISIBLE);
+                                        showMessage(context.getString(R.string.message_password_reset_otp_sent), context);
+                                    } else {
+                                        ((Activity) context).findViewById(R.id.etUsername).setEnabled(true);
+                                        ((Activity) context).findViewById(R.id.btnResetPassword).setEnabled(true);
+                                        ((Activity) context).findViewById(R.id.btnBack).setEnabled(true);
+                                        ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                        showMessage(context.getString(R.string.message_network_timeout), context);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            default:
+                                ((Activity) context).findViewById(R.id.etUsername).setEnabled(true);
+                                ((Activity) context).findViewById(R.id.btnResetPassword).setEnabled(true);
+                                ((Activity) context).findViewById(R.id.btnBack).setEnabled(true);
+                                ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                showMessage(context.getString(R.string.message_password_reset_invalid), context);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        ((Activity) context).findViewById(R.id.etUsername).setEnabled(true);
+                        ((Activity) context).findViewById(R.id.btnResetPassword).setEnabled(true);
+                        ((Activity) context).findViewById(R.id.btnBack).setEnabled(true);
+                        ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                        showMessage(context.getString(R.string.message_network_timeout), context);
+                    }
+                });
+    }
+
+    /**
+     * PatientApiRequest for Patient Validate Reset Password
+     */
+    public void validateResetPassword(String otp){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
+        jsonObject.addProperty("otp", otp);
+        patientApiRequest.validateResetPassword(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        PinView pinView = (PinView) ((Activity)context).findViewById(R.id.pinView);
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                pinView.setLineColor(context.getResources().getColor(R.color.green));
+                                showMessage(context.getString(R.string.message_password_reset_success), context);
+                                Intent signIn = new Intent(context, SignInActivity.class);
+                                context.startActivity(signIn);
+                                toggleValidateResetState(false);
+                                break;
+                            default:
+                                pinView.setLineColor(context.getResources().getColor(R.color.red));
+                                toggleValidateResetState(true);
+                                showMessage(context.getString(R.string.message_validate_invalid), context);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleValidateResetState(true);
+                        showMessage(context.getString(R.string.message_network_timeout), context);
+                    }
+                });
+    }
+
+    /**
+     * Function to handle Validate Reset State
+     */
+    private void toggleValidateResetState(boolean status) {
+        if (status) {
+            ((Activity) this.context).findViewById(R.id.pinView).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnSubmit).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.btnBack2).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * PatientApiRequest for Logout Patient
      */
     public void logoutPatient() {
@@ -595,7 +704,7 @@ public class PatientRepository {
     /**
      * PatientApiRequest for Toggling Details Permission
      */
-    public void respondToDetailsPermission(String appointmentId, Boolean acceptPermission, final String doctorName){
+    public void respondToDetailsPermission(String appointmentId, final Boolean acceptPermission, final String doctorName){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("appointmentId", appointmentId);
         jsonObject.addProperty("acceptPermission", acceptPermission);
@@ -605,12 +714,16 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                String successMessage = context.getString(R.string.message_respond_doctor_success, doctorName);
-                                showMessage(successMessage, context);
+                                if (acceptPermission) {
+                                    String successOnMessage = context.getString(R.string.message_respond_doctor_success_on, doctorName);
+                                    showMessage(successOnMessage, context);
+                                } else {
+                                    String successOffMessage = context.getString(R.string.message_respond_doctor_success_off, doctorName);
+                                    showMessage(successOffMessage, context);
+                                }
                                 break;
                             default:
-                                String invalidMessage = context.getString(R.string.message_respond_doctor_invalid, doctorName);
-                                showMessage(invalidMessage, context);
+                                showMessage(context.getString(R.string.message_respond_doctor_invalid), context);
                                 break;
                         }
                     }
@@ -649,71 +762,6 @@ public class PatientRepository {
                 });
     }
 
-    // work
-    public void resetPasswordSendOTP(String username){
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("username", username);
-        Log.d(TAG, jsonObject.toString());
-        patientApiRequest.resetPassword(jsonObject)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        switch(response.code()) {
-                            case HTTP_OK:
-                                try {
-                                    String nonce = new JSONObject(response.body().string()).getString("nonce");
-                                    if (!nonce.isEmpty()) {
-                                        mSharedPreference.writeNonce(nonce);
-                                        showMessage(context.getString(R.string.message_password_reset_otp_sent), context);
-                                    } else {
-                                        toggleLoginState(true);
-                                        showMessage(context.getString(R.string.message_network_timeout), context);
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            default:
-                                showMessage(context.getString(R.string.message_password_reset_invalid), context);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout), context);
-                    }
-                });
-    }
-
-    // work
-    public void validateResetPassword(String otp){
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
-        jsonObject.addProperty("otp", otp);
-        Log.d(TAG, jsonObject.toString());
-        patientApiRequest.validateResetPassword(jsonObject)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        switch(response.code()) {
-                            case HTTP_OK:
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
-                                showMessage(context.getString(R.string.message_password_reset_success), context);
-                                break;
-                            default:
-                                showMessage(context.getString(R.string.message_password_reset_invalid), context);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout), context);
-                    }
-                });
-    }
 
     // work
     public void changePassword(String username, String oldPassword, String newPassword){

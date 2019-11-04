@@ -93,6 +93,7 @@ public class PatientFragment extends Fragment {
                         Collections.reverse(appointmentList);
                         patient.setAppointments(appointmentList);
                         if (mAdapter != null) {
+                            mAdapter.setPatient(patient);
                             rvAppointments.addItemDecoration(getSectionCallback(patient));
                             rvAppointments.setAdapter(mAdapter);
                             mAdapter.notifyDataSetChanged();
