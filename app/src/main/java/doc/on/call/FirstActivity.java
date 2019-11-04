@@ -134,7 +134,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String appointmentId = editText.getText().toString();
-                mPatient.respondToDetailsPermission(appointmentId,true);
+//                mPatient.respondToDetailsPermission(appointmentId,true);
             }
         });
     }

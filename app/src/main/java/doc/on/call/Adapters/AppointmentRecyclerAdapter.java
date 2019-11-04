@@ -16,6 +16,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import doc.on.call.Model.Appointment;
 import doc.on.call.Model.Patient;
@@ -51,6 +53,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentRecyclerAdapter.ViewHolder viewHolder, int i) {
+        // Fetch patient's appointment
         final Appointment appointment = patient.getAppointments().get(i);
         // Set Event Listener to Appointment Delete Icon
         viewHolder.imgAppointmentDelete.setOnClickListener(new View.OnClickListener() {
@@ -75,19 +78,33 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         viewHolder.tvAppointmentNumber.setText("Appointment " + appointment.getAppointmentNumber());
         viewHolder.tvAppointmentDoctor.setText(appointment.getDoctorDetail().getName());
         viewHolder.tvAppointmentIssue.setText(appointment.getPatientDetail().getIssue());
-        // Initialise initial permission
-        if (appointment.getExtraPatientDetails() == null) {
-            viewHolder.swTogglePermission.setChecked(false);
-        } else {
-            viewHolder.swTogglePermission.setChecked(true);
-        }
-        viewHolder.swTogglePermission.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Toggle request to details permission
-                mPatient.respondToDetailsPermission(appointment.getId(), isChecked);
+        // Date comparison to check if toggle permission is displayed
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:m:s");
+        try {
+            Date appointmentDate = sdf.parse(appointment.getAppointmentDateTime());
+            if (new Date().after(appointmentDate)) {
+                // Appointment is history
+                viewHolder.tvTogglePermission.setVisibility(View.GONE);
+                viewHolder.swTogglePermission.setVisibility(View.GONE);
+            } else {
+                // Appointment is upcoming
+                // Initialise initial permission
+                if (appointment.getExtraPatientDetails() == null) {
+                    viewHolder.swTogglePermission.setChecked(false);
+                } else {
+                    viewHolder.swTogglePermission.setChecked(true);
+                }
+                viewHolder.swTogglePermission.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        // Toggle request to details permission
+                        mPatient.respondToDetailsPermission(appointment.getId(), isChecked, appointment.getDoctorDetail().getName());
+                    }
+                });
             }
-        });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -102,6 +119,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         private final TextView tvAppointmentNumber;
         private final TextView tvAppointmentDoctor;
         private final TextView tvAppointmentIssue;
+        private final TextView tvTogglePermission;
         private final Switch swTogglePermission;
 
 
@@ -114,6 +132,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
             tvAppointmentNumber = (TextView) itemView.findViewById(R.id.tvAppointmentNumber);
             tvAppointmentDoctor = (TextView) itemView.findViewById(R.id.tvAppointmentDoctor);
             tvAppointmentIssue = (TextView) itemView.findViewById(R.id.tvAppointmentIssue);
+            tvTogglePermission = (TextView) itemView.findViewById(R.id.tvTogglePermission);
             swTogglePermission = (Switch) itemView.findViewById(R.id.swTogglePermission);
         }
     }

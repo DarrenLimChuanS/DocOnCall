@@ -78,6 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvAppointmentDoctor" />
 
         <TextView
+            android:id="@+id/tvTogglePermission"
             style="@style/tv_label_sm"
             android:text="@string/label_switch_allow_details"
             android:layout_marginBottom="@dimen/margin_size_4dp"

@@ -436,6 +436,9 @@ public class PatientRepository {
                 });
     }
 
+    /**
+     * PatientApiRequest for Get Patient to check if user is logged in
+     */
     public void checkLoggedIn() {
         patientApiRequest.getPatient()
                 .enqueue(new Callback<Patient>() {
@@ -477,6 +480,9 @@ public class PatientRepository {
 
     /**
      * ============================== START OF PATIENT ==============================
+     */
+    /**
+     * PatientApiRequest for Get All Patients
      */
     public LiveData<List<Patient>> getAllPatients() {
         final MutableLiveData<List<Patient>> patientList = new MutableLiveData<>();
@@ -575,6 +581,36 @@ public class PatientRepository {
                                 ((FragmentActivity) context).findViewById(R.id.btnTime).setEnabled(true);
                                 ((FragmentActivity) context).findViewById(R.id.btnCreate).setEnabled(true);
                                 ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        showMessage(context.getString(R.string.message_network_timeout), context);
+                    }
+                });
+    }
+
+    /**
+     * PatientApiRequest for Toggling Details Permission
+     */
+    public void respondToDetailsPermission(String appointmentId, Boolean acceptPermission, final String doctorName){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("appointmentId", appointmentId);
+        jsonObject.addProperty("acceptPermission", acceptPermission);
+        patientApiRequest.respondToDetailsPermission(jsonObject)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        switch(response.code()) {
+                            case HTTP_OK:
+                                String successMessage = context.getString(R.string.message_respond_doctor_success, doctorName);
+                                showMessage(successMessage, context);
+                                break;
+                            default:
+                                String invalidMessage = context.getString(R.string.message_respond_doctor_invalid, doctorName);
+                                showMessage(invalidMessage, context);
                                 break;
                         }
                     }
@@ -801,32 +837,6 @@ public class PatientRepository {
                 });
     }
 
-    // work
-    public void respondToDetailsPermission(String appointmentId, Boolean acceptPermission){
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("appointmentId", appointmentId);
-        jsonObject.addProperty("acceptPermission", acceptPermission);
-        Log.d(TAG, jsonObject.toString());
-        patientApiRequest.respondToDetailsPermission(jsonObject)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        switch(response.code()) {
-                            case HTTP_OK:
-                                showMessage(context.getString(R.string.message_respond_doctor_success), context);
-                                break;
-                            default:
-                                showMessage(context.getString(R.string.message_respond_doctor_invalid), context);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable th) {
-                        showMessage(context.getString(R.string.message_network_timeout), context);
-                    }
-                });
-    }
 
     /**
      * ============================== END OF PATIENT ==============================

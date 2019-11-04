@@ -63,7 +63,6 @@ public interface PatientApiRequest {
     Call<ResponseBody> updatePatient(@Body JsonObject jsonObject);
 
     @POST("api/patient/password/change")
-    @Headers({"No-Authentication: true"})
     Call<ResponseBody> changePassword(@Body JsonObject jsonObject);
 
     @POST("api/patient/password/reset/otp")

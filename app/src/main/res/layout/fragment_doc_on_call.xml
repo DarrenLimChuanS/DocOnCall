@@ -112,7 +112,7 @@
     <!-- Upcoming appointment -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clUpcomingAppointment"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

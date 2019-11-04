@@ -2,6 +2,8 @@ package doc.on.call.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,10 @@ public class SettingFragment extends Fragment {
     private static final String TAG = SettingFragment.class.getSimpleName();
 
     private Context context;
-    private TextView btnLogout;
-    private TextView btnPatient;
+    private CardView cvUpdatePatient;
+    private CardView cvChangePassword;
+    private CardView cvDeletePatient;
+    private CardView cvLogoutPatient;
     private PatientRepository mPatient;
 
     public SettingFragment (Context context) {
@@ -28,21 +32,22 @@ public class SettingFragment extends Fragment {
 
         mPatient = new PatientRepository(getContext());
 
-        btnLogout = (TextView) view.findViewById(R.id.btnLogout);
-        btnPatient = (TextView) view.findViewById(R.id.btnPatient);
+        cvUpdatePatient = (CardView) view.findViewById(R.id.cvUpdatePatient);
+        cvChangePassword = (CardView) view.findViewById(R.id.cvChangePassword);
+        cvDeletePatient = (CardView) view.findViewById(R.id.cvDeletePatient);
+        cvLogoutPatient = (CardView) view.findViewById(R.id.cvLogoutPatient);
 
-        btnLogout.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-                logoutPatient();
-            }
-        });
-
-        btnPatient.setOnClickListener(new OnClickListener() {
+        cvDeletePatient.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 getPatient();
             }
         });
 
+        cvLogoutPatient.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+                logoutPatient();
+            }
+        });
 
         return view;
     }

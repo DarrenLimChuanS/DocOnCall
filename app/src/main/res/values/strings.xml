@@ -79,8 +79,8 @@
     <string name="message_delete_account_invalid">Unable to delete account!</string>
     <string name="message_delete_appointment_success">Appointment deleted!</string>
     <string name="message_delete_appointment_invalid">Unable to delete appointment!</string>
-    <string name="message_respond_doctor_success">Your response has been sent!</string>
-    <string name="message_respond_doctor_invalid">Unable to send response!</string>
+    <string name="message_respond_doctor_success">Permission granted to Doctor %1$s to view your data!</string>
+    <string name="message_respond_doctor_invalid">Permission removed from Doctor %1$s to view your data!</string>
 
     <!-- Date Picker -->
     <string name="date_picker_message">Please pick a weekday not later than one month from now.</string>
