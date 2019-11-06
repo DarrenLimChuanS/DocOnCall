@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -244,12 +248,27 @@ public class DocOnCallFragment extends Fragment {
 
                 String dateTime = date + " " + time;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:m");
+                Log.d("TESTING_TIME", date + " " + time);
+
+
+
                 Date dateFormat = sdf.parse(dateTime);
+                Log.d("TESTING_TIME", dateFormat.toString());
+
                 Date currentDate = new Date();
-                SimpleDateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+                SimpleDateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'",Locale.getDefault());
                 String jsonDate = jsonDateFormat.format(dateFormat);
+                Log.d("TESTING_TIME", jsonDate);
                 String currentJsonDate = jsonDateFormat.format(currentDate);
+                Log.d("TESTING_TIME", currentJsonDate);
                 mPatient.createAppointment(jsonDate, currentJsonDate, issue, loggedInPatient.getName());
+
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
+                        Locale.getDefault());
+                Date currentLocalTime = calendar.getTime();
+                DateFormat datenow = new SimpleDateFormat("z", Locale.getDefault());
+                String localTime = datenow.format(currentLocalTime);
+                Log.d("TESTING_TIME", localTime);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

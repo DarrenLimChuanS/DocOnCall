@@ -16,7 +16,7 @@ public class TokenInterceptor implements Interceptor {
 
     public TokenInterceptor(Context context) {
         this.context = context;
-        this.mSharedPreference = ObscuredSharedPreference.getPref(context);
+        this.mSharedPreference = new ObscuredSharedPreference(context);
     }
 
     public Response intercept(Chain chain) throws IOException {

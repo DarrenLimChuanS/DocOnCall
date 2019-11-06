@@ -53,7 +53,7 @@ public class PatientRepository {
     public PatientRepository(Context context) {
         this.context = context;
         this.patientApiRequest = (PatientApiRequest) RetrofitRequest.getRetrofitInstance(context).create(PatientApiRequest.class);
-        this.mSharedPreference = ObscuredSharedPreference.getPref(context);
+        this.mSharedPreference = new ObscuredSharedPreference(context);
     }
 
     /**

@@ -45,7 +45,8 @@ public class HomeActivity extends AppCompatActivity {
         HomeActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // Shared Preference
-        mSharedPreference = ObscuredSharedPreference.getPref(this);
+        mSharedPreference = new ObscuredSharedPreference(this);
+
         Log.d(TAG, "Hello");
         Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
         Log.d(TAG, "Nonce: " + mSharedPreference.readNonce());
