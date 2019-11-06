@@ -14,6 +14,9 @@
     <string name="label_name">Full Name</string>
     <string name="label_nric">NRIC</string>
     <string name="label_password">Password</string>
+    <string name="label_password_old">Old Password</string>
+    <string name="label_password_new">New Password</string>
+    <string name="label_password_confirm">Confirm Password</string>
     <string name="label_phone">Mobile Number</string>
     <string name="label_sign_in">Sign In</string>
     <string name="label_sign_up">Sign Up</string>
@@ -22,10 +25,17 @@
     <string name="label_verify">Verify</string>
     <string name="label_appointment">Appointment</string>
     <string name="label_doctor">Doctor</string>
+    <string name="label_change">Change</string>
+    <string name="label_update_account">Update Account</string>
+    <string name="label_change_password">Change Password</string>
+    <string name="label_delete_account">Delete Account</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_update">Update</string>
 
     <!-- Paragraph Labels -->
     <string name="label_forgot_password">Forgot Password?</string>
     <string name="label_reset_password">Reset Password</string>
+    <string name="label_resend_token">Resend Token?</string>
     <string name="label_verify_token">Verification Token</string>
     <string name="label_enter_issue">Enter your issue</string>
     <string name="label_make_appointment">Make Appointment</string>
@@ -44,6 +54,7 @@
     <string name="error_email">Invalid Email</string>
     <string name="error_username">Invalid Username</string>
     <string name="error_password">Invalid Password</string>
+    <string name="error_password_match">New Password does not match with Confirm Password.</string>
     <string name="error_otp">Invalid OTP</string>
     <string name="error_fullname">Invalid Full Name</string>
     <string name="error_nric">Invalid NRIC</string>
@@ -63,10 +74,11 @@
     <string name="message_logout_no_session">Session Expired. Please log in again.</string>
     <string name="message_logout_success">Logout successful</string>
     <string name="message_network_timeout">Connection timed out</string>
-    <string name="message_register_input_conflict">Username and email is taken!</string>
+    <string name="message_register_input_conflict">Username and email must be unique!</string>
     <string name="message_register_invalid">Registration failed</string>
     <string name="message_register_success">Register successful\n\nAn email has been sent to your registered email for verification</string>
-    <string name="message_register_resend">A verification code has been resent!</string>
+    <string name="message_register_resend_invalid">Resend invalid</string>
+    <string name="message_register_resend_success">An email with a new verification token has been resent to your registered email!</string>
     <string name="message_validate_invalid">OTP invalid</string>
     <string name="message_validate_success">Login successful</string>
     <string name="message_verify_invalid">Account Verification invalid</string>
@@ -107,12 +119,4 @@
     <string name="placeholder_title_have_appointment">Upcoming Appointment</string>
     <string name="placeholder_body_have_appointment">You have an appointment with Doctor %1$s\n on %2$s</string>
     <string name="placeholder_body_reset_password">We just need your registered Username to send you the password reset instructions.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="label_update_account">Update Account</string>
-    <string name="label_change_password">Change Password</string>
-    <string name="label_delete_account">Delete Account</string>
-    <string name="label_cancel">Cancel</string>
-    <string name="label_update">Update</string>
 </resources>

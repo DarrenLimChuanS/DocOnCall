@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/llSearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -23,6 +24,7 @@
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:visibility="gone"
             android:background="@drawable/search_rect">
             <ImageView
                 android:layout_width="15dp"
@@ -46,9 +48,11 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/vSearchBarLine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_line_size_1dp"
             android:layout_marginTop="7dp"
+            android:visibility="gone"
             android:background="@color/colorAccent"/>
 
         <xyz.sangcomz.stickytimelineview.TimeLineRecyclerView
@@ -63,8 +67,10 @@
             android:visibility="gone"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="@dimen/width_image_size_400dp"
-                android:layout_height="@dimen/height_image_size_350dp"
+                android:layout_width="@dimen/width_image_size_250dp"
+                android:layout_height="@dimen/height_image_size_200dp"
+                android:layout_marginTop="@dimen/margin_header_size_100dp"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_error_outline_red_24dp" />
             <TextView
                 android:layout_width="match_parent"

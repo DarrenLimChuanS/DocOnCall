@@ -16,6 +16,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static doc.on.call.Utilities.Constants.PREF_EMAIL;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
 import static doc.on.call.Utilities.Constants.PREF_RESEND;
 import static doc.on.call.Utilities.Constants.PREF_TOKEN;
@@ -137,6 +138,17 @@ public class ObscuredSharedPreference {
     public String readRegisterationResendToken() {
         String token = this.sharedPreferences.getString(PREF_RESEND, null);
         return token != null ? decrypt(token) : null;
+    }
+
+    public void writeEmail(String email) {
+        Editor edit = this.sharedPreferences.edit();
+        edit.putString(PREF_EMAIL, encrypt(email));
+        edit.apply();
+    }
+
+    public String readEmail() {
+        String email = this.sharedPreferences.getString(PREF_EMAIL, null);
+        return email != null ? decrypt(email) : null;
     }
 
     public void removeSharedPreference(String key) {

@@ -19,6 +19,7 @@ public class Constants {
     public static final String PREF_NONCE = "SP_Nonce";
     public static final String PREF_TOKEN = "SP_Token";
     public static final String PREF_RESEND = "SP_Resend";
+    public static final String PREF_EMAIL = "SP_Email";
 
     // Date Time
     public static final String DT_YEAR = "Year";

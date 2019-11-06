@@ -24,6 +24,7 @@ public class VerifyActivity extends AppCompatActivity {
     EditText etToken;
     TextView btnVerify;
     TextView btnBack;
+    TextView tvResendToken;
 
     ProgressBar pbLoading;
 
@@ -41,6 +42,7 @@ public class VerifyActivity extends AppCompatActivity {
         etToken = (EditText)findViewById(R.id.etToken);
         btnVerify = (TextView)findViewById(R.id.btnVerify);
         btnBack = (TextView)findViewById(R.id.btnBack);
+        tvResendToken = (TextView)findViewById(R.id.tvResendToken);
 
         pbLoading = (ProgressBar)findViewById(R.id.pbLoading);
 
@@ -70,6 +72,13 @@ public class VerifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 backToLogin();
+            }
+        });
+
+        tvResendToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resendToken();
             }
         });
     }
@@ -104,6 +113,10 @@ public class VerifyActivity extends AppCompatActivity {
     public void backToLogin() {
         Intent signIn = new Intent(this, SignInActivity.class);
         startActivity(signIn);
+    }
+
+    public void resendToken() {
+        mPatient.resendRegistrationToken();
     }
 
     /**
