@@ -60,4 +60,9 @@
     <!-- Card -->
     <dimen name="card_radius_size_8dp">8dp</dimen>
     <dimen name="card_radius_size_15dp">15dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="elevation_size_1dp">1dp</dimen>
+    <dimen name="elevation_size_5dp">5dp</dimen>
+    <dimen name="elevation_size_10dp">10dp</dimen>
 </resources>

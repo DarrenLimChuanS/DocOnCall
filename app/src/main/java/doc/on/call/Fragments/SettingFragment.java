@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -111,7 +110,7 @@ public class SettingFragment extends Fragment {
 
     public void updatePatient(){
         // Dialog for update patient
-        updateDialog.setContentView(R.layout.fragment_update_patient_dialog);
+        updateDialog.setContentView(R.layout.dialog_update_patient);
         etAddress = (EditText) updateDialog.findViewById(R.id.etAddress);
         etEmail = (EditText) updateDialog.findViewById(R.id.etEmail);
         etPhone = (EditText) updateDialog.findViewById(R.id.etPhone);

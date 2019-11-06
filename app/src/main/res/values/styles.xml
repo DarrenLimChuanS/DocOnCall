@@ -14,7 +14,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/pb_rect</item>
         <item name="android:visibility">gone</item>
-        <item name="android:elevation">10dp</item>
+        <item name="android:elevation">@dimen/elevation_size_10dp</item>
         <item name="android:indeterminate">true</item>
         <item name="android:layout_gravity">center</item>
     </style>
@@ -34,6 +34,13 @@
         <item name="android:layout_marginRight">@dimen/margin_size_70dp</item>
         <item name="android:background">@color/colorAccent</item>
     </style>
+    <style name="v_line_accent_long">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_line_size_1dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_size_20dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_size_20dp</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
     <style name="v_line_black">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/height_line_size_1dp</item>
@@ -46,6 +53,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/margin_size_70dp</item>
         <item name="android:layout_marginRight">@dimen/margin_size_70dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">@dimen/padding_size_10dp</item>
+    </style>
+    <style name="et_layout_long">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_size_20dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_size_20dp</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:padding">@dimen/padding_size_10dp</item>
     </style>
