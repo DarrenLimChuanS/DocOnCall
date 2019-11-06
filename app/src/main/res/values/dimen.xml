@@ -46,6 +46,7 @@
     <dimen name="padding_size_16dp">16dp</dimen>
 
     <!-- Text -->
+    <dimen name="text_size_12dp">12dp</dimen>
     <dimen name="text_size_14dp">14dp</dimen>
     <dimen name="text_size_16dp">16dp</dimen>
     <dimen name="text_size_18dp">18dp</dimen>

@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import doc.on.call.Fragments.DocOnCallFragment;
 import doc.on.call.Fragments.PatientFragment;
+import doc.on.call.Fragments.SettingFragment;
 import doc.on.call.HomeActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
@@ -781,6 +782,8 @@ public class PatientRepository {
                             case HTTP_OK:
                                 toggleUpdatePatientState(false, updateDialog);
                                 updateDialog.dismiss();
+                                SettingFragment settingFragment = new SettingFragment(context);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, settingFragment).commit();
                                 showMessage(context.getString(R.string.message_account_updated_success), context);
                                 break;
                             default:
