@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.chaos.view.PinView;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import doc.on.call.Model.Patient;
@@ -56,15 +58,22 @@ public class SettingFragment extends Fragment {
     // Variables for Change Password Dialog
     private Dialog changePasswordDialog;
     private EditText etUsername;
-        private EditText etOldPassword;
-        private ImageView imgOldPassword;
-        private EditText etNewPassword;
-        private ImageView imgNewPassword;
-        private EditText etConfirmPasword;
-        private ImageView imgConfirmPassword;
+    private EditText etOldPassword;
+    private ImageView imgOldPassword;
+    private EditText etNewPassword;
+    private ImageView imgNewPassword;
+    private EditText etConfirmPasword;
+    private ImageView imgConfirmPassword;
     private ImageView btnChangeClose;
     private Button btnChange;
     private Button btnChangeCancel;
+
+    // Variables for Delete Dialog
+    private Dialog deleteDialog;
+    private PinView pinViewDelete;
+    private ImageView btnDeleteClose;
+    private Button btnDelete;
+    private Button btnDeleteCancel;
 
     public SettingFragment (Context context) {
         this.context = context;
@@ -98,6 +107,7 @@ public class SettingFragment extends Fragment {
 
         updateDialog = new Dialog(context);
         changePasswordDialog = new Dialog(context);
+        deleteDialog = new Dialog(context);
 
         // Event Listeners
         cvUpdatePatient.setOnClickListener(new OnClickListener() {
@@ -299,7 +309,51 @@ public class SettingFragment extends Fragment {
     }
 
     public void deletePatient(){
-        mPatient.deletePatient();
+        // Create Delete Dialog
+        deleteDialog.setContentView(R.layout.dialog_delete_patient);
+        pinViewDelete = (PinView) deleteDialog.findViewById(R.id.pinViewDelete);
+        btnDeleteClose = (ImageView) deleteDialog.findViewById(R.id.btnDeleteClose);
+        btnDelete = (Button) deleteDialog.findViewById(R.id.btnDelete);
+        btnDeleteCancel = (Button) deleteDialog.findViewById(R.id.btnDeleteCancel);
+
+        btnDeleteClose.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+
+        btnDelete.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String otp = pinViewDelete.getText().toString().trim();
+                if (!isOtpValid(otp)) {
+                    pinViewDelete.requestFocus();
+                    pinViewDelete.setError(getString(R.string.error_otp));
+                } else {
+                    pinViewDelete.setEnabled(false);
+                    btnDeleteClose.setEnabled(false);
+                    btnDelete.setEnabled(false);
+                    btnDeleteCancel.setEnabled(false);
+                    pbLoading.setVisibility(View.VISIBLE);
+                    // Send Delete OTP
+                    mPatient.validateDeletePatient(otp, deleteDialog);
+                }
+            }
+        });
+
+        btnDeleteCancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+
+        deleteDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // Send Delete OTP
+        pbLoading.setVisibility(View.VISIBLE);
+        mPatient.deletePatient(deleteDialog);
     }
 
     public void logoutPatient() {
@@ -354,6 +408,10 @@ public class SettingFragment extends Fragment {
 
     boolean isPasswordMatchValid(String firstPassword, String secondPassword) {
         return firstPassword.equals(secondPassword);
+    }
+
+    boolean isOtpValid(String otp) {
+        return !otp.isEmpty() ? true : false;
     }
     /**
      * ================================= END OF VALIDATIONS =================================

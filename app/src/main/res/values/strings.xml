@@ -2,7 +2,8 @@
     <!-- Title -->
     <string name="app_name">DocOnCall</string>
     <string name="app_slogan">Doctors to your doorstep</string>
-    <string name="app_otp">Enter the 6 digit OTP</string>
+    <string name="app_otp_login">Enter the 6 digit OTP to login</string>
+    <string name="app_otp_delete">Enter the 6 digit OTP\n to delete account</string>
 
     <!-- Word Labels -->
     <string name="label_address">Address</string>
@@ -31,6 +32,7 @@
     <string name="label_delete_account">Delete Account</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_update">Update</string>
+    <string name="label_delete">Delete</string>
 
     <!-- Paragraph Labels -->
     <string name="label_forgot_password">Forgot Password?</string>

@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_caption_size_20dp"
-            android:text="@string/app_otp" />
+            android:text="@string/app_otp_login" />
 
         <com.chaos.view.PinView
             android:id="@+id/pinView"

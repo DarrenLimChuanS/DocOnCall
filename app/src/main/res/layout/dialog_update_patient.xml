@@ -50,6 +50,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -86,23 +87,20 @@
                             android:inputType="number" />
                     </LinearLayout>
                     <View style="@style/v_line_accent_long" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="@dimen/margin_size_40dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/btnUpdateCancel"
-                        style="@style/btn_error"
-                        android:layout_weight="0.5"
-                        android:text="@string/label_cancel"/>
 
                     <Button
                         android:id="@+id/btnUpdate"
-                        android:layout_weight="0.5"
                         style="@style/btn_success"
+                        android:layout_marginTop="@dimen/margin_size_40dp"
+                        android:layout_weight="0.5"
                         android:text="@string/label_update"/>
+
+                    <Button
+                        android:id="@+id/btnUpdateCancel"
+                        style="@style/btn_error"
+                        android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+                        android:layout_weight="0.5"
+                        android:text="@string/label_cancel"/>
                 </LinearLayout>
 
             </LinearLayout>

@@ -38,7 +38,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static doc.on.call.Utilities.Commons.showMessage;
-import static doc.on.call.Utilities.Constants.HTTP_BAD;
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
 import static doc.on.call.Utilities.Constants.PREF_EMAIL;
@@ -876,9 +875,10 @@ public class PatientRepository {
         }
     }
 
-    // work
-    public void deletePatient(){
-        Log.d(TAG, "deletePatient");
+    /**
+     * PatientApiRequest for Delete Patient
+     */
+    public void deletePatient(final Dialog deleteDialog){
         patientApiRequest.deletePatient()
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -889,9 +889,11 @@ public class PatientRepository {
                                     String nonce = new JSONObject(response.body().string()).getString("nonce");
                                     if (!nonce.isEmpty()) {
                                         mSharedPreference.writeNonce(nonce);
+                                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                         showMessage(context.getString(R.string.message_delete_account_otp_sent), context);
+                                        deleteDialog.show();
                                     } else {
-                                        toggleLoginState(true);
+                                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                         showMessage(context.getString(R.string.message_network_timeout), context);
                                     }
                                 } catch (JSONException | IOException e) {
@@ -899,6 +901,7 @@ public class PatientRepository {
                                 }
                                 break;
                             default:
+                                ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_delete_account_invalid), context);
                                 break;
                         }
@@ -906,29 +909,31 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
-    // work
-    public void validateDeleteAccount(String otp){
+    /**
+     * PatientApiRequest for Validate Delete Patient
+     */
+    public void validateDeletePatient(String otp, final Dialog deleteDialog){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
         jsonObject.addProperty("otp", otp);
-        Log.d(TAG, jsonObject.toString());
-        patientApiRequest.validateDeleteAccount(jsonObject)
+        patientApiRequest.validateDeletePatient(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                toggleDeleteState(false, deleteDialog);
                                 showMessage(context.getString(R.string.message_delete_account_success), context);
                                 logoutPatient();
-                                //TODO log user out and clear all the share pref
                                 break;
                             default:
+                                toggleDeleteState(true, deleteDialog);
                                 showMessage(context.getString(R.string.message_delete_account_invalid), context);
                                 break;
                         }
@@ -936,9 +941,26 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleDeleteState(true, deleteDialog);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
+    }
+
+    /**
+     * Function to handle Validate Delete State
+     */
+    private void toggleDeleteState(boolean status, Dialog deleteDialog) {
+        if (status) {
+            deleteDialog.findViewById(R.id.pinViewDelete).setEnabled(status);
+            deleteDialog.findViewById(R.id.btnDeleteClose).setEnabled(status);
+            deleteDialog.findViewById(R.id.btnDelete).setEnabled(status);
+            deleteDialog.findViewById(R.id.btnDeleteCancel).setEnabled(status);
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+            deleteDialog.dismiss();
+        }
     }
     /**
      * ============================== END OF PATIENT ==============================

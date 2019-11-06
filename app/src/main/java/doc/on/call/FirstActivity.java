@@ -124,7 +124,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Delete account");
-                mPatient.deletePatient();
+//                mPatient.deletePatient();
             }
         });
 
