@@ -251,7 +251,7 @@ public class DocOnCallFragment extends Fragment {
 
                 Date dateFormat = sdf.parse(dateTime);
                 Date currentDate = new Date();
-                SimpleDateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+                SimpleDateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 String jsonDate = jsonDateFormat.format(dateFormat);
                 String currentJsonDate = jsonDateFormat.format(currentDate);
                 mPatient.createAppointment(jsonDate, currentJsonDate, issue, loggedInPatient.getName());
