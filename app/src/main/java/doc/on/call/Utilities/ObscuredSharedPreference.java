@@ -45,8 +45,10 @@ public class ObscuredSharedPreference {
 
     public static native String getPrefFile();
 
+    private static ObscuredSharedPreference prefs;
+
     protected Context context;
-    private SharedPreferences sharedPreferences;
+    protected SharedPreferences sharedPreferences;
     private static String alias;
     private static KeyStore keystore;
     private static SecretKey secret_key;
@@ -60,6 +62,17 @@ public class ObscuredSharedPreference {
         Log.d("DocOnCall", "keystore_alias: " + alias);
         ObscuredSharedPreference.get_SymmetricKeyinKeyStore();
     }
+
+    public static ObscuredSharedPreference getPref(Context context) {
+        synchronized (ObscuredSharedPreference.class) {
+            if (prefs == null) {
+                prefs = new ObscuredSharedPreference(context);
+            }
+        }
+        return prefs;
+    }
+
+
 
     public static void get_SymmetricKeyinKeyStore() {
         try {

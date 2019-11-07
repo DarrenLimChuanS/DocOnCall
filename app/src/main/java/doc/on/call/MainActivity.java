@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
 
-        mSharedPreference = new ObscuredSharedPreference(this);
+        mSharedPreference = ObscuredSharedPreference.getPref(this);
         mPatient = new PatientRepository(this);
         Log.d(TAG, "Hello");
         Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
