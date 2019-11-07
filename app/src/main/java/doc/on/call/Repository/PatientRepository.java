@@ -248,6 +248,7 @@ public class PatientRepository {
             ((Activity) this.context).findViewById(R.id.etToken).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.btnVerify).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.btnBack).setEnabled(true);
+            ((Activity) this.context).findViewById(R.id.tvResendToken).setEnabled(true);
             ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         } else {
             ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
@@ -333,6 +334,7 @@ public class PatientRepository {
             ((Activity) context).findViewById(R.id.imgPassword).setEnabled(true);
             ((Activity) context).findViewById(R.id.btnSignIn).setEnabled(true);
             ((Activity) context).findViewById(R.id.btnSignUp).setEnabled(true);
+            ((Activity) context).findViewById(R.id.tvForgotPassword).setEnabled(true);
             ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         } else {
             ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);

@@ -105,6 +105,7 @@ public class VerifyActivity extends AppCompatActivity {
             etToken.setEnabled(false);
             btnVerify.setEnabled(false);
             btnBack.setEnabled(false);
+            tvResendToken.setEnabled(false);
             pbLoading.setVisibility(View.VISIBLE);
             mPatient.verifyPatient(username, password, token);
         }

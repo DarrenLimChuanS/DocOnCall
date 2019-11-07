@@ -145,6 +145,7 @@ public class SignInActivity extends AppCompatActivity {
             imgPassword.setEnabled(false);
             btnSignIn.setEnabled(false);
             btnSignUp.setEnabled(false);
+            tvForgotPassword.setEnabled(false);
             pbLoading.setVisibility(View.VISIBLE);
 
             // Recaptcha user-side token generation end
@@ -187,6 +188,7 @@ public class SignInActivity extends AppCompatActivity {
                             imgPassword.setEnabled(true);
                             btnSignIn.setEnabled(true);
                             btnSignUp.setEnabled(true);
+                            tvForgotPassword.setEnabled(true);
                             pbLoading.setVisibility(View.INVISIBLE);
                         }
                     }).addOnCanceledListener(SignInActivity.this, new OnCanceledListener() {
@@ -199,6 +201,7 @@ public class SignInActivity extends AppCompatActivity {
                     imgPassword.setEnabled(true);
                     btnSignIn.setEnabled(true);
                     btnSignUp.setEnabled(true);
+                    tvForgotPassword.setEnabled(true);
                     pbLoading.setVisibility(View.INVISIBLE);
                 }
             });
@@ -236,6 +239,7 @@ public class SignInActivity extends AppCompatActivity {
         imgPassword.setEnabled(true);
         btnSignIn.setEnabled(true);
         btnSignUp.setEnabled(true);
+        tvForgotPassword.setEnabled(true);
         etUsername.getText().clear();
         etPassword.getText().clear();
         llOtpInputs.setVisibility(View.GONE);
