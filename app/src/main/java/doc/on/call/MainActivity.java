@@ -18,11 +18,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
+
         mSharedPreference = ObscuredSharedPreference.getPref(this);
         mPatient = new PatientRepository(this);
         Log.d(TAG, "Hello");
         Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
         Log.d(TAG, "Nonce: " + mSharedPreference.readNonce());
+        Log.d(TAG, "Resend: " + mSharedPreference.readRegisterationResendToken());
+        Log.d(TAG, "Email: " + mSharedPreference.readEmail());
 
         // Check the session of user
         mPatient.checkLoggedIn();

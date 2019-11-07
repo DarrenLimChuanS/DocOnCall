@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -244,6 +248,7 @@ public class DocOnCallFragment extends Fragment {
 
                 String dateTime = date + " " + time;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:m");
+
                 Date dateFormat = sdf.parse(dateTime);
                 Date currentDate = new Date();
                 SimpleDateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
