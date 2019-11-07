@@ -57,7 +57,6 @@ public class SettingFragment extends Fragment {
 
     // Variables for Change Password Dialog
     private Dialog changePasswordDialog;
-    private EditText etUsername;
     private EditText etOldPassword;
     private ImageView imgOldPassword;
     private EditText etNewPassword;
@@ -203,7 +202,6 @@ public class SettingFragment extends Fragment {
     public void changePassword(){
         // Dialog for change password
         changePasswordDialog.setContentView(R.layout.dialog_change_password);
-        etUsername = (EditText) changePasswordDialog.findViewById(R.id.etUsername);
         etOldPassword = (EditText) changePasswordDialog.findViewById(R.id.etOldPassword);
         imgOldPassword = (ImageView) changePasswordDialog.findViewById(R.id.imgOldPassword);
         etNewPassword = (EditText) changePasswordDialog.findViewById(R.id.etNewPassword);
@@ -261,14 +259,10 @@ public class SettingFragment extends Fragment {
         btnChange.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = etUsername.getText().toString().trim();
                 String oldPassword = etOldPassword.getText().toString().trim();
                 String newPassword = etNewPassword.getText().toString().trim();
                 String confirmPassword = etConfirmPasword.getText().toString().trim();
-                if (!isUsernameValid(username)) {
-                    etUsername.requestFocus();
-                    etUsername.setError(getString(R.string.error_username));
-                } else if(!isPasswordValid(oldPassword)) {
+                if (!isPasswordValid(oldPassword)) {
                     etOldPassword.requestFocus();
                     etOldPassword.setError(getString(R.string.error_password));
                 } else if(!isPasswordValid(newPassword)) {
@@ -283,7 +277,6 @@ public class SettingFragment extends Fragment {
                     etNewPassword.setError(getString(R.string.error_password_match));
                     etConfirmPasword.setError(getString(R.string.error_password_match));
                 } else {
-                    etUsername.setEnabled(false);
                     etOldPassword.setEnabled(false);
                     etNewPassword.setEnabled(false);
                     etConfirmPasword.setEnabled(false);
@@ -291,7 +284,7 @@ public class SettingFragment extends Fragment {
                     btnChange.setEnabled(false);
                     btnChangeCancel.setEnabled(false);
                     pbLoading.setVisibility(View.VISIBLE);
-                    mPatient.changePassword(username, oldPassword, newPassword, changePasswordDialog);
+                    mPatient.changePassword(loggedInPatient.getUsername(), oldPassword, newPassword, changePasswordDialog);
                 }
             }
         });
@@ -396,10 +389,6 @@ public class SettingFragment extends Fragment {
             e.printStackTrace();
             return false;
         }
-    }
-
-    boolean isUsernameValid(String username) {
-        return !username.isEmpty() ? true : false;
     }
 
     boolean isPasswordValid(String password) {
