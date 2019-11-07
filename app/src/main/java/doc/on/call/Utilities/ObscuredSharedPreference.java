@@ -160,31 +160,12 @@ public class ObscuredSharedPreference {
      */
 
     private void saveMap(HashMap<String, String> inputMap, String path) {
-        SharedPreferences pSharedPref = this.sharedPreferences;
-        if (pSharedPref != null) {
-            if (path.equals(PREF_NONCE)) {
-                JSONObject jsonObject = new JSONObject(inputMap);
-                String jsonString = jsonObject.toString();
-                SharedPreferences.Editor editor = pSharedPref.edit();
-                editor.remove(PREF_NONCE).apply();
-                editor.putString(PREF_NONCE, jsonString);
-                editor.commit();
-            } else if (path.equals(PREF_TOKEN)) {
-                JSONObject jsonObject = new JSONObject(inputMap);
-                String jsonString = jsonObject.toString();
-                SharedPreferences.Editor editor = pSharedPref.edit();
-                editor.remove(PREF_TOKEN).apply();
-                editor.putString(PREF_TOKEN, jsonString);
-                editor.commit();
-            } else {
-                JSONObject jsonObject = new JSONObject(inputMap);
-                String jsonString = jsonObject.toString();
-                SharedPreferences.Editor editor = pSharedPref.edit();
-                editor.remove(PREF_RESEND).apply();
-                editor.putString(PREF_RESEND, jsonString);
-                editor.commit();
-            }
-        }
+            JSONObject jsonObject = new JSONObject(inputMap);
+            String jsonString = jsonObject.toString();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove(path).apply();
+            editor.putString(path, jsonString);
+            editor.commit();
     }
 
     private HashMap<String, String> loadMap(String token_value) {
@@ -264,14 +245,21 @@ public class ObscuredSharedPreference {
     }
 
     public void writeEmail(String email) {
-        Editor edit = this.sharedPreferences.edit();
-        edit.putString(PREF_EMAIL, encrypt(email));
-        edit.apply();
+        encrypt(email,PREF_EMAIL);
     }
 
     public String readEmail() {
         String email = this.sharedPreferences.getString(PREF_EMAIL, null);
-        return email != null ? decrypt(email) : null;
+        if (email != null) {
+            HashMap<String, String> outputMap = loadMap(email);
+            if (!outputMap.isEmpty()) {
+                return decrypt(outputMap);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     public void removeSharedPreference(String key) {
