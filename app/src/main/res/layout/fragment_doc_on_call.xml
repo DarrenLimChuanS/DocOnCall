@@ -27,7 +27,7 @@
         <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
             android:id="@+id/tvTitle"
             style="@style/tv_title"
-            android:layout_marginTop="@dimen/margin_header_size_30dp"
+            android:layout_marginTop="@dimen/margin_header_size_100dp"
             android:text="@string/app_slogan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
 
         <View
             android:id="@+id/view"
-            style="@style/v_line_accent"
+            style="@style/v_line_accent_long"
             android:layout_marginBottom="@dimen/margin_size_20dp"
             app:layout_constraintBottom_toTopOf="@+id/btnTime"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +93,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnDate" />
 
         <View
-            style="@style/v_line_accent"
+            style="@style/v_line_accent_long"
             android:layout_marginTop="@dimen/margin_size_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

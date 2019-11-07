@@ -46,6 +46,8 @@ public class PatientFragment extends Fragment {
     private ProgressBar pbLoading;
 
     // Error: No Appointment
+    private LinearLayout llSearchBar;
+    private View vSearchBar;
     private LinearLayout rvEmpty;
     private Button btnMakeAppointment;
 
@@ -69,6 +71,8 @@ public class PatientFragment extends Fragment {
         pbLoading = (ProgressBar)view.findViewById(R.id.pbLoading);
         pbLoading.setVisibility(View.VISIBLE);
 
+        llSearchBar = (LinearLayout) view.findViewById(R.id.llSearchBar);
+        vSearchBar = (View) view.findViewById(R.id.vSearchBarLine);
         rvEmpty = (LinearLayout) view.findViewById(R.id.rvEmpty);
         btnMakeAppointment = (Button) view.findViewById(R.id.btnMakeAppointment);
         rvAppointments = (TimeLineRecyclerView)view.findViewById(R.id.rvAppointments);
@@ -87,6 +91,8 @@ public class PatientFragment extends Fragment {
                     Log.d(TAG, "OnChanged");
                     patient = patientResponse;
                     if (!patient.getAppointments().isEmpty()) {
+                        llSearchBar.setVisibility(View.VISIBLE);
+                        vSearchBar.setVisibility(View.VISIBLE);
                         // Reverse the list to display in Chronological order
                         List<Appointment> appointmentList = new ArrayList<>();
                         appointmentList = patient.getAppointments();

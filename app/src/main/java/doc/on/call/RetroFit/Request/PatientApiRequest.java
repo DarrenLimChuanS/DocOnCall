@@ -77,7 +77,7 @@ public interface PatientApiRequest {
     Call<ResponseBody> deletePatient();
 
     @POST("api/patient/account/delete/validate")
-    Call<ResponseBody> validateDeleteAccount(@Body JsonObject jsonObject);
+    Call<ResponseBody> validateDeletePatient(@Body JsonObject jsonObject);
     /**
      * ============================== END OF PATIENT ==============================
      */

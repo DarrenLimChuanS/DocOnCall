@@ -81,7 +81,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = editText.getText().toString();
-                mPatient.resendRegistrationToken(email);
+                mPatient.resendRegistrationToken();
             }
         });
 
@@ -114,7 +114,7 @@ public class FirstActivity extends AppCompatActivity {
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPatient.changePassword(username,oldPassword,newPassword);
+//                mPatient.changePassword(username,oldPassword,newPassword);
             }
         });
 
@@ -124,7 +124,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Delete account");
-                mPatient.deletePatient();
+//                mPatient.deletePatient();
             }
         });
 

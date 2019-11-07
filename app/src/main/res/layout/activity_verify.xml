@@ -85,5 +85,11 @@
             style="@style/btn_info"
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:text="@string/label_back" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
+            android:id="@+id/tvResendToken"
+            style="@style/tv_label_accent"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:text="@string/label_resend_token" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

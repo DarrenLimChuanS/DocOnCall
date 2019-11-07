@@ -32,6 +32,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
+import static doc.on.call.Utilities.Constants.PREF_EMAIL;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
 import static doc.on.call.Utilities.Constants.PREF_RESEND;
 import static doc.on.call.Utilities.Constants.PREF_TOKEN;
@@ -260,6 +261,17 @@ public class ObscuredSharedPreference {
         } else {
             return null;
         }
+    }
+
+    public void writeEmail(String email) {
+        Editor edit = this.sharedPreferences.edit();
+        edit.putString(PREF_EMAIL, encrypt(email));
+        edit.apply();
+    }
+
+    public String readEmail() {
+        String email = this.sharedPreferences.getString(PREF_EMAIL, null);
+        return email != null ? decrypt(email) : null;
     }
 
     public void removeSharedPreference(String key) {

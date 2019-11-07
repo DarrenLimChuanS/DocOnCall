@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import doc.on.call.Fragments.DocOnCallFragment;
 import doc.on.call.Fragments.PatientFragment;
+import doc.on.call.Fragments.SettingFragment;
 import doc.on.call.HomeActivity;
 import doc.on.call.Model.Patient;
 import doc.on.call.R;
@@ -37,10 +38,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static doc.on.call.Utilities.Commons.showMessage;
-import static doc.on.call.Utilities.Constants.HTTP_BAD;
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
+import static doc.on.call.Utilities.Constants.PREF_EMAIL;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
+import static doc.on.call.Utilities.Constants.PREF_RESEND;
 import static doc.on.call.Utilities.Constants.PREF_TOKEN;
 import static doc.on.call.Utilities.Constants.SPLASH_TIME_OUT;
 
@@ -62,7 +64,7 @@ public class PatientRepository {
     /**
      * PatientApiRequest for Register Patient
      */
-    public void registerPatient(String email, String username, String password, String fullname, String nric, int age, int phone, String address) {
+    public void registerPatient(final String email, String username, String password, String fullname, String nric, int age, int phone, String address) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("address", address);
         jsonObject.addProperty("age", Integer.valueOf(age));
@@ -79,24 +81,19 @@ public class PatientRepository {
                         System.out.println(response.body());
                         switch(response.code()) {
                             case HTTP_OK:
-                                //Added from here
                                 try {
                                     String resendToken = new JSONObject(response.body().string()).getString("token");
                                     if (!resendToken.isEmpty()) {
-                                        System.out.println("resendToken: "+resendToken);
                                         mSharedPreference.writeRegisterationResendToken(resendToken);
-                                        //TODO see if wanna put the code (toggle...to context.start) here
-                                        //Added this because registration now returns a token
-                                        //That token is used if u wanna resend verification token
+                                        mSharedPreference.writeEmail(email);
+                                        toggleRegisterDetailsState(false);
+                                        showMessage(context.getString(R.string.message_register_success), context);
+                                        Intent signIn = new Intent(context, SignInActivity.class);
+                                        context.startActivity(signIn);
                                     }
                                 } catch (JSONException | IOException e) {
                                     e.printStackTrace();
                                 }
-                                //to here
-                                toggleRegisterDetailsState(false);
-                                showMessage(context.getString(R.string.message_register_success), context);
-                                //Intent signIn = new Intent(context, SignInActivity.class);
-                                //context.startActivity(signIn);
                                 break;
                             default:
                                 try {
@@ -130,11 +127,10 @@ public class PatientRepository {
                 });
     }
 
-    public void resendRegistrationToken(String email){
+    public void resendRegistrationToken(){
         JsonObject jsonObject = new JsonObject();
-        System.out.println(this.mSharedPreference.readRegisterationResendToken());
-        jsonObject.addProperty("token", this.mSharedPreference.readRegisterationResendToken());
-        jsonObject.addProperty("email", email);
+        jsonObject.addProperty("token", mSharedPreference.readRegisterationResendToken());
+        jsonObject.addProperty("email", mSharedPreference.readEmail());
         patientApiRequest.resendRegistrationToken(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -144,26 +140,27 @@ public class PatientRepository {
                                 try {
                                     String resendToken = new JSONObject(response.body().string()).getString("token");
                                     if (!resendToken.isEmpty()) {
+                                        // Overwrite Token with new Token
                                         mSharedPreference.writeRegisterationResendToken(resendToken);
                                     }
-                                    showMessage(context.getString(R.string.message_register_resend), context);
+                                    ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                    showMessage(context.getString(R.string.message_register_resend_success), context);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                                 break;
-                            case HTTP_BAD:
-                                System.out.println(response.body());
-                                break;
                             default:
-                                showMessage(context.getString(R.string.message_network_timeout), context);
+                                ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+                                showMessage(context.getString(R.string.message_register_resend_invalid), context);
                                 break;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
@@ -174,16 +171,16 @@ public class PatientRepository {
      */
     private void toggleRegisterDetailsState(boolean status) {
         if (status) {
-            ((Activity) this.context).findViewById(R.id.etFullName).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.etNRIC).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.etAge).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.etPhone).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.etAddress).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.btnSignUp2).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.btnSignUp2Back).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+            ((Activity) context).findViewById(R.id.etFullName).setEnabled(true);
+            ((Activity) context).findViewById(R.id.etNRIC).setEnabled(true);
+            ((Activity) context).findViewById(R.id.etAge).setEnabled(true);
+            ((Activity) context).findViewById(R.id.etPhone).setEnabled(true);
+            ((Activity) context).findViewById(R.id.etAddress).setEnabled(true);
+            ((Activity) context).findViewById(R.id.btnSignUp2).setEnabled(true);
+            ((Activity) context).findViewById(R.id.btnSignUp2Back).setEnabled(true);
+            ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         } else {
-            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+            ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         }
     }
 
@@ -192,15 +189,15 @@ public class PatientRepository {
      */
     private void toggleRegisterState(boolean status) {
         if (status) {
-            ((Activity) this.context).findViewById(R.id.etEmail).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.etUsername).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.etPassword).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.imgPassword).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.btnSignUp).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.btnSignUpBack).setEnabled(true);
-            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+            ((Activity) context).findViewById(R.id.etEmail).setEnabled(true);
+            ((Activity) context).findViewById(R.id.etUsername).setEnabled(true);
+            ((Activity) context).findViewById(R.id.etPassword).setEnabled(true);
+            ((Activity) context).findViewById(R.id.imgPassword).setEnabled(true);
+            ((Activity) context).findViewById(R.id.btnSignUp).setEnabled(true);
+            ((Activity) context).findViewById(R.id.btnSignUpBack).setEnabled(true);
+            ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         } else {
-            ((Activity) this.context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+            ((Activity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         }
     }
 
@@ -219,6 +216,8 @@ public class PatientRepository {
                         switch (response.code()) {
                             case HTTP_OK:
                                 toggleVerifyState(false);
+                                mSharedPreference.removeSharedPreference(PREF_RESEND);
+                                mSharedPreference.removeSharedPreference(PREF_EMAIL);
                                 showMessage(context.getString(R.string.message_verify_success), context);
                                 Intent signIn = new Intent(context, SignInActivity.class);
                                 context.startActivity(signIn);
@@ -525,12 +524,14 @@ public class PatientRepository {
                         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         switch(response.code()) {
                             case HTTP_OK:
+                                ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_logout_success), context);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
                                 mSharedPreference.removeSharedPreference(PREF_TOKEN);
                                 break;
                             default:
+                                ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
                                 mSharedPreference.removeSharedPreference(PREF_NONCE);
@@ -541,6 +542,7 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
@@ -592,7 +594,7 @@ public class PatientRepository {
      * ============================== START OF PATIENT ==============================
      */
     /**
-     * PatientApiRequest for Get All Patients
+     * PatientApiRequest for Get All Patients (OBSOLETE)
      */
     public LiveData<List<Patient>> getAllPatients() {
         final MutableLiveData<List<Patient>> patientList = new MutableLiveData<>();
@@ -613,8 +615,6 @@ public class PatientRepository {
                             default:
                                 showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
-                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
                                 break;
                         }
                     }
@@ -680,6 +680,7 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
+                                ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_appointment_success), context);
                                 DocOnCallFragment docOnCallFragment = new DocOnCallFragment(context);
                                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, docOnCallFragment).commit();
@@ -697,6 +698,7 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
@@ -766,7 +768,9 @@ public class PatientRepository {
                 });
     }
 
-    // work
+    /**
+     * PatientApiRequest for Updating Patient
+     */
     public void updatePatient(String address, String email, int phone, final Dialog updateDialog){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("address", address.trim());
@@ -781,6 +785,8 @@ public class PatientRepository {
                             case HTTP_OK:
                                 toggleUpdatePatientState(false, updateDialog);
                                 updateDialog.dismiss();
+                                SettingFragment settingFragment = new SettingFragment(context);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, settingFragment).commit();
                                 showMessage(context.getString(R.string.message_account_updated_success), context);
                                 break;
                             default:
@@ -805,17 +811,19 @@ public class PatientRepository {
             updateDialog.findViewById(R.id.etAddress).setEnabled(true);
             updateDialog.findViewById(R.id.etEmail).setEnabled(true);
             updateDialog.findViewById(R.id.etPhone).setEnabled(true);
-            updateDialog.findViewById(R.id.btnClose).setEnabled(true);
+            updateDialog.findViewById(R.id.btnUpdateClose).setEnabled(true);
             updateDialog.findViewById(R.id.btnUpdate).setEnabled(true);
-            updateDialog.findViewById(R.id.btnCancel).setEnabled(true);
+            updateDialog.findViewById(R.id.btnUpdateCancel).setEnabled(true);
             ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         } else {
             ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
         }
     }
 
-    // work
-    public void changePassword(String username, String oldPassword, String newPassword){
+    /**
+     * PatientApiRequest for Change Password
+     */
+    public void changePassword(String username, String oldPassword, String newPassword, final Dialog changePasswordDialog){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("role", "patient");
         jsonObject.addProperty("username", username);
@@ -828,9 +836,14 @@ public class PatientRepository {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
+                                toggleChangePasswordState(false, changePasswordDialog);
+                                changePasswordDialog.dismiss();
+                                SettingFragment settingFragment = new SettingFragment(context);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, settingFragment).commit();
                                 showMessage(context.getString(R.string.message_change_password_success), context);
                                 break;
                             default:
+                                toggleChangePasswordState(true, changePasswordDialog);
                                 showMessage(context.getString(R.string.message_change_password_invalid), context);
                                 break;
                         }
@@ -838,14 +851,34 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleChangePasswordState(true, changePasswordDialog);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
-    // work
-    public void deletePatient(){
-        Log.d(TAG, "deletePatient");
+    /**
+     * Function to handle Change Password State
+     */
+    private void toggleChangePasswordState(boolean status, Dialog changePasswordDialog) {
+        if (status) {
+            changePasswordDialog.findViewById(R.id.etUsername).setEnabled(status);
+            changePasswordDialog.findViewById(R.id.etOldPassword).setEnabled(status);
+            changePasswordDialog.findViewById(R.id.etNewPassword).setEnabled(status);
+            changePasswordDialog.findViewById(R.id.etConfirmPassword).setEnabled(status);
+            changePasswordDialog.findViewById(R.id.btnChangeClose).setEnabled(status);
+            changePasswordDialog.findViewById(R.id.btnChange).setEnabled(status);
+            changePasswordDialog.findViewById(R.id.btnChangeCancel).setEnabled(status);
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * PatientApiRequest for Delete Patient
+     */
+    public void deletePatient(final Dialog deleteDialog){
         patientApiRequest.deletePatient()
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -856,9 +889,11 @@ public class PatientRepository {
                                     String nonce = new JSONObject(response.body().string()).getString("nonce");
                                     if (!nonce.isEmpty()) {
                                         mSharedPreference.writeNonce(nonce);
+                                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                         showMessage(context.getString(R.string.message_delete_account_otp_sent), context);
+                                        deleteDialog.show();
                                     } else {
-                                        toggleLoginState(true);
+                                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                         showMessage(context.getString(R.string.message_network_timeout), context);
                                     }
                                 } catch (JSONException | IOException e) {
@@ -866,6 +901,7 @@ public class PatientRepository {
                                 }
                                 break;
                             default:
+                                ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_delete_account_invalid), context);
                                 break;
                         }
@@ -873,29 +909,31 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
     }
 
-    // work
-    public void validateDeleteAccount(String otp){
+    /**
+     * PatientApiRequest for Validate Delete Patient
+     */
+    public void validateDeletePatient(String otp, final Dialog deleteDialog){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("nonce", this.mSharedPreference.readNonce());
         jsonObject.addProperty("otp", otp);
-        Log.d(TAG, jsonObject.toString());
-        patientApiRequest.validateDeleteAccount(jsonObject)
+        patientApiRequest.validateDeletePatient(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         switch(response.code()) {
                             case HTTP_OK:
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                toggleDeleteState(false, deleteDialog);
                                 showMessage(context.getString(R.string.message_delete_account_success), context);
                                 logoutPatient();
-                                //TODO log user out and clear all the share pref
                                 break;
                             default:
+                                toggleDeleteState(true, deleteDialog);
                                 showMessage(context.getString(R.string.message_delete_account_invalid), context);
                                 break;
                         }
@@ -903,9 +941,26 @@ public class PatientRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable th) {
+                        toggleDeleteState(true, deleteDialog);
                         showMessage(context.getString(R.string.message_network_timeout), context);
                     }
                 });
+    }
+
+    /**
+     * Function to handle Validate Delete State
+     */
+    private void toggleDeleteState(boolean status, Dialog deleteDialog) {
+        if (status) {
+            deleteDialog.findViewById(R.id.pinViewDelete).setEnabled(status);
+            deleteDialog.findViewById(R.id.btnDeleteClose).setEnabled(status);
+            deleteDialog.findViewById(R.id.btnDelete).setEnabled(status);
+            deleteDialog.findViewById(R.id.btnDeleteCancel).setEnabled(status);
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+        } else {
+            ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
+            deleteDialog.dismiss();
+        }
     }
     /**
      * ============================== END OF PATIENT ==============================
