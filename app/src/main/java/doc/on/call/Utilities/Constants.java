@@ -37,10 +37,10 @@ public class Constants {
     public static final String USERNAME_REGEX = "^(?i)([a-z0-9]+){8,100}$";
     public static final String FULLNAME_REGEX = "^[a-zA-Z -]{2,50}$";
     public static final String EMAIL_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-    public static final String PHONE_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-    public static final String ADDRESS_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-    public static final String PASSWORD_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-    public static final String OTP_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-    public static final String NRIC_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+    public static final String PHONE_REGEX = "^[6|8|9]\\d{7}$";
+    public static final String ADDRESS_REGEX = "^[^\\s]+[a-zA-Z0-9\\s#,-]{3,100}$";
+    public static final String PASSWORD_REGEX = "^[A-Za-z0-9!@#$%^&*()]{8,100}$";
+    public static final String OTP_REGEX = "^[0-9]{6}$";
+    public static final String NRIC_REGEX = "^(?i)[STFG][6-9,0][0-9]{6}[A-Z]$";
 
 }
