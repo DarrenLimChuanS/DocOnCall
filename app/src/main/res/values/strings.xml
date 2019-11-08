@@ -94,7 +94,8 @@
     <string name="message_account_updated_success">Account has been updated!</string>
     <string name="message_account_update_invalid">Unable to update account!</string>
     <string name="message_change_password_success">Password has been updated!</string>
-    <string name="message_change_password_invalid">Unable to change password!</string>
+    <string name="message_change_password_invalid">Invalid attempt to change password</string>
+    <string name="message_change_password_conflict">Your new password cannot be same as the old password!</string>
     <string name="message_delete_account_otp_sent">An OTP has been sent!</string>
     <string name="message_delete_account_success">Account deleted!</string>
     <string name="message_delete_account_invalid">Unable to delete account!</string>

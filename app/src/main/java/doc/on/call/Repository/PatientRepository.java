@@ -861,8 +861,13 @@ public class PatientRepository {
                                 showMessage(context.getString(R.string.message_change_password_success), context);
                                 break;
                             default:
-                                toggleChangePasswordState(true, changePasswordDialog);
-                                showMessage(context.getString(R.string.message_change_password_invalid), context);
+                                if (response.message().equals(context.getResources().getString(R.string.message_change_password_conflict))) {
+                                    toggleChangePasswordState(true, changePasswordDialog);
+                                    showMessage(context.getString(R.string.message_change_password_conflict), context);
+                                } else {
+                                    toggleChangePasswordState(true, changePasswordDialog);
+                                    showMessage(context.getString(R.string.message_change_password_invalid), context);
+                                }
                                 break;
                         }
                     }

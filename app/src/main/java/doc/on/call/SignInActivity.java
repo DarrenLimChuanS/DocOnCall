@@ -248,6 +248,22 @@ public class SignInActivity extends AppCompatActivity {
         llOtpInputs.setVisibility(View.GONE);
         llLoginInputs.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        etUsername.setEnabled(true);
+        etPassword.setEnabled(true);
+        imgPassword.setEnabled(true);
+        btnSignIn.setEnabled(true);
+        btnSignUp.setEnabled(true);
+        tvForgotPassword.setEnabled(true);
+        etUsername.getText().clear();
+        etPassword.getText().clear();
+        llOtpInputs.setVisibility(View.GONE);
+        llLoginInputs.setVisibility(View.VISIBLE);
+    }
+
     /**
      * ================================= END OF FUNCTIONS =================================
      */

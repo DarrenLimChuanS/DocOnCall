@@ -194,10 +194,24 @@ public class Commons {
                 Date dateToTest = new SimpleDateFormat("yyyy-MM-dd").parse(date);
                 Calendar dateToTestCal = Calendar.getInstance();
                 dateToTestCal.setTime(dateToTest);
+
+                // Start Date
+                Calendar currentDate = Calendar.getInstance();
+                currentDate.add(Calendar.MONTH, 0);
+
+                // End Date
+                Calendar currentDateAfter1Month = Calendar.getInstance();
+                currentDateAfter1Month.add(Calendar.MONTH, 1);
+
                 if ((dateToTestCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (dateToTestCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
                     return false;
                 } else {
-                    return true;
+                    // Date is within 1 month
+                    if (dateToTest.before(currentDateAfter1Month.getTime()) && dateToTest.after(currentDate.getTime())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
