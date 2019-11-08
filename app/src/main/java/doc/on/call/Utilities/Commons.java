@@ -146,7 +146,7 @@ public class Commons {
             // Fetching current year
             int year = Calendar.getInstance().get(Calendar.YEAR);
             // User is below 125 years old
-            if (year - intbirthYear <= 125){
+            if (year - intbirthYear <= 125 && year - intbirthYear >= 0){
                 return true;
             } else {
                 return false;
