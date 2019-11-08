@@ -90,8 +90,8 @@
     <string name="message_appointment_success">Appointment has been created</string>
     <string name="message_appointment_invalid">Appointment Invalid</string>
     <string name="message_password_reset_otp_sent">An OTP has been sent!</string>
-    <string name="message_password_reset_success">Password reset successful!</string>
-    <string name="message_password_reset_invalid">Failed to reset password!</string>
+    <string name="message_password_reset_success">Password reset successful! Please change your password upon logging in.</string>
+    <string name="message_password_reset_invalid">Please wait 60 seconds to resend an OTP</string>
     <string name="message_account_updated_success">Account has been updated!</string>
     <string name="message_account_update_invalid">Unable to update account!</string>
     <string name="message_change_password_success">Password has been updated!</string>
