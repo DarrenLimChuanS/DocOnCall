@@ -34,6 +34,9 @@ import doc.on.call.R;
 import doc.on.call.Repository.PatientRepository;
 import doc.on.call.ViewModel.PatientViewModel;
 
+import static doc.on.call.Utilities.Commons.isDateValid;
+import static doc.on.call.Utilities.Commons.isIssueValid;
+import static doc.on.call.Utilities.Commons.isTimeValid;
 import static doc.on.call.Utilities.Commons.showMessage;
 
 public class DocOnCallFragment extends Fragment {
@@ -262,22 +265,5 @@ public class DocOnCallFragment extends Fragment {
     }
     /**
      * ================================= END OF FUNCTIONS =================================
-     */
-    /**
-     * ================================= START OF VALIDATIONS =================================
-     */
-    public boolean isIssueValid(String issue) {
-        return !issue.isEmpty() ? true : false;
-    }
-
-    public boolean isDateValid(String date) {
-        return !date.equals(context.getResources().getString(R.string.label_date_not_selected));
-    }
-
-    public boolean isTimeValid(String time) {
-        return !time.equals(context.getResources().getString(R.string.label_time_not_selected));
-    }
-    /**
-     * ================================= END OF VALIDATIONS =================================
      */
 }

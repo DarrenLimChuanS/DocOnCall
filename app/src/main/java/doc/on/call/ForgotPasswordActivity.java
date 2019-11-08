@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.chaos.view.PinView;
 
+import static doc.on.call.Utilities.Commons.isOtpValid;
+import static doc.on.call.Utilities.Commons.isUsernameValid;
+
 public class ForgotPasswordActivity extends AppCompatActivity {
     private static final String TAG = ForgotPasswordActivity.class.getSimpleName();
 
@@ -128,19 +131,5 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
     /**
      * ================================= END OF FUNCTIONS =================================
-     */
-
-    /**
-     * ================================= START OF VALIDATIONS =================================
-     */
-    boolean isUsernameValid(String username) {
-        return !username.isEmpty() ? true : false;
-    }
-
-    boolean isOtpValid(String otp) {
-        return !otp.isEmpty() ? true : false;
-    }
-    /**
-     * ================================= END OF VALIDATIONS =================================
      */
 }

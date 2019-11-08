@@ -30,6 +30,13 @@ import doc.on.call.R;
 import doc.on.call.Repository.PatientRepository;
 import doc.on.call.ViewModel.PatientViewModel;
 
+import static doc.on.call.Utilities.Commons.isAddressValid;
+import static doc.on.call.Utilities.Commons.isEmailValid;
+import static doc.on.call.Utilities.Commons.isOtpValid;
+import static doc.on.call.Utilities.Commons.isPasswordMatchValid;
+import static doc.on.call.Utilities.Commons.isPasswordValid;
+import static doc.on.call.Utilities.Commons.isPhoneValid;
+
 public class SettingFragment extends Fragment {
     private static final String TAG = SettingFragment.class.getSimpleName();
 
@@ -369,40 +376,4 @@ public class SettingFragment extends Fragment {
             pbLoading.setVisibility(View.VISIBLE);
         }
     }
-
-    /**
-     * ================================= START OF VALIDATIONS =================================
-     */
-    boolean isAddressValid(String address) {
-        return !address.isEmpty() ? true : false;
-    }
-
-    boolean isEmailValid(String email) {
-        return !email.isEmpty() ? true : false;
-    }
-
-    boolean isPhoneValid(String phone) {
-        try {
-            Integer.parseInt(phone);
-            return true;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    boolean isPasswordValid(String password) {
-        return !password.isEmpty() ? true : false;
-    }
-
-    boolean isPasswordMatchValid(String firstPassword, String secondPassword) {
-        return firstPassword.equals(secondPassword);
-    }
-
-    boolean isOtpValid(String otp) {
-        return !otp.isEmpty() ? true : false;
-    }
-    /**
-     * ================================= END OF VALIDATIONS =================================
-     */
 }

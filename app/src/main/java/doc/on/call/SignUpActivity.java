@@ -13,7 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
 import doc.on.call.Repository.PatientRepository;
+
+import static doc.on.call.Utilities.Commons.isAddressValid;
+import static doc.on.call.Utilities.Commons.isAgeValid;
+import static doc.on.call.Utilities.Commons.isEmailValid;
+import static doc.on.call.Utilities.Commons.isFullNameValid;
+import static doc.on.call.Utilities.Commons.isNRICValid;
+import static doc.on.call.Utilities.Commons.isPasswordValid;
+import static doc.on.call.Utilities.Commons.isPhoneValid;
+import static doc.on.call.Utilities.Commons.isUsernameValid;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = SignUpActivity.class.getSimpleName();
@@ -207,55 +217,5 @@ public class SignUpActivity extends AppCompatActivity {
     }
     /**
      * ================================= END OF FUNCTIONS =================================
-     */
-
-    /**
-     * ================================= START OF VALIDATIONS =================================
-     */
-    boolean isEmailValid(String email) {
-        return !email.isEmpty() ? true : false;
-    }
-
-    boolean isUsernameValid(String username) {
-        return !username.isEmpty() ? true : false;
-    }
-
-    boolean isPasswordValid(String password) {
-        return !password.isEmpty() ? true : false;
-    }
-
-    boolean isFullNameValid(String fullName) {
-        return !fullName.isEmpty() ? true : false;
-    }
-
-    boolean isNRICValid(String nric) {
-        return !nric.isEmpty() ? true : false;
-    }
-
-    boolean isAgeValid(String age) {
-        try {
-            Integer.parseInt(age);
-            return true;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    boolean isPhoneValid(String phone) {
-        try {
-            Integer.parseInt(phone);
-            return true;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    boolean isAddressValid(String address) {
-        return !address.isEmpty() ? true : false;
-    }
-    /**
-     * ================================= END OF VALIDATIONS =================================
      */
 }

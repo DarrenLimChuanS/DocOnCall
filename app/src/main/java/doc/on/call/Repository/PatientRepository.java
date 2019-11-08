@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.chaos.view.PinView;
 import com.google.gson.JsonObject;
@@ -138,6 +140,20 @@ public class PatientRepository {
                         switch(response.code()) {
                             case HTTP_OK:
                                 try {
+                                    ((Activity) context).findViewById(R.id.tvResendToken).setEnabled(false);
+                                    new CountDownTimer(10000, 1000) {
+                                        TextView tvResendToken = ((Activity) context).findViewById(R.id.tvResendToken);
+                                        public void onTick(long millisUntilFinished) {
+                                            long secondsUntilFinished = (millisUntilFinished / 1000);
+                                            String secondsLeft = Long.toString(secondsUntilFinished);
+                                            tvResendToken.setText(context.getResources().getString(R.string.placeholder_resend_token_cooldown, secondsLeft));
+                                        }
+
+                                        public void onFinish() {
+                                            tvResendToken.setText(context.getResources().getString(R.string.label_resend_token));
+                                            tvResendToken.setEnabled(true);
+                                        }
+                                    }.start();
                                     String resendToken = new JSONObject(response.body().string()).getString("token");
                                     if (!resendToken.isEmpty()) {
                                         // Overwrite Token with new Token
@@ -864,7 +880,6 @@ public class PatientRepository {
      */
     private void toggleChangePasswordState(boolean status, Dialog changePasswordDialog) {
         if (status) {
-            changePasswordDialog.findViewById(R.id.etUsername).setEnabled(status);
             changePasswordDialog.findViewById(R.id.etOldPassword).setEnabled(status);
             changePasswordDialog.findViewById(R.id.etNewPassword).setEnabled(status);
             changePasswordDialog.findViewById(R.id.etConfirmPassword).setEnabled(status);

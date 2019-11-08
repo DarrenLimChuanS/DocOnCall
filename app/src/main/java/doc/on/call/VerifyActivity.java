@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 import doc.on.call.Repository.PatientRepository;
 
+import static doc.on.call.Utilities.Commons.isPasswordValid;
+import static doc.on.call.Utilities.Commons.isTokenValid;
+import static doc.on.call.Utilities.Commons.isUsernameValid;
+
 public class VerifyActivity extends AppCompatActivity {
     private static final String TAG = VerifyActivity.class.getSimpleName();
 
@@ -122,23 +126,5 @@ public class VerifyActivity extends AppCompatActivity {
 
     /**
      * ================================= END OF FUNCTIONS =================================
-     */
-
-    /**
-     * ================================= START OF VALIDATIONS =================================
-     */
-    boolean isUsernameValid(String username) {
-        return !username.isEmpty() ? true : false;
-    }
-
-    boolean isPasswordValid(String password) {
-        return !password.isEmpty() ? true : false;
-    }
-
-    boolean isTokenValid(String token) {
-        return !token.isEmpty() ? true : false;
-    }
-    /**
-     * ================================= END OF VALIDATIONS =================================
      */
 }

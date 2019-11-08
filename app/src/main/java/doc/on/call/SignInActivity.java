@@ -28,6 +28,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import doc.on.call.Repository.PatientRepository;
 
+import static doc.on.call.Utilities.Commons.isUsernameValid;
+import static doc.on.call.Utilities.Commons.isPasswordValid;
+import static doc.on.call.Utilities.Commons.isOtpValid;
 import static doc.on.call.Utilities.Commons.showMessage;
 
 public class SignInActivity extends AppCompatActivity {
@@ -247,23 +250,5 @@ public class SignInActivity extends AppCompatActivity {
     }
     /**
      * ================================= END OF FUNCTIONS =================================
-     */
-
-    /**
-     * ================================= START OF VALIDATIONS =================================
-     */
-    boolean isUsernameValid(String username) {
-        return !username.isEmpty() ? true : false;
-    }
-
-    boolean isPasswordValid(String password) {
-        return !password.isEmpty() ? true : false;
-    }
-
-    boolean isOtpValid(String otp) {
-        return !otp.isEmpty() ? true : false;
-    }
-    /**
-     * ================================= END OF VALIDATIONS =================================
      */
 }
