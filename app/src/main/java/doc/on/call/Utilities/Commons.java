@@ -112,7 +112,7 @@ public class Commons {
      * ================================= START OF VALIDATIONS =================================
      */
     public static boolean isEmailValid(String email) {
-        return email.matches(EMAIL_REGEX) ? true : false;
+        return email.matches(EMAIL_REGEX);
     }
 
     public static boolean isUsernameValid(String username) {
@@ -133,11 +133,11 @@ public class Commons {
 
 
     public static boolean isFullNameValid(String fullName) {
-        return fullName.matches(FULLNAME_REGEX) ? true : false;
+        return fullName.matches(FULLNAME_REGEX);
     }
 
     public static boolean isNRICValid(String nric) {
-        return nric.matches(NRIC_REGEX) ? true : false;
+        return nric.matches(NRIC_REGEX);
     }
 
     public static boolean isAgeValid(String birthYear) {
@@ -172,15 +172,20 @@ public class Commons {
     }
 
     public static boolean isAddressValid(String address) {
-        return address.matches(ADDRESS_REGEX) ? true : false;
+        return address.matches(ADDRESS_REGEX);
     }
 
     public static boolean isTokenValid(String token) {
-        return token.matches(TOKEN_REGEX) ? true : false;
+        if (token.isEmpty()) {
+            return false;
+        } else {
+            return token.matches(TOKEN_REGEX);
+        }
+
     }
 
     public static boolean isIssueValid(String issue) {
-        return issue.matches(ISSUE_REGEX) ? true : false;
+        return issue.matches(ISSUE_REGEX);
     }
 
     public static boolean isDateValid(String date) {

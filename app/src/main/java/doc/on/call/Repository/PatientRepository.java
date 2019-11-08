@@ -99,7 +99,7 @@ public class PatientRepository {
                                 break;
                             default:
                                 try {
-                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.message_register_input_conflict))) {
+                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.error_body_register_input_conflict))) {
                                         toggleRegisterDetailsState(false);
                                         toggleRegisterState(true);
                                         ((Activity) context).findViewById(R.id.llAccountInputs).setVisibility(View.VISIBLE);
@@ -310,7 +310,7 @@ public class PatientRepository {
                             case HTTP_UNAUTHORIZED:
                                 // Verified or invalid login
                                 try {
-                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.message_login_unverified))) {
+                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.error_body_login_unverified))) {
                                         showMessage(context.getString(R.string.message_login_unverified), context);
                                         // Not verified, direct to verify screen
                                         Intent verifyPatient = new Intent(context, VerifyActivity.class);
@@ -860,7 +860,7 @@ public class PatientRepository {
                                 break;
                             default:
                                 try {
-                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.error_change_password_conflict))) {
+                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.error_body_change_password_conflict))) {
                                         toggleChangePasswordState(true, changePasswordDialog);
                                         showMessage(context.getString(R.string.message_change_password_conflict), context);
                                     } else {
