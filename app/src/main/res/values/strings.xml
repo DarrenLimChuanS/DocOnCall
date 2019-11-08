@@ -68,6 +68,7 @@
     <string name="error_issue">Invalid Issue</string>
     <string name="error_date">Invalid Date, date must be a weekday not later than one month from now.</string>
     <string name="error_time">Invalid Time, time must be between 9AM to 4PM.</string>
+    <string name="error_change_password_conflict">Your new password cannot be same as the old password!</string>
 
     <!-- HTTP Message -->
     <string name="message_login_invalid">Login invalid</string>
@@ -95,7 +96,7 @@
     <string name="message_account_update_invalid">Unable to update account!</string>
     <string name="message_change_password_success">Password has been updated!</string>
     <string name="message_change_password_invalid">Invalid attempt to change password</string>
-    <string name="message_change_password_conflict">Your new password cannot be same as the old password!</string>
+    <string name="message_change_password_conflict">Please use a password that is different from your previous.</string>
     <string name="message_delete_account_otp_sent">An OTP has been sent!</string>
     <string name="message_delete_account_success">Account deleted!</string>
     <string name="message_delete_account_invalid">Unable to delete account!</string>

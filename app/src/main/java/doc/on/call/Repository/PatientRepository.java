@@ -427,7 +427,6 @@ public class PatientRepository {
     public void resetPasswordSendOTP(String username){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("username", username);
-        Log.d(TAG, jsonObject.toString());
         patientApiRequest.resetPassword(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -574,7 +573,6 @@ public class PatientRepository {
                 .enqueue(new Callback<Patient>() {
                     @Override
                     public void onResponse(Call<Patient> call, Response<Patient> response) {
-                        Log.d(TAG, "Checking logged in");
                         switch(response.code()) {
                             case HTTP_OK:
                                 if (response.body() != null) {
@@ -861,12 +859,16 @@ public class PatientRepository {
                                 showMessage(context.getString(R.string.message_change_password_success), context);
                                 break;
                             default:
-                                if (response.message().equals(context.getResources().getString(R.string.message_change_password_conflict))) {
-                                    toggleChangePasswordState(true, changePasswordDialog);
-                                    showMessage(context.getString(R.string.message_change_password_conflict), context);
-                                } else {
-                                    toggleChangePasswordState(true, changePasswordDialog);
-                                    showMessage(context.getString(R.string.message_change_password_invalid), context);
+                                try {
+                                    if (response.errorBody().string().equals(context.getResources().getString(R.string.error_change_password_conflict))) {
+                                        toggleChangePasswordState(true, changePasswordDialog);
+                                        showMessage(context.getString(R.string.message_change_password_conflict), context);
+                                    } else {
+                                        toggleChangePasswordState(true, changePasswordDialog);
+                                        showMessage(context.getString(R.string.message_change_password_invalid), context);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                                 break;
                         }
