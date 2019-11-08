@@ -30,6 +30,7 @@ public class RetrofitRequest {
         if (retrofit == null) {
             client = new Builder().addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .addInterceptor(new TokenInterceptor(context))
+                    .followRedirects(false)
                     .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                     .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
