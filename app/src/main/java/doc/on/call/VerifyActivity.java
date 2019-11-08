@@ -120,6 +120,13 @@ public class VerifyActivity extends AppCompatActivity {
         startActivity(signIn);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent signIn = new Intent(this, SignInActivity.class);
+        startActivity(signIn);
+    }
+
     public void resendToken() {
         mPatient.resendRegistrationToken();
     }

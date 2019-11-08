@@ -8,6 +8,7 @@
     <!-- Word Labels -->
     <string name="label_address">Address</string>
     <string name="label_age">Age</string>
+    <string name="label_yearOfBirth">Year of Birth</string>
     <string name="label_back">Back</string>
     <string name="label_continue">Continue</string>
     <string name="label_email">Email</string>

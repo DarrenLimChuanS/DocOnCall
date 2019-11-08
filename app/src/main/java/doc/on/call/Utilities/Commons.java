@@ -177,6 +177,9 @@ public class Commons {
     }
 
     public static boolean isTokenValid(String token) {
+        Log.d(TAG, token);
+        Log.d(TAG, "=====================================");
+        Log.d(TAG, TOKEN_REGEX);
         return token.matches(TOKEN_REGEX) ? true : false;
     }
 

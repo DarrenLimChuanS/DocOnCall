@@ -66,10 +66,10 @@ public class PatientRepository {
     /**
      * PatientApiRequest for Register Patient
      */
-    public void registerPatient(final String email, String username, String password, String fullname, String nric, int age, int phone, String address) {
+    public void registerPatient(final String email, String username, String password, String fullname, String nric, int yearOfBirth, int phone, String address) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("address", address);
-        jsonObject.addProperty("age", Integer.valueOf(age));
+        jsonObject.addProperty("yearOfBirth", Integer.valueOf(yearOfBirth));
         jsonObject.addProperty("email", email);
         jsonObject.addProperty("name", fullname);
         jsonObject.addProperty("nric", nric);
@@ -141,7 +141,7 @@ public class PatientRepository {
                             case HTTP_OK:
                                 try {
                                     ((Activity) context).findViewById(R.id.tvResendToken).setEnabled(false);
-                                    new CountDownTimer(10000, 1000) {
+                                    new CountDownTimer(60000, 1000) {
                                         TextView tvResendToken = ((Activity) context).findViewById(R.id.tvResendToken);
                                         public void onTick(long millisUntilFinished) {
                                             long secondsUntilFinished = (millisUntilFinished / 1000);

@@ -184,7 +184,7 @@ public class SignUpActivity extends AppCompatActivity {
             etAddress.requestFocus();
             etAddress.setError(getString(R.string.error_address));
         } else {
-            int ageNumber = Integer.parseInt(age);
+            int yearOfBirth = Integer.parseInt(age);
             int phoneNumber = Integer.parseInt(phone);
             etFullName.setEnabled(false);
             etNRIC.setEnabled(false);
@@ -194,7 +194,7 @@ public class SignUpActivity extends AppCompatActivity {
             btnSignUp2.setEnabled(false);
             btnSignUp2Back.setEnabled(false);
             pbLoading.setVisibility(View.VISIBLE);
-            mPatient.registerPatient(email, username, password, fullname, nric, ageNumber, phoneNumber, address);
+            mPatient.registerPatient(email, username, password, fullname, nric, yearOfBirth, phoneNumber, address);
         }
     }
 
