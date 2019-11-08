@@ -52,7 +52,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_setting">Setting</string>
 
-    <!-- Errors -->
+    <!-- Validation Errors -->
     <string name="error_email">Invalid Email</string>
     <string name="error_username">Invalid Username</string>
     <string name="error_password">Invalid Password</string>
@@ -121,4 +121,5 @@
     <string name="placeholder_title_have_appointment">Upcoming Appointment</string>
     <string name="placeholder_body_have_appointment">You have an appointment with Doctor %1$s\n on %2$s</string>
     <string name="placeholder_body_reset_password">We just need your registered Username to send you the password reset instructions.</string>
+    <string name="placeholder_resend_token_cooldown">Please wait for %1$s seconds</string>
 </resources>

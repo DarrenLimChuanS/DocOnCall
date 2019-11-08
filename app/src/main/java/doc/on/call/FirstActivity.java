@@ -68,8 +68,8 @@ public class FirstActivity extends AppCompatActivity {
         screen4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(FirstActivity.this,PropertyDetailsActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent(FirstActivity.this,PropertyDetailsActivity.class);
+//                startActivity(intent);
             }
         });
 

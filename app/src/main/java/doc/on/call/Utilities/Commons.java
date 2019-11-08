@@ -24,10 +24,12 @@ import static doc.on.call.Utilities.Constants.DT_TIME;
 import static doc.on.call.Utilities.Constants.DT_YEAR;
 import static doc.on.call.Utilities.Constants.EMAIL_REGEX;
 import static doc.on.call.Utilities.Constants.FULLNAME_REGEX;
+import static doc.on.call.Utilities.Constants.ISSUE_REGEX;
 import static doc.on.call.Utilities.Constants.NRIC_REGEX;
 import static doc.on.call.Utilities.Constants.OTP_REGEX;
 import static doc.on.call.Utilities.Constants.PASSWORD_REGEX;
 import static doc.on.call.Utilities.Constants.PHONE_REGEX;
+import static doc.on.call.Utilities.Constants.TOKEN_REGEX;
 import static doc.on.call.Utilities.Constants.USERNAME_REGEX;
 
 public class Commons {
@@ -175,19 +177,67 @@ public class Commons {
     }
 
     public static boolean isTokenValid(String token) {
-        return !token.isEmpty() ? true : false;
+        return token.matches(TOKEN_REGEX) ? true : false;
     }
 
     public static boolean isIssueValid(String issue) {
-        return !issue.isEmpty() ? true : false;
+        return issue.matches(ISSUE_REGEX) ? true : false;
     }
 
     public static boolean isDateValid(String date) {
-        return !date.equals(Resources.getSystem().getString(R.string.label_date_not_selected));
+        if (!date.equals("Date is not selected")) {
+            try {
+                // Convert date to Java Date to check
+                Date dateToTest = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                Calendar dateToTestCal = Calendar.getInstance();
+                dateToTestCal.setTime(dateToTest);
+                if ((dateToTestCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (dateToTestCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 
     public static boolean isTimeValid(String time) {
-        return !time.equals(Resources.getSystem().getString(R.string.label_time_not_selected));
+        if (!time.equals("Time is not selected")){
+            try {
+                // Convert time to Java Date to check
+                Date timeToTest = new SimpleDateFormat("kk:m").parse(time);
+                Calendar timeToTestCal = Calendar.getInstance();
+                timeToTestCal.setTime(timeToTest);
+                timeToTestCal.add(Calendar.DATE, 1);
+
+                // Start time
+                String startTimeString = "09:00";
+                Date startTime = new SimpleDateFormat("kk:m").parse(startTimeString);
+                Calendar startTimeCal = Calendar.getInstance();
+                startTimeCal.setTime(startTime);
+                startTimeCal.add(Calendar.DATE, 1);
+
+                // End time
+                String endTimeString = "16:00";
+                Date endTime = new SimpleDateFormat("kk:m").parse(endTimeString);
+                Calendar endTimeCal = Calendar.getInstance();
+                endTimeCal.setTime(endTime);
+                endTimeCal.add(Calendar.DATE, 1);
+
+                // Check if time to check is between start and end time
+                Date x = timeToTestCal.getTime();
+                return (x.after(startTimeCal.getTime()) && x.before(endTimeCal.getTime()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
     /**
      * ================================= END OF VALIDATIONS =================================

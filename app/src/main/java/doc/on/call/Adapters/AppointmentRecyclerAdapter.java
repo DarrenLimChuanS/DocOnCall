@@ -61,12 +61,15 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
     public void onBindViewHolder(@NonNull AppointmentRecyclerAdapter.ViewHolder viewHolder, int i) {
         // Fetch patient's appointment
         final Appointment appointment = patient.getAppointments().get(i);
+        final String appointmentId = appointment.getId();
+        final String appointmentNumber = appointment.getAppointmentNumber();
+        final String doctorName = appointment.getDoctorDetail().getName();
 
         // Set data into view holder
         viewHolder.tvAppointmentDate.setText(convertDateTime(appointment.getAppointmentDateTime(), DT_DAY_MONTH));
         viewHolder.tvAppointmentDayTime.setText(convertDateTime(appointment.getAppointmentDateTime(), DT_DAY_TIME));
-        viewHolder.tvAppointmentNumber.setText(context.getString(R.string.label_appointment) + " " + appointment.getAppointmentNumber());
-        viewHolder.tvAppointmentDoctor.setText(context.getString(R.string.label_doctor) + " " +  appointment.getDoctorDetail().getName());
+        viewHolder.tvAppointmentNumber.setText(context.getString(R.string.label_appointment) + " " + appointmentNumber);
+        viewHolder.tvAppointmentDoctor.setText(context.getString(R.string.label_doctor) + " " +  doctorName);
         viewHolder.tvAppointmentIssue.setText(appointment.getPatientDetail().getIssue());
         // Date comparison to check if toggle permission is displayed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:m:s");
@@ -89,7 +92,6 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                 viewHolder.imgAppointmentDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String appointmentId = appointment.getId();
                         // Confirmation Dialog
                         new AlertDialog.Builder(context)
                                 .setTitle(context.getResources().getString(R.string.alert_delete_appointment_title))
@@ -97,6 +99,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         // Delete Appointment
+                                        Log.d(TAG, "==================================NOTICE ME==================" + appointmentId);
                                         mPatient.deleteAppointment(appointmentId);
                                     }})
                                 .setNegativeButton(android.R.string.no, null).show();
@@ -106,7 +109,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         // Toggle request to details permission
-                        mPatient.respondToDetailsPermission(appointment.getId(), isChecked, appointment.getDoctorDetail().getName());
+                        mPatient.respondToDetailsPermission(appointmentId, isChecked, doctorName);
                     }
                 });
             }

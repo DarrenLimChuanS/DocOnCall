@@ -42,5 +42,6 @@ public class Constants {
     public static final String PASSWORD_REGEX = "^[A-Za-z0-9!@#$%^&*()]{8,100}$";
     public static final String OTP_REGEX = "^[0-9]{6}$";
     public static final String NRIC_REGEX = "^(?i)[STFG][6-9,0][0-9]{6}[A-Z]$";
-
+    public static final String TOKEN_REGEX = "^[-A-Za-z0-9+=]{1,108}|=[^=]|={3,108}$";
+    public static final String ISSUE_REGEX = "^[A-Za-z]{1,255}$";
 }
