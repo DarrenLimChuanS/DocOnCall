@@ -145,7 +145,6 @@ public class Commons {
             int intbirthYear = Integer.parseInt(birthYear);
             // Fetching current year
             int year = Calendar.getInstance().get(Calendar.YEAR);
-            Log.d(TAG, Integer.toString(intbirthYear) + " VS " + Integer.toString(year));
             // User is below 125 years old
             if (year - intbirthYear <= 125){
                 return true;
@@ -177,9 +176,6 @@ public class Commons {
     }
 
     public static boolean isTokenValid(String token) {
-        Log.d(TAG, token);
-        Log.d(TAG, "=====================================");
-        Log.d(TAG, TOKEN_REGEX);
         return token.matches(TOKEN_REGEX) ? true : false;
     }
 
@@ -206,11 +202,17 @@ public class Commons {
                 if ((dateToTestCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (dateToTestCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
                     return false;
                 } else {
-                    // Date is within 1 month
-                    if (dateToTest.before(currentDateAfter1Month.getTime()) && dateToTest.after(currentDate.getTime())) {
+                    // Check if it's same day
+                    if (dateToTestCal.get(Calendar.DAY_OF_YEAR) == currentDate.get(Calendar.DAY_OF_YEAR) &&
+                        dateToTestCal.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR)) {
                         return true;
                     } else {
-                        return false;
+                        // Date is within 1 month
+                        if (dateToTest.before(currentDateAfter1Month.getTime()) && dateToTest.after(currentDate.getTime())) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
             } catch (ParseException e) {

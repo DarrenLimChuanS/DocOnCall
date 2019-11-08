@@ -66,8 +66,8 @@
     <string name="error_address">Invalid Address</string>
     <string name="error_token">Invalid Token</string>
     <string name="error_issue">Invalid Issue</string>
-    <string name="error_date">Invalid Date</string>
-    <string name="error_time">Invalid Time</string>
+    <string name="error_date">Invalid Date, date must be a weekday not later than one month from now.</string>
+    <string name="error_time">Invalid Time, time must be between 9AM to 4PM.</string>
 
     <!-- HTTP Message -->
     <string name="message_login_invalid">Login invalid</string>
