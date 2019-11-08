@@ -143,15 +143,6 @@ public class SignInActivity extends AppCompatActivity {
             etPassword.requestFocus();
             etPassword.setError(getString(R.string.error_password));
         } else {
-            etUsername.setEnabled(false);
-            etPassword.setEnabled(false);
-            imgPassword.setEnabled(false);
-            btnSignIn.setEnabled(false);
-            btnSignUp.setEnabled(false);
-            tvForgotPassword.setEnabled(false);
-            pbLoading.setVisibility(View.VISIBLE);
-
-            // Recaptcha user-side token generation end
             SafetyNet.getClient(SignInActivity.this).verifyWithRecaptcha(getSiteAPIKey())
                     .addOnSuccessListener(SignInActivity.this,
                             new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
@@ -162,6 +153,13 @@ public class SignInActivity extends AppCompatActivity {
                                     String userResponseToken = response.getTokenResult();
                                     if (!userResponseToken.isEmpty()) {
                                         Log.e("token", userResponseToken);
+                                        etUsername.setEnabled(false);
+                                        etPassword.setEnabled(false);
+                                        imgPassword.setEnabled(false);
+                                        btnSignIn.setEnabled(false);
+                                        btnSignUp.setEnabled(false);
+                                        tvForgotPassword.setEnabled(false);
+                                        pbLoading.setVisibility(View.VISIBLE);
                                         // Validate the user response token by sending to backend-server, send token to server as well (implement when server verification is done)
                                         mPatient.loginPatient(username, password, userResponseToken);
                                     }
@@ -194,21 +192,7 @@ public class SignInActivity extends AppCompatActivity {
                             tvForgotPassword.setEnabled(true);
                             pbLoading.setVisibility(View.INVISIBLE);
                         }
-                    }).addOnCanceledListener(SignInActivity.this, new OnCanceledListener() {
-                //NOT WORKING NEED CHECK AGAIN
-                @Override
-                public void onCanceled() {
-                    showMessage("Captcha Verification Canceled!", SignInActivity.this);
-                    etUsername.setEnabled(true);
-                    etPassword.setEnabled(true);
-                    imgPassword.setEnabled(true);
-                    btnSignIn.setEnabled(true);
-                    btnSignUp.setEnabled(true);
-                    tvForgotPassword.setEnabled(true);
-                    pbLoading.setVisibility(View.INVISIBLE);
-                }
-            });
-            // Recaptcha user-side token generation end
+                    });
         }
     }
 
