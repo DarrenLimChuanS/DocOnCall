@@ -950,15 +950,19 @@ public class PatientRepository {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        PinView pinView = deleteDialog.findViewById(R.id.pinViewDelete);
                         switch(response.code()) {
                             case HTTP_OK:
+                                mSharedPreference.removeSharedPreference(PREF_NONCE);
+                                pinView.setLineColor(context.getResources().getColor(R.color.green));
                                 toggleDeleteState(false, deleteDialog);
                                 showMessage(context.getString(R.string.message_delete_account_success), context);
                                 logoutPatient();
                                 break;
                             default:
+                                pinView.setLineColor(context.getResources().getColor(R.color.red));
                                 toggleDeleteState(true, deleteDialog);
-                                showMessage(context.getString(R.string.message_delete_account_invalid), context);
+                                showMessage(context.getString(R.string.message_validate_invalid), context);
                                 break;
                         }
                     }
