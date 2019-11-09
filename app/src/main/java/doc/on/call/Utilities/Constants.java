@@ -34,7 +34,7 @@ public class Constants {
     public static final String DT_TIME = "Time";
 
     // Regex
-    public static final String USERNAME_REGEX = "^(?i)([a-z0-9]+){8,100}$";
+    public static final String USERNAME_REGEX = "^[a-z0-9]{8,100}$";
     public static final String FULLNAME_REGEX = "^[a-zA-Z -]{2,50}$";
     public static final String EMAIL_REGEX = "^(?!.{255})(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static final String PHONE_REGEX = "^[6|8|9]\\d{7}$";
