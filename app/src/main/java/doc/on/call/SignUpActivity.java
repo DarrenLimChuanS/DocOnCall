@@ -134,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
             etUsername.setError(getString(R.string.error_username_register));
         } else if (!isPasswordValid(password)) {
             etPassword.requestFocus();
-            etPassword.setError(getString(R.string.error_password));
+            etPassword.setError(getString(R.string.error_password_register));
         } else {
             etEmail.setEnabled(false);
             etUsername.setEnabled(false);
