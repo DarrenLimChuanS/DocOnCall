@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 
 import com.chaos.view.PinView;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
 import com.google.android.gms.tasks.OnFailureListener;
