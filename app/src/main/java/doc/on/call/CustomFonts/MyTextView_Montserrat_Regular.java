@@ -1,14 +1,12 @@
 package doc.on.call.CustomFonts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Created by wolfsoft1 on 31/1/18.
- */
-
+@SuppressLint("AppCompatCustomView")
 public class MyTextView_Montserrat_Regular extends TextView {
     public MyTextView_Montserrat_Regular(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

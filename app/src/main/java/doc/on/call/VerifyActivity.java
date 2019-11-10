@@ -1,6 +1,5 @@
 package doc.on.call;
 
-import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;

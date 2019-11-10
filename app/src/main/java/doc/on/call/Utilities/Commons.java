@@ -1,8 +1,6 @@
 package doc.on.call.Utilities;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;

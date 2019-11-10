@@ -22,7 +22,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 

@@ -15,62 +15,23 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Checker {
-    private static final String[] NonWritablePath = {
-            "/system",
-            "/system/bin",
-            "/system/sbin",
-            "/system/xbin",
-            "/vendor/bin",
-            "/sbin",
-            "/etc",
-            //"/sys",
-            //"/proc",
-            //"/dev"
-    };
+
+    // Fetch NDK
+    static {
+        System.loadLibrary("native-lib");
+    }
+    public static native String[] getNonWritablePath();
+    public static native String[] getBinaryPath();
+    public static native String[] getRootRelatedPackages();
+
+    private static final String[] NonWritablePath = getNonWritablePath();
+
     private Context mcontext;
-    private String[] binaryPaths = {
-            "/data/local/",
-            "/data/local/bin/",
-            "/data/local/xbin/",
-            "/sbin/",
-            "/su/bin/",
-            "/system/bin/",
-            "/system/bin/.ext/",
-            "/system/bin/failsafe/",
-            "/system/sd/xbin/",
-            "/system/usr/we-need-root/",
-            "/system/xbin/",
-            "/cache",
-            "/data",
-            "/dev"
-    };
+
+    private String[] binaryPaths = getBinaryPath();
+
     // contains list of knownRootCloakingPackages, knownDangerousAppsPackages & knownRootAppsPackages
-    private String[] Root_Related_Packages = {
-            "com.noshufou.android.su",
-            "com.noshufou.android.su.elite",
-            "eu.chainfire.supersu",
-            "com.koushikdutta.superuser",
-            "com.thirdparty.superuser",
-            "com.yellowes.su",
-            "com.topjohnwu.magisk",
-            "com.koushikdutta.rommanager",
-            "com.koushikdutta.rommanager.license",
-            "com.dimonvideo.luckypatcher",
-            "com.chelpus.lackypatch",
-            "com.ramdroid.appquarantine",
-            "com.ramdroid.appquarantinepro",
-            "com.android.vending.billing.InAppBillingService.COIN",
-            "com.chelpus.luckypatcher",
-            "com.devadvance.rootcloak",
-            "com.devadvance.rootcloakplus",
-            "de.robv.android.xposed.installer",
-            "com.saurik.substrate",
-            "com.zachspong.temprootremovejb",
-            "com.amphoras.hidemyroot",
-            "com.amphoras.hidemyrootadfree",
-            "com.formyhm.hiderootPremium",
-            "com.formyhm.hideroot"
-    };
+    private String[] Root_Related_Packages = getRootRelatedPackages();
 
     public Checker(Context context) {
         this.mcontext = context;

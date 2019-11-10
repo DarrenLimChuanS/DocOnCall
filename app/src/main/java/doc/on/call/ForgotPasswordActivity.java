@@ -3,7 +3,6 @@ package doc.on.call;
 import androidx.appcompat.app.AppCompatActivity;
 import doc.on.call.Repository.PatientRepository;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;

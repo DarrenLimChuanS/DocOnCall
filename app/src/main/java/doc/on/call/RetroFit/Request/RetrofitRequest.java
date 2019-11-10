@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.OkHttpClient.Builder;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -28,8 +27,7 @@ public class RetrofitRequest {
 
     public static Retrofit getRetrofitInstance(Context context) {
         if (retrofit == null) {
-            client = new Builder().addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                    .addInterceptor(new TokenInterceptor(context))
+            client = new Builder().addInterceptor(new TokenInterceptor(context))
                     .followRedirects(false)
                     .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)

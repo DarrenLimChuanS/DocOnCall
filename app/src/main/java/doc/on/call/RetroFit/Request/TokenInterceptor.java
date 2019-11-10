@@ -5,7 +5,6 @@ import doc.on.call.Utilities.Constants;
 import doc.on.call.Utilities.ObscuredSharedPreference;
 import java.io.IOException;
 import okhttp3.Interceptor;
-import okhttp3.Interceptor.Chain;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
 import okhttp3.Response;

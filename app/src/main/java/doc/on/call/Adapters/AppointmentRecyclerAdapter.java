@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import doc.on.call.Model.Appointment;
 import doc.on.call.Model.Patient;

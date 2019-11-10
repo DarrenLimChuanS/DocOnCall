@@ -7,7 +7,6 @@ import android.provider.Settings;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
-import android.util.Log;
 
 import org.json.JSONObject;
 

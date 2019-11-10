@@ -1,10 +1,12 @@
 package doc.on.call.CustomFonts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+@SuppressLint("AppCompatCustomView")
 public class EditText_Roboto_Light extends EditText {
 
     public EditText_Roboto_Light(Context context, AttributeSet attrs, int defStyle) {

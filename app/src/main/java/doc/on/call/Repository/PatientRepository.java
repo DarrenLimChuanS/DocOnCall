@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
@@ -42,10 +40,7 @@ import retrofit2.Response;
 import static doc.on.call.Utilities.Commons.showMessage;
 import static doc.on.call.Utilities.Constants.HTTP_OK;
 import static doc.on.call.Utilities.Constants.HTTP_UNAUTHORIZED;
-import static doc.on.call.Utilities.Constants.PREF_EMAIL;
 import static doc.on.call.Utilities.Constants.PREF_NONCE;
-import static doc.on.call.Utilities.Constants.PREF_RESEND;
-import static doc.on.call.Utilities.Constants.PREF_TOKEN;
 import static doc.on.call.Utilities.Constants.SPLASH_TIME_OUT;
 
 public class PatientRepository {

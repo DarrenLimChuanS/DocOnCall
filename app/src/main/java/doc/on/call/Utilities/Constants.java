@@ -1,13 +1,8 @@
 package doc.on.call.Utilities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Constants {
     // HTTP Responses
-    public static final int HTTP_BAD = 400;
     public static final int HTTP_OK = 200;
-    public static final int HTTP_SERVER_ERROR = 500;
     public static final int HTTP_UNAUTHORIZED = 401;
 
     // OkHttp
@@ -16,7 +11,7 @@ public class Constants {
     public static final int READ_TIMEOUT = 5;
     public static final int WRITE_TIMEOUT = 5;
     public static final int CONNECTION_TIMEOUT = 10;
-    public static int SPLASH_TIME_OUT = 3000;
+    public static final int SPLASH_TIME_OUT = 3000;
 
     // Obscured Shared Preference
     public static final String PREF_NONCE = "SP_Nonce";
