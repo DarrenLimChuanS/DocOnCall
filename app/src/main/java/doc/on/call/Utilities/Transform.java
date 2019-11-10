@@ -44,13 +44,9 @@ public class Transform {
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(signature.toByteArray());
                 final String currentSignature = Base64.encodeToString(md.digest(), Base64.NO_WRAP);
-                Log.d("REMOVE_ME", "Signature to check: " + VERIFY_SIGNATURE);
-                Log.d("REMOVE_ME", "Signature of currt: " + currentSignature);
                 if (VERIFY_SIGNATURE.compareTo(currentSignature) == 0) {
                     return false;
                 } else {
-                    Log.d("REMOVE_ME", "Signature to check: " + VERIFY_SIGNATURE);
-                    Log.d("REMOVE_ME", "Signature of currt: " + currentSignature);
                     return true;
                 }
             }

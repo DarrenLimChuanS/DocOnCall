@@ -172,7 +172,6 @@ public class SignInActivity extends AppCompatActivity {
                                     // successful.
                                     String userResponseToken = response.getTokenResult();
                                     if (!userResponseToken.isEmpty()) {
-                                        Log.e("token", userResponseToken);
                                         etUsername.setEnabled(false);
                                         etPassword.setEnabled(false);
                                         imgPassword.setEnabled(false);
@@ -194,13 +193,10 @@ public class SignInActivity extends AppCompatActivity {
                                 // handle the error appropriately.
                                 ApiException apiException = (ApiException) e;
                                 int statusCode = apiException.getStatusCode();
-                                Log.e("token", "Error: " + CommonStatusCodes
-                                        .getStatusCodeString(statusCode));
                                 // show error to tell users of captcha verification failed
                                 showMessage(getString(R.string.message_login_captcha_failed), SignInActivity.this);
                             } else {
                                 // A different, unknown type of error occurred.
-                                Log.e("token", "Error: " + e.getMessage());
                                 // show error to tell users of captcha verification failed
                                 showMessage(getString(R.string.message_login_captcha_failed), SignInActivity.this);
                             }
