@@ -35,6 +35,17 @@ Java_doc_on_call_RetroFit_Request_RetrofitRequest_getAPIBaseURL(JNIEnv *env, job
 }
 
 /**
+ * Function to fetch Transform Verify Signature
+ */
+extern "C" JNIEXPORT jstring
+
+JNICALL
+Java_doc_on_call_Utilities_Transform_getVerifySignature(JNIEnv *env, jobject object) {
+    std::string mVerifySignature = "o5uO2nTdkE3LShePRXMHcuouLtp6q3fx9HkE8c/9OC0=";
+    return env->NewStringUTF(mVerifySignature.c_str());
+}
+
+/**
  * Function to fetch Checker Non Writable Path
  */
 extern "C" JNIEXPORT jobjectArray
@@ -44,7 +55,7 @@ Java_doc_on_call_Utilities_Checker_getNonWritablePath(JNIEnv *env, jobject objec
     jobjectArray ret;
     int i;
 
-    char *data[7]= {"/system",
+    char const *data[7]= {"/system",
                     "/system/bin",
                     "/system/sbin",
                     "/system/xbin",
@@ -69,7 +80,7 @@ Java_doc_on_call_Utilities_Checker_getBinaryPath(JNIEnv *env, jobject object) {
     jobjectArray ret;
     int i;
 
-    char *data[14]= {"/data/local/",
+    char const *data[14]= {"/data/local/",
                     "/data/local/bin/",
                     "/data/local/xbin/",
                     "/sbin/",
@@ -101,7 +112,7 @@ Java_doc_on_call_Utilities_Checker_getRootRelatedPackages(JNIEnv *env, jobject o
     jobjectArray ret;
     int i;
 
-    char *data[24]= {"com.noshufou.android.su",
+    char const *data[24]= {"com.noshufou.android.su",
                     "com.noshufou.android.su.elite",
                     "eu.chainfire.supersu",
                     "com.koushikdutta.superuser",

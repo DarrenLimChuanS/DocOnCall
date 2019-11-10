@@ -122,7 +122,6 @@
     <string name="alert_checker_message_code_tampering">DocOnCall might be modified and recompiled! This is not allowed!\n\nApplication will exit now!</string>
     <string name="alert_checker_debugging_turned_on">USB debugging is turned on! This is not allowed!\n\nApplication will exit now!</string>
     <string name="alert_checker_btn_text">OK</string>
-
     <string name="alert_delete_appointment_title">WARNING: Deleting Appointment</string>
     <string name="alert_delete_appointment_message">Are you sure you want to proceed in deleting this appointment?</string>
 

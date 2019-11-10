@@ -11,11 +11,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Transform {
-    private Context mcontext;
-    private static final String VERIFY_SIGNATURE = "o5uO2nTdkE3LShePRXMHcuouLtp6q3fx9HkE8c/9OC0=";
+
+    // Fetch NDK
+    static {
+        System.loadLibrary("native-lib");
+    }
+
+    public static native String getVerifySignature();
+
+    private Context context;
 
     public Transform(Context context) {
-        this.mcontext = context;
+        this.context = context;
     }
 
     /**
@@ -26,7 +33,7 @@ public class Transform {
     public boolean isUSBDebugging_turned_on() {
         // debugging enabled
         // debugging turned off
-        return Settings.Secure.getInt(mcontext.getContentResolver(), Settings.Global.ADB_ENABLED, 0) == 1;
+        return Settings.Secure.getInt(context.getContentResolver(), Settings.Global.ADB_ENABLED, 0) == 1;
     }
 
 
@@ -37,13 +44,13 @@ public class Transform {
      */
     public boolean checkPackageIntegrity() {
         try {
-            PackageInfo packageInfo = mcontext.getPackageManager().getPackageInfo(mcontext.getPackageName(), PackageManager.GET_SIGNATURES);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : packageInfo.signatures) {
                 MessageDigest md;
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(signature.toByteArray());
                 final String currentSignature = Base64.encodeToString(md.digest(), Base64.NO_WRAP);
-                if (VERIFY_SIGNATURE.compareTo(currentSignature) == 0) {
+                if (getVerifySignature().compareTo(currentSignature) == 0) {
                     return false;
                 } else {
                     return true;
