@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import doc.on.call.Repository.PatientRepository;
+import doc.on.call.Utilities.Checker;
+import doc.on.call.Utilities.CheckerDialog;
 
 import static doc.on.call.Utilities.Commons.isUsernameValid;
 import static doc.on.call.Utilities.Commons.isPasswordValid;
@@ -78,55 +80,62 @@ public class SignInActivity extends AppCompatActivity {
         btnBack = (TextView) findViewById(R.id.btnBack);
         llOtpInputs = (LinearLayout) findViewById(R.id.llOtpInputs);
 
-        mPatient = new PatientRepository(this);
+        // Check if Device is rooted or emulator
+        Checker check_root = new Checker(this);
+        if(check_root.isDeviceRooted()) {
+            CheckerDialog warning_dialog = new CheckerDialog(this);
+            warning_dialog.DisplayDialog();
+        } else {
+            mPatient = new PatientRepository(this);
 
-        // Event Listeners
-        imgPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            // Event Listeners
+            imgPassword.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginPatient();
-            }
-        });
+            btnSignIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loginPatient();
+                }
+            });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerPatient();
-            }
-        });
+            btnSignUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    registerPatient();
+                }
+            });
 
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetPassword();
-            }
-        });
+            tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    resetPassword();
+                }
+            });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submitOTP();
-            }
-        });
+            btnSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    submitOTP();
+                }
+            });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                backToLogin();
-            }
-        });
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    backToLogin();
+                }
+            });
+        }
     }
 
     /**
