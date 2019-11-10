@@ -99,7 +99,6 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         // Delete Appointment
-                                        Log.d(TAG, "==================================NOTICE ME==================" + appointmentId);
                                         mPatient.deleteAppointment(appointmentId);
                                     }})
                                 .setNegativeButton(android.R.string.no, null).show();

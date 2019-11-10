@@ -63,7 +63,6 @@ public class PatientFragment extends Fragment {
 
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         view =  layoutInflater.inflate(R.layout.fragment_patient, viewGroup, false);
-        Log.d(TAG, "onCreateView");
 
         // Fetch variables
         pbLoading = (ProgressBar)view.findViewById(R.id.pbLoading);
@@ -84,7 +83,6 @@ public class PatientFragment extends Fragment {
             public void onChanged(@Nullable Patient patientResponse) {
                 pbLoading.setVisibility(View.GONE);
                 if (patientResponse != null) {
-                    Log.d(TAG, "OnChanged");
                     patient = patientResponse;
                     if (!patient.getAppointments().isEmpty()) {
                         // Reverse the list to display in Chronological order

@@ -60,7 +60,6 @@ public class ObscuredSharedPreference {
         this.sharedPreferences = context.getSharedPreferences(getPrefFile(), 0);
         keystore = create_AndroidKeyStore();
         ObscuredSharedPreference.set_alias(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
-        Log.d("DocOnCall", "keystore_alias: " + alias);
         ObscuredSharedPreference.get_SymmetricKeyinKeyStore();
     }
 
@@ -77,7 +76,6 @@ public class ObscuredSharedPreference {
 
     public static void get_SymmetricKeyinKeyStore() {
         try {
-            Log.d("Token", "keystore alias exist: " + keystore.containsAlias(alias));
             if (!keystore.containsAlias(alias)){
                 KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
                 KeyGenParameterSpec keyGenParameterSpec = new KeyGenParameterSpec.Builder(alias,
@@ -142,11 +140,7 @@ public class ObscuredSharedPreference {
             cipher.init(Cipher.ENCRYPT_MODE, secret_key);
             HashMap<String, String> EncryptedInMap = new HashMap<>();
             String iv_storage = new String(Base64.encode(cipher.getIV(), Base64.NO_WRAP));
-            Log.d ("Token", "encode IV used: " + iv_storage);
-            Log.d ("Token", "encode_to_string IV used: " + Base64.encodeToString(cipher.getIV(), Base64.NO_WRAP));
-            Log.d("Token", "plaintext: " + value);
             String encrypted = new String(Base64.encode(cipher.doFinal(bytes), Base64.NO_WRAP));
-            Log.d("Token", "encode ciphertext: " + encrypted);
             EncryptedInMap.put("encrypted_iv", iv_storage);
             EncryptedInMap.put("encrypted_data", encrypted);
             saveMap(EncryptedInMap, action_path);
@@ -265,6 +259,12 @@ public class ObscuredSharedPreference {
     public void removeSharedPreference(String key) {
         Editor edit = this.sharedPreferences.edit();
         edit.remove(key);
+        edit.commit();
+    }
+
+    public void clearSharedPreference() {
+        Editor edit = this.sharedPreferences.edit();
+        edit.clear();
         edit.commit();
     }
     /**

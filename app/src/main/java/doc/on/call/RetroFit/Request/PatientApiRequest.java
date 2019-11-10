@@ -44,9 +44,6 @@ public interface PatientApiRequest {
     /**
      * ============================== START OF PATIENT ==============================
      */
-    @GET("api/testing/patients")
-    Call<List<Patient>> getAllPatients();
-
     @GET("api/patient")
     Call<Patient> getPatient();
 

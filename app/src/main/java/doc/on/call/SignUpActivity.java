@@ -155,8 +155,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void backToLogin() {
-        Intent signIn = new Intent(this, SignInActivity.class);
-        startActivity(signIn);
+        super.onBackPressed();
     }
 
     public void registerPatient() {

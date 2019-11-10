@@ -116,15 +116,7 @@ public class VerifyActivity extends AppCompatActivity {
     }
 
     public void backToLogin() {
-        Intent signIn = new Intent(this, SignInActivity.class);
-        startActivity(signIn);
-    }
-
-    @Override
-    public void onBackPressed() {
         super.onBackPressed();
-        Intent signIn = new Intent(this, SignInActivity.class);
-        startActivity(signIn);
     }
 
     public void resendToken() {

@@ -47,10 +47,6 @@ public class HomeActivity extends AppCompatActivity {
         // Shared Preference
         mSharedPreference = ObscuredSharedPreference.getPref(this);
 
-        Log.d(TAG, "Hello");
-        Log.d(TAG, "Token: " + mSharedPreference.readJWTToken());
-        Log.d(TAG, "Nonce: " + mSharedPreference.readNonce());
-
         // Fetch variables
         navHome = (LinearLayout)findViewById(R.id.navHome);
         imgHome = (ImageView)findViewById(R.id.imgHome);
@@ -89,18 +85,6 @@ public class HomeActivity extends AppCompatActivity {
                 inflateSetting();
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
     }
 
     public void inflateHome() {

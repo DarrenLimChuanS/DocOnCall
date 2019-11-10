@@ -232,8 +232,7 @@ public class PatientRepository {
                         switch (response.code()) {
                             case HTTP_OK:
                                 toggleVerifyState(false);
-                                mSharedPreference.removeSharedPreference(PREF_RESEND);
-                                mSharedPreference.removeSharedPreference(PREF_EMAIL);
+                                mSharedPreference.clearSharedPreference();
                                 showMessage(context.getString(R.string.message_verify_success), context);
                                 Intent signIn = new Intent(context, SignInActivity.class);
                                 context.startActivity(signIn);
@@ -379,6 +378,7 @@ public class PatientRepository {
                                         pinView.setLineColor(context.getResources().getColor(R.color.green));
                                         showMessage(context.getString(R.string.message_validate_success), context);
                                         Intent home = new Intent(context, HomeActivity.class);
+                                        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                         context.startActivity(home);
                                         toggleValidateState(false);
                                     } else {
@@ -544,15 +544,13 @@ public class PatientRepository {
                                 ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_logout_success), context);
                                 context.startActivity(signIn);
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
-                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
+                                mSharedPreference.clearSharedPreference();
                                 break;
                             default:
                                 ((FragmentActivity) context).findViewById(R.id.pbLoading).setVisibility(View.GONE);
                                 showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
-                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
+                                mSharedPreference.clearSharedPreference();
                                 break;
                         }
                     }
@@ -610,41 +608,6 @@ public class PatientRepository {
      * ============================== START OF PATIENT ==============================
      */
     /**
-     * PatientApiRequest for Get All Patients (OBSOLETE)
-     */
-    public LiveData<List<Patient>> getAllPatients() {
-        final MutableLiveData<List<Patient>> patientList = new MutableLiveData<>();
-        patientApiRequest.getAllPatients()
-                .enqueue(new Callback<List<Patient>>() {
-                    @Override
-                    public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
-                        Intent signIn = new Intent(context, SignInActivity.class);
-                        signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Log.d(TAG, "onResponse response:: " + response);
-                        switch(response.code()) {
-                            case HTTP_OK:
-                                if (response.body() != null) {
-                                    patientList.setValue(response.body());
-                                    Log.d(TAG, "Patient list is: " + patientList.getValue().toString());
-                                }
-                                break;
-                            default:
-                                showMessage(context.getString(R.string.message_logout_no_session), context);
-                                context.startActivity(signIn);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Patient>> call, Throwable th) {
-                        patientList.setValue(null);
-                        showMessage(context.getString(R.string.message_network_timeout), context);
-                    }
-                });
-        return patientList;
-    }
-
-    /**
      * PatientApiRequest for Get Patient
      */
     public LiveData<Patient> getPatient() {
@@ -655,19 +618,16 @@ public class PatientRepository {
                     public void onResponse(Call<Patient> call, Response<Patient> response) {
                         Intent signIn = new Intent(context, SignInActivity.class);
                         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Log.d(TAG, "onResponse response:: " + response);
                         switch(response.code()) {
                             case HTTP_OK:
                                 if (response.body() != null) {
                                     patient.setValue(response.body());
-                                    Log.d(TAG, "Patient is: " + patient.getValue().toString());
                                 }
                                 break;
                             default:
                                 showMessage(context.getString(R.string.message_logout_no_session), context);
                                 context.startActivity(signIn);
-                                mSharedPreference.removeSharedPreference(PREF_NONCE);
-                                mSharedPreference.removeSharedPreference(PREF_TOKEN);
+                                mSharedPreference.clearSharedPreference();
                                 break;
                         }
                     }
@@ -687,9 +647,7 @@ public class PatientRepository {
     public void createAppointment(String appointmentDateTime, String datetimeCreated, String issue, String patientDetail) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("appointmentDateTime", appointmentDateTime);
-        jsonObject.addProperty("datetimeCreated", datetimeCreated);
         jsonObject.addProperty("issue", issue);
-        jsonObject.addProperty("patientDetail", patientDetail);
         patientApiRequest.createAppointment(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -726,7 +684,6 @@ public class PatientRepository {
     public void deleteAppointment(String appointmentId){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("appointmentId", appointmentId);
-        Log.d(TAG, jsonObject.toString());
         patientApiRequest.deleteAppointment(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -792,7 +749,6 @@ public class PatientRepository {
         jsonObject.addProperty("address", address.trim());
         jsonObject.addProperty("email", email.trim());
         jsonObject.addProperty("phone", phone);
-        Log.d(TAG, jsonObject.toString());
         patientApiRequest.updatePatient(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -845,7 +801,6 @@ public class PatientRepository {
         jsonObject.addProperty("username", username);
         jsonObject.addProperty("oldPassword", oldPassword);
         jsonObject.addProperty("newPassword", newPassword);
-        Log.d(TAG, jsonObject.toString());
         patientApiRequest.changePassword(jsonObject)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
