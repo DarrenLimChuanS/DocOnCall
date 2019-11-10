@@ -12,12 +12,12 @@ public class CheckerDialog extends Dialog {
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
 
-    public CheckerDialog(final Context context) {
+    public CheckerDialog(final Context context, int msg_R_id) {
         super(context);
         builder = new AlertDialog.Builder(context);
         // Add the buttons
         builder.setTitle(R.string.alert_checker_title);
-        builder.setMessage(R.string.alert_checker_message);
+        builder.setMessage(msg_R_id);
         builder.setPositiveButton(R.string.alert_checker_btn_text, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button, close the application by exiting all activities
