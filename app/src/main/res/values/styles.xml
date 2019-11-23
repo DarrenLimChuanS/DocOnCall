@@ -14,25 +14,37 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/pb_rect</item>
         <item name="android:visibility">gone</item>
-        <item name="android:elevation">10dp</item>
+        <item name="android:elevation">@dimen/elevation_size_10dp</item>
         <item name="android:indeterminate">true</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <!-- Logo -->
     <style name="iv_logo">
         <item name="android:layout_width">@dimen/width_image_size_250dp</item>
         <item name="android:layout_height">@dimen/height_image_size_200dp</item>
-        <item name="android:layout_marginTop">@dimen/margin_header_size_100dp</item>
         <item name="android:src">@drawable/img_appicon</item>
     </style>
 
     <!-- View Line -->
-    <style name="v_line">
+    <style name="v_line_accent">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/height_line_size_0_5dp</item>
+        <item name="android:layout_height">@dimen/height_line_size_1dp</item>
         <item name="android:layout_marginLeft">@dimen/margin_size_70dp</item>
         <item name="android:layout_marginRight">@dimen/margin_size_70dp</item>
         <item name="android:background">@color/colorAccent</item>
+    </style>
+    <style name="v_line_accent_long">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_line_size_1dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_size_20dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_size_20dp</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+    <style name="v_line_black">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_line_size_1dp</item>
+        <item name="android:background">@color/black</item>
     </style>
 
     <!-- EditText -->
@@ -44,6 +56,14 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:padding">@dimen/padding_size_10dp</item>
     </style>
+    <style name="et_layout_long">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_size_20dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_size_20dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">@dimen/padding_size_10dp</item>
+    </style>
     <style name="et_input">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -51,6 +71,42 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_size_14dp</item>
+    </style>
+    <style name="et_input_big">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_18dp</item>
+    </style>
+
+    <!-- TextView -->
+    <style name="tv_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_title_size_30dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="tv_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_18dp</item>
+    </style>
+    <style name="tv_label_sm">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">@dimen/text_size_12dp</item>
+    </style>
+    <style name="tv_label_accent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_18dp</item>
     </style>
 
     <!-- Buttons -->
@@ -62,6 +118,14 @@
         <item name="android:textSize">@dimen/text_button_size_16dp</item>
         <item name="android:textColor">@color/blue</item>
     </style>
+    <style name="btn_info_sm">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_info_sm</item>
+        <item name="android:textSize">@dimen/text_button_size_16dp</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
     <style name="btn_primary">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -70,5 +134,72 @@
         <item name="android:textSize">@dimen/text_button_size_16dp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="btn_primary_sm">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_primary_sm</item>
+        <item name="android:textSize">@dimen/text_button_size_16dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="btn_error">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_error</item>
+        <item name="android:textSize">@dimen/text_button_size_16dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="btn_success">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_success</item>
+        <item name="android:textSize">@dimen/text_button_size_16dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
+    <!-- Menu -->
+    <style name="ll_menu">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Recycler Appointment -->
+    <style name="rv_date_time">
+        <item name="android:layout_width">@dimen/width_recycler_size_130dp</item>
+        <item name="android:layout_height">@dimen/height_recycler_size_half_65dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="rv_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_size_10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_16dp</item>
+    </style>
+    <style name="rv_body">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_size_10dp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">@dimen/text_size_14dp</item>
+    </style>
+
+    <!-- Switch -->
+    <style name="ThemeOverlay.MySwitch" parent="">
+        <item name="android:colorControlActivated">@color/green</item>
+        <item name="android:colorForeground">@color/colorAccent</item>
+    </style>
+
+    <!-- Card -->
+    <style name="cv_two_cards" parent="CardView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/margin_size_8dp</item>
+        <item name="cardCornerRadius">@dimen/card_radius_size_8dp</item>
+    </style>
 </resources>

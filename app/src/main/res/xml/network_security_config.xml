@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">doconcall.tk</domain>
+        <pin-set>
+            <!--doconcall.tk-->
+            <pin digest="SHA-256">q9d475/q2xjBY9x3gH5l4ud161MopkGASLHvGHwK9bg=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>

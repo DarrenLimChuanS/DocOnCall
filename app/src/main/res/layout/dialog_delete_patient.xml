@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/btnDeleteClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_black_24dp"
+        android:layout_marginTop="@dimen/margin_size_8dp"
+        android:layout_marginRight="@dimen/margin_size_8dp"
+        android:elevation="@dimen/elevation_size_5dp"
+        android:layout_alignParentRight="true"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/card_radius_size_15dp"
+        app:cardBackgroundColor="@color/light_green"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_size_20dp"
+                android:layout_marginBottom="@dimen/margin_size_20dp"
+                android:layout_marginLeft="@dimen/margin_size_6dp"
+                android:layout_marginRight="@dimen/margin_size_6dp"
+                android:gravity="center">
+
+                <doc.on.call.CustomFonts.MyTextView_Roboto_Bold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_title_size_30dp"
+                    android:text="@string/label_delete_account"/>
+                <View style="@style/v_line_black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_header_size_30dp"
+                    android:textSize="@dimen/text_caption_size_20dp"
+                    android:text="@string/app_otp_delete" />
+
+                <com.chaos.view.PinView
+                    android:id="@+id/pinViewDelete"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+                    android:cursorVisible="true"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_18dp"
+                    android:textStyle="bold"
+                    app:cursorColor="@color/blue"
+                    app:cursorWidth="2dp"
+                    app:itemCount="6"
+                    app:itemHeight="50dp"
+                    app:itemRadius="10dp"
+                    app:itemSpacing="5dp"
+                    app:itemWidth="45dp"
+                    app:lineColor="@color/colorAccent"
+                    app:lineWidth="2dp"
+                    app:viewType="rectangle" />
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    style="@style/btn_success"
+                    android:layout_marginTop="@dimen/margin_size_40dp"
+                    android:layout_weight="0.5"
+                    android:text="@string/label_submit"/>
+
+                <Button
+                    android:id="@+id/btnDeleteCancel"
+                    style="@style/btn_error"
+                    android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+                    android:layout_weight="0.5"
+                    android:text="@string/label_cancel"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

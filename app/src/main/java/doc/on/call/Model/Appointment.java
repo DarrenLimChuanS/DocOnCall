@@ -25,6 +25,9 @@ public class Appointment {
     @SerializedName("patientDetail")
     @Expose
     private PatientDetail patientDetail;
+    @SerializedName("extraPatientDetails")
+    @Expose
+    private ExtraPatientDetails extraPatientDetails;
 
     public String getAppointmentDateTime() {
         return this.appointmentDateTime;
@@ -82,6 +85,14 @@ public class Appointment {
         this.patientDetail = patientDetail;
     }
 
+    public ExtraPatientDetails getExtraPatientDetails() {
+        return extraPatientDetails;
+    }
+
+    public void setExtraPatientDetails(ExtraPatientDetails extraPatientDetails) {
+        this.extraPatientDetails = extraPatientDetails;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
@@ -92,6 +103,7 @@ public class Appointment {
                 ", done=" + done +
                 ", id='" + id + '\'' +
                 ", patientDetail=" + patientDetail +
+                ", extraPatientDetails=" + extraPatientDetails +
                 '}';
     }
 }

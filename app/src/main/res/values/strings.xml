@@ -2,11 +2,13 @@
     <!-- Title -->
     <string name="app_name">DocOnCall</string>
     <string name="app_slogan">Doctors to your doorstep</string>
-    <string name="app_otp">Enter the 6 digit OTP</string>
+    <string name="app_otp_login">Enter the 6 digit OTP to login</string>
+    <string name="app_otp_delete">Enter the 6 digit OTP\n to delete account</string>
 
-    <!-- Label -->
+    <!-- Word Labels -->
     <string name="label_address">Address</string>
     <string name="label_age">Age</string>
+    <string name="label_yearOfBirth">Year of Birth</string>
     <string name="label_back">Back</string>
     <string name="label_continue">Continue</string>
     <string name="label_email">Email</string>
@@ -14,36 +16,120 @@
     <string name="label_name">Full Name</string>
     <string name="label_nric">NRIC</string>
     <string name="label_password">Password</string>
+    <string name="label_password_old">Old Password</string>
+    <string name="label_password_new">New Password</string>
+    <string name="label_password_confirm">Confirm Password</string>
     <string name="label_phone">Mobile Number</string>
     <string name="label_sign_in">Sign In</string>
     <string name="label_sign_up">Sign Up</string>
     <string name="label_submit">Submit</string>
     <string name="label_username">Username</string>
     <string name="label_verify">Verify</string>
+    <string name="label_appointment">Appointment</string>
+    <string name="label_doctor">Doctor</string>
+    <string name="label_change">Change</string>
+    <string name="label_update_account">Update Account</string>
+    <string name="label_change_password">Change Password</string>
+    <string name="label_delete_account">Delete Account</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_update">Update</string>
+    <string name="label_delete">Delete</string>
+
+    <!-- Paragraph Labels -->
+    <string name="label_forgot_password">Forgot Password?</string>
+    <string name="label_reset_password">Reset Password</string>
+    <string name="label_resend_token">Resend Token</string>
     <string name="label_verify_token">Verification Token</string>
+    <string name="label_enter_issue">Enter your issue</string>
+    <string name="label_make_appointment">Make Appointment</string>
+    <string name="label_select_time">Select Time</string>
+    <string name="label_select_date">Select Date</string>
+    <string name="label_date_not_selected">Date is not selected</string>
+    <string name="label_time_not_selected">Time is not selected</string>
+    <string name="label_switch_allow_details">Allow data to Doctor </string>
 
     <!-- Menu -->
     <string name="menu_doc_on_call">Doctor On Call</string>
     <string name="menu_home">Home</string>
     <string name="menu_setting">Setting</string>
 
-    <!-- Errors -->
+    <!-- Validation Errors -->
+    <string name="error_email">Invalid Email</string>
     <string name="error_username">Invalid Username</string>
+    <string name="error_username_register">Invalid Username\nMust be within 8–100 characters\nMust not contain special characters</string>
     <string name="error_password">Invalid Password</string>
+    <string name="error_password_register">Invalid Password\nMust be within 8–100 characters</string>
+    <string name="error_password_match">Invalid, New Password does not match with Confirm Password.</string>
     <string name="error_otp">Invalid OTP</string>
-    <string name="error_name">Invalid Name</string>
+    <string name="error_fullname">Invalid Full Name</string>
+    <string name="error_nric">Invalid NRIC</string>
+    <string name="error_age">Invalid Age</string>
+    <string name="error_phone">Invalid Phone</string>
+    <string name="error_address">Invalid Address</string>
+    <string name="error_token">Invalid Token</string>
+    <string name="error_issue">Invalid Issue</string>
+    <string name="error_date">Invalid Date, date must be a weekday not later than one month from now.</string>
+    <string name="error_time">Invalid Time, time must be between 9AM to 4PM.</string>
 
+    <!-- Error Body -->
+    <string name="error_body_change_password_conflict">Your new password cannot be same as the old password!</string>
+    <string name="error_body_register_input_conflict">Username and email must be unique!</string>
+    <string name="error_body_login_unverified">Account not verified! Please check your email!</string>
 
     <!-- HTTP Message -->
-    <string name="message_login_invalid">Login Invalid</string>
-    <string name="message_login_success">"Login Successful\n\nAn OTP has been sent to your registered phone number"</string>
+    <string name="message_login_invalid">Login invalid</string>
+    <string name="message_login_success">Login successful\n\nAn OTP has been sent to your registered phone number</string>
     <string name="message_login_unverified">Account not verified! Please check your email!</string>
+    <string name="message_login_captcha_failed">ReCaptcha invalid!</string>
+    <string name="message_logout_no_session">Session Expired. Please log in again.</string>
+    <string name="message_logout_success">Logout successful</string>
     <string name="message_network_timeout">Connection timed out</string>
     <string name="message_register_input_conflict">Username and email must be unique!</string>
-    <string name="message_register_invalid">Registration Failed</string>
-    <string name="message_register_success">"Register Successful\n\nAn OTP has been sent to your registered email for verification"</string>
-    <string name="message_validate_invalid">OTP Invalid</string>
-    <string name="message_validate_success">Login Successful</string>
-    <string name="message_verify_invalid">Account Verification Invalid</string>
-    <string name="message_verify_success">"Account Verification Successful\n\nPlease proceed to login to your account"</string>
+    <string name="message_register_invalid">Registration failed</string>
+    <string name="message_register_success">Register successful\n\nAn email has been sent to your registered email for verification</string>
+    <string name="message_register_resend_invalid">Resend invalid</string>
+    <string name="message_register_resend_success">An email with a new verification token has been resent to your registered email!</string>
+    <string name="message_validate_invalid">OTP invalid</string>
+    <string name="message_validate_success">Login successful</string>
+    <string name="message_verify_invalid">Account Verification invalid</string>
+    <string name="message_verify_success">Account Verification successful\n\nPlease proceed to login to your account</string>
+    <string name="message_appointment_success">Appointment has been created</string>
+    <string name="message_appointment_invalid">Appointment Invalid</string>
+    <string name="message_password_reset_otp_sent">An OTP has been sent!</string>
+    <string name="message_password_reset_success">Password reset successful! Please change your password upon logging in.</string>
+    <string name="message_password_reset_invalid">Please wait 60 seconds to resend an OTP</string>
+    <string name="message_account_updated_success">Account has been updated!</string>
+    <string name="message_account_update_invalid">Unable to update account!</string>
+    <string name="message_change_password_success">Password has been updated!</string>
+    <string name="message_change_password_invalid">Invalid attempt to change password</string>
+    <string name="message_change_password_conflict">Please use a password that is different from your previous.</string>
+    <string name="message_delete_account_otp_sent">An OTP has been sent!</string>
+    <string name="message_delete_account_success">Account deleted!</string>
+    <string name="message_delete_account_invalid">Unable to delete account!</string>
+    <string name="message_delete_appointment_success">Appointment deleted!</string>
+    <string name="message_delete_appointment_invalid">Unable to delete appointment!</string>
+    <string name="message_respond_doctor_success_on">Permission granted to Doctor %1$s to view your data!</string>
+    <string name="message_respond_doctor_success_off">Permission removed from Doctor %1$s to view your data!</string>
+    <string name="message_respond_doctor_invalid">Permission Request invalid</string>
+
+    <!-- Date Picker -->
+    <string name="date_picker_message">Please pick a weekday not later than one month from now.</string>
+    <string name="time_picker_message">Please pick a time between 9am to 4pm.</string>
+
+    <!-- Dialogs -->
+    <string name="alert_checker_title">WARNING</string>
+    <string name="alert_checker_message">DocOnCall is executed in an insecure environment! This is not allowed!\n\nApplication will exit now!</string>
+    <string name="alert_checker_message_code_tampering">DocOnCall might be modified and recompiled! This is not allowed!\n\nApplication will exit now!</string>
+    <string name="alert_checker_debugging_turned_on">USB debugging is turned on! This is not allowed!\n\nApplication will exit now!</string>
+    <string name="alert_checker_btn_text">OK</string>
+    <string name="alert_delete_appointment_title">WARNING: Deleting Appointment</string>
+    <string name="alert_delete_appointment_message">Are you sure you want to proceed in deleting this appointment?</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_title_no_appointment">Sorry</string>
+    <string name="placeholder_body_no_appointment">You do not seem to have any appointments</string>
+    <string name="placeholder_title_have_appointment">Upcoming Appointment</string>
+    <string name="placeholder_body_have_appointment">You have an appointment with Doctor %1$s\n on %2$s</string>
+    <string name="placeholder_body_reset_password">We just need your registered Username to send you the password reset instructions.</string>
+    <string name="placeholder_resend_token_cooldown">Please wait for %1$s seconds</string>
 </resources>

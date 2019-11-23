@@ -1,14 +1,12 @@
 package doc.on.call.CustomFonts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.Button;
 
-/**
- * Created by praja on 17-May-17.
- */
-
+@SuppressLint("AppCompatCustomView")
 public class Button_Roboto_Medium extends Button {
 
     public Button_Roboto_Medium(Context context, AttributeSet attrs, int defStyle) {

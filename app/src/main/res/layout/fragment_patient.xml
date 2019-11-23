@@ -5,10 +5,54 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.PatientFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="@style/pb_loading"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello Blank Fragment" />
+        android:orientation="vertical">
+
+        <xyz.sangcomz.stickytimelineview.TimeLineRecyclerView
+            android:id="@+id/rvAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/rvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="@dimen/width_image_size_250dp"
+                android:layout_height="@dimen/height_image_size_200dp"
+                android:layout_marginTop="@dimen/margin_header_size_100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_error_outline_red_24dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/text_placeholder_title_size_50dp"
+                android:text="@string/placeholder_title_no_appointment"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/text_placeholder_body_size_26dp"
+                android:text="@string/placeholder_body_no_appointment"/>
+            <Button
+                android:id="@+id/btnMakeAppointment"
+                style="@style/btn_primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+                android:layout_gravity="center"
+                android:text="@string/label_make_appointment"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

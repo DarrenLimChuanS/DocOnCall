@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VerifyActivity">
+    android:orientation="vertical"
+    tools:context="doc.on.call.VerifyActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="@style/pb_loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        style="@style/iv_logo"
+        android:layout_marginTop="@dimen/margin_header_size_30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Step one Account Inputs -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/imgIcon">
+
+        <LinearLayout
+            style="@style/et_layout">
+            <doc.on.call.CustomFonts.EditText_Roboto_Regular
+                android:id="@+id/etUsername"
+                style="@style/et_input"
+                android:layout_weight="1"
+                android:hint="@string/label_username"
+                android:inputType="textNoSuggestions" />
+        </LinearLayout>
+
+        <View style="@style/v_line_accent" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            style="@style/et_layout">
+            <doc.on.call.CustomFonts.EditText_Roboto_Regular
+                android:id="@+id/etPassword"
+                style="@style/et_input"
+                android:layout_weight="1"
+                android:hint="@string/label_password"
+                android:inputType="textPassword" />
+            <ImageView
+                android:id="@+id/imgPassword"
+                android:layout_width="@dimen/width_icon_size_18dp"
+                android:layout_height="@dimen/height_icon_size_18dp"
+                android:src="@drawable/ic_eye" />
+        </LinearLayout>
+
+        <View style="@style/v_line_accent" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            style="@style/et_layout">
+            <doc.on.call.CustomFonts.EditText_Roboto_Regular
+                android:id="@+id/etToken"
+                style="@style/et_input"
+                android:layout_weight="1"
+                android:hint="@string/label_verify_token"
+                android:inputType="textNoSuggestions" />
+        </LinearLayout>
+
+        <View style="@style/v_line_accent" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
+            android:id="@+id/btnVerify"
+            style="@style/btn_primary"
+            android:layout_marginTop="@dimen/margin_size_50dp"
+            android:text="@string/label_verify" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
+            android:id="@+id/btnBack"
+            style="@style/btn_info"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:text="@string/label_back" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
+            android:id="@+id/tvResendToken"
+            style="@style/tv_label_accent"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:text="@string/label_resend_token" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="doc.on.call.SignInActivity">
-
 
     <ProgressBar
         android:id="@+id/pbLoading"
@@ -19,6 +18,7 @@
     <ImageView
         android:id="@+id/imgIcon"
         style="@style/iv_logo"
+        android:layout_marginTop="@dimen/margin_header_size_100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,6 @@
     <!-- Step one Login Inputs -->
     <LinearLayout
         android:id="@+id/llLoginInputs"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -39,10 +38,10 @@
                 style="@style/et_input"
                 android:layout_weight="1"
                 android:hint="@string/label_username"
-                android:inputType="text" />
+                android:inputType="textNoSuggestions" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
@@ -60,7 +59,7 @@
                 android:src="@drawable/ic_eye" />
         </LinearLayout>
 
-        <View style="@style/v_line" />
+        <View style="@style/v_line_accent" />
 
         <doc.on.call.CustomFonts.MyTextView_Roboto_Medium
             android:id="@+id/btnSignIn"
@@ -73,10 +72,15 @@
             style="@style/btn_info"
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:text="@string/label_sign_up" />
+
+        <doc.on.call.CustomFonts.MyTextView_Roboto_Regular
+            android:id="@+id/tvForgotPassword"
+            style="@style/tv_label_accent"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
+            android:text="@string/label_forgot_password" />
     </LinearLayout>
 
     <!-- Step twice OTP inputs -->
-    <!-- Step one Login Inputs -->
     <LinearLayout
         android:id="@+id/llOtpInputs"
         android:layout_width="match_parent"
@@ -90,22 +94,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_caption_size_20dp"
-            android:text="@string/app_otp" />
+            android:text="@string/app_otp_login" />
 
         <com.chaos.view.PinView
             android:id="@+id/pinView"
             style="@style/PinWidget.PinView"
-            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:cursorVisible="true"
             android:inputType="number"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_18dp"
             android:textStyle="bold"
             app:cursorColor="@color/blue"
             app:cursorWidth="2dp"
-            app:hideLineWhenFilled="true"
             app:itemCount="6"
             app:itemHeight="50dp"
             app:itemRadius="10dp"
@@ -127,4 +130,4 @@
             android:layout_marginTop="@dimen/margin_spacing_size_15dp"
             android:text="@string/label_back" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
